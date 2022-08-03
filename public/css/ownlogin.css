@@ -1,0 +1,228 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+/* loginForm start */
+.login-form-container {
+    min-height: calc(100vh - 246px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-form-container .logo {
+    width: 200px;
+}
+
+.login-form-wrapper {
+    font-family: Roboto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 750px;
+    margin: 10px;
+    border-radius: 10px;
+    padding: 25px;
+    background: #e5e5e5;
+}
+
+.form-header {
+    max-width: 300px;
+    font-family: Roboto;
+    font-weight: bold;
+    text-align: center;
+    font-size: x-large;
+    margin-bottom: 25px;
+    margin-top: 30px;
+    cursor: default;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-fields-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 18px;
+    width: fit-content;
+    margin: auto;
+}
+.login-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.login-input {
+    padding: 10px 10px;
+    height: auto;
+    outline: none;
+    border: 1px solid;
+    border-radius: 6px;
+    margin-left: 15px;
+    /* height: 25px; */
+}
+
+.login-field {
+    margin-bottom: 3px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.code-field {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+
+
+
+.field-tip {
+    font-size: 14px;
+    color: #4e4e4e;
+    margin: 5px 0;
+}
+
+.login-tip {
+    cursor: default;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #000000;
+    padding: 10px 10px;
+}
+input[type="submit"] {
+    -webkit-appearance: none;
+}
+.applyButton,
+.applyButton.disabled {
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 6px;
+    outline: none;
+    font-size: 16px;
+    color: white;
+    background-color: #931515;
+    cursor: pointer;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.login-form-container .kod-number_text{
+    padding-bottom: 0;
+}
+.resend {
+    margin-top: 15px;
+}
+
+.disabled {
+    background-color: #e5e5e5;
+}
+/* loginForm end */
+/* history-order start */
+.history-order{
+	margin: 10px 0;
+}
+.orders-header{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    padding: 10px 0;
+}
+.orders-header_item{
+    display: flex;
+    font-weight: 900;
+    padding-left: 50px;
+    font-size: 18px;
+    line-height: 23px;
+}
+.order-head{
+	/* display: flex;
+    justify-content: space-around; */
+	padding: 25px 0 25px 10px;
+	background: #e5e5e5;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 95% 5%;
+    width: 100%;
+    /* padding: 10px 0; */
+}
+.order-data_item{
+    display: flex;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 23px;
+}
+.order-head.hclosed{
+	border-radius: 6px;
+	transition: border-radius 0.5s ease-in-out;
+	transition-delay: 0.4s;
+}
+.order-head.hopened{
+	border-radius: 6px 6px 0px 0px;
+	transition: border-radius 0.1s ease-in-out;
+}
+.order-data{
+	display: flex;
+	justify-content: space-around;
+    /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
+	/* width:100%; */
+
+}
+.history-arrow_rotate{
+   transform: rotate(360deg);
+	 transition: transform 0.5s ease-in-out;
+	 margin: 10px 15px;
+}
+.history-arrow{
+    transform: rotate(180deg);
+    transition: transform 0.5s ease-in-out;
+	margin: 10px 15px;
+}
+.order-item-body{
+	background: #e5e5e5;
+    border-radius: 0px 0px 6px 6px;
+}
+.order-item-container{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+    cursor: default;
+    padding: 10px 10px;
+    background: #f7f5f5;
+}
+.history-order-good{
+	background: white;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+    height: 165px;
+    box-sizing: border-box;
+    max-width: 100%;
+    cursor: default;
+    padding: 10px 10px;
+    width: 100%;
+    box-shadow: inset 0px 0px 3px grey;
+}
+.history-order-good .price-num{
+    padding-top: 33px;
+    font-size: 16px;
+}
+.history-order-good .main-name{
+    padding-top: 0;
+}
+.reapply-order-button{
+	height: 50px;
+    width: 96%;
+    margin: 2%;
+    flex-shrink: 1;
+}
+/* history-order end */

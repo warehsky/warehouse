@@ -1,0 +1,271 @@
+@import url('reset.css');
+body{
+    margin: 0;
+    font-family: 'Arsenal', sans-serif; 
+ 
+}
+*,
+*:before,
+*:after{
+    box-sizing: border-box;
+}
+.container{
+   width: 100%;
+   max-width: 1170px;
+   margin: 0 auto;
+}
+button{
+	outline: none;
+}
+
+/* оснойной блок */
+.contact-banner{
+   display: flex;
+   flex-direction: column;
+   padding-bottom: 35px;
+}
+/* оснойной блок */
+
+/* блок пунктов (contact-skills) */
+.contact-skills{
+   border-bottom: 1px solid #c4c4c4;
+   border-top: 1px solid #c4c4c4;
+}
+.contact-skills .contact-skill{
+   display: flex;
+   align-items: center;
+}
+.contact-title{
+   font-weight: 700;
+   font-size: 20px;
+   line-height: 23px;
+   text-transform: uppercase;
+   color: #151515;
+   padding-top: 25px;
+   padding-bottom: 25px;
+   align-items: flex-start;
+}
+.contact-skill {
+   padding-top: 20px;
+}
+.contact-skill .advantages-item_text{
+   padding-top: 5px;
+   padding-bottom: 5px;
+}
+.contact-skill .circle-icon_img{
+   width: 25px;
+   height: 25px;
+}
+.contact-skill .circle-icon{
+   width: 50px;
+   height: 50px;
+}
+/* блок пунктов (contact-skills) */
+
+/* блок социальные сети */
+.contact-social{
+   padding-top: 35px;
+   padding-bottom: 35px;
+   border-bottom: 1px solid #c4c4c4;
+}
+.social-block{
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+   grid-column-gap: 150px;
+   grid-row-gap: 15px;
+}
+.social-title{
+   font-weight: 500;
+   font-size: 16px;
+   line-height: 19px;
+   color: #000000;
+   padding-bottom: 25px;
+}
+.social-item{
+   text-decoration: none;
+   display: flex;
+   align-items: center;
+}
+.social-link{
+   margin: 0 20px;
+   font-weight: 700;
+   font-size: 14px;
+   line-height: 16px;
+   color: #931515;
+}
+.social-item:hover .social-link{
+   border-bottom: 1px solid #931515;
+}
+/* блок социальные сети */
+
+/* форма */
+.contacts-form{
+   display: grid;
+   grid-template-columns: 1fr 2fr;
+   grid-column-gap: 60px;
+   padding-top: 25px;
+   padding-bottom: 25px;
+}
+.contact-form{
+   width: 275px;
+}
+.form-title{
+   font-weight: 500;
+   font-size: 16px;
+   line-height: 19px;
+   color: #000000;
+   padding-bottom: 15px;
+}
+.form-desc{
+   font-weight: normal;
+   font-size: 12px;
+   line-height: 14px;
+   color: #525252;
+
+}
+.form-btn{
+   font-weight: 700;
+   font-size: 14px;
+   line-height: 161.3%;
+   color: #FFFFFF;
+   cursor: pointer;
+   background: #931515;
+   border: none;
+   outline: none;
+   border-radius: 8px;
+   width: 203px;
+   height: 48px;
+}
+.form-item:nth-child(2){
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-end;
+}
+.contact-comment{
+   height: 180px;
+   background: #FFFFFF;
+   border: 1px solid #c4c4c4;
+   border-radius: 4px;
+   outline: none;
+   padding: 15px 15px;
+}
+.contact-comment::placeholder {
+   font-weight: 400;
+	font-size: 15px;
+	line-height: 14px;
+	color: #a1a1a1;
+	opacity: 0.9;
+   padding-top: 4px;
+}
+.contact-btn{
+   margin-top: 15px;
+}
+.form-item:nth-child(2) .checkout-block{
+   height: 230px;
+}
+/* форма */
+
+/* баннер контакты внизу */
+.contact-img{
+   display: flex;
+   justify-content: center;
+   padding-top: 25px;
+   padding-bottom: 25px;
+   position: relative;
+   padding-top: 50.25%; /* 16:9 Aspect Ratio */
+}
+
+.contact-banner img,
+.contact-img img{
+   width: 100%;
+   height: auto;
+}
+.contact-img img{
+   position: absolute;
+   left: 0;
+   top: 0;
+}
+/* баннер контакты внизу */
+/* reviews start on the single page */
+.reviews{
+   padding-top: 25px;
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+}
+.star-rating{
+   padding-bottom: 15px;
+   display: flex;
+   align-items: flex-end;
+}
+.star-rating_text{
+   font-weight: 700;
+   padding-right: 10px;
+   font-size: 14px;
+   text-transform: uppercase;
+}
+.star-rating_text-review{
+   padding-bottom: 15px;
+}
+.review-comment{
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+}
+.review-form{
+   margin-bottom: 25px;
+   background: #FFFFFF;
+	border-radius: 4px;
+	border: 1px solid #c4c4c4;
+	padding: 8px 10px 9px 10px;
+	outline: none;
+	color: #111;
+}
+.reviews-btn{
+	color: #931515;
+	font-weight: 900;
+   font-size: 14px;
+	text-decoration: none;
+   cursor: pointer;
+   text-align: center;
+   border-bottom: 1px solid #FFFFFF;
+}
+.reviews-btn:hover{
+   border-bottom: 1px solid #931515;
+}
+.reviews-public{
+   margin-top: 20px;
+}
+.review-item{
+   border-bottom: 1px solid #F2F2F2;
+   display: grid;
+   grid-template-rows: 100px;
+   grid-template-columns: 10% 90%;
+   grid-gap: 2vw;
+   padding: 10px 10px;
+   width: 100%;
+   margin-bottom: 10px;
+}
+.review-client{
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   padding-right: 20px;
+}
+.review-client_name,
+.review-client_data{
+   padding-bottom: 15px;
+   font-weight: 500;
+   font-size: 17px;
+   line-height: 21px;
+}
+.review-comments{
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+}
+.review-comments .reviews-comments-star,
+.review-comments-comment{
+   padding-bottom: 15px;
+}
+/* reviews end on the single page */

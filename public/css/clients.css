@@ -1,0 +1,80 @@
+@import url('main.css');
+table {
+   empty-cells: show;
+}
+
+table td,
+table th {
+   min-width: 2em;
+   min-height: 2em;
+   padding: 5px 5px 5px 5px;
+}
+table td{
+   padding: 5px 10px 5px 5px;
+   font-size: 12px;
+}
+.client-items table thead{
+   font-weight: 900;
+}
+.client-items{
+   display: none;
+}
+.client-items table{
+   margin-left: 10px;
+}
+.client-items table td{
+   padding: 5px;
+}
+.clients-links{
+   margin-top: 10px;
+}
+.client-title{
+   font-size: 16px;
+}
+.client-title {
+   font-weight: 900;
+   float: left;
+   text-align: left;
+}
+.client-search{
+   float: right;
+   text-align: right;
+}
+.sortable{
+   cursor: pointer;
+}
+.sortable::after{
+   content: "\25be";
+   color: white;
+}
+.sorting_asc::after{
+   content: "\25be";
+   color: black;
+}
+.sorting_desc::after{
+   content: '\25b4';
+   color: black;
+}
+#deferring{
+   position: absolute;
+   width: 150px;
+   padding: 5px;
+   display: none;
+}
+.deferring-inf{
+   text-align: center;
+   cursor: pointer;
+}
+.r-guid{
+   font-size: 10px;
+   max-width: 100px;
+   word-wrap: break-word;
+}
+.client-data{
+   max-width: 70px;
+   word-wrap: break-word;
+}
+.client-name{
+   max-width: 200px;
+   word-wrap: break-word;
+}

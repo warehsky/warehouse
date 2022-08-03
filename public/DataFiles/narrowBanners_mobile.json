@@ -1,0 +1,24 @@
+{
+    "banners":[
+        {
+            "grouplink":"/?group=[18,%2048]",
+            "image":"/img/slider-mobile-page/mobiledown0.png",
+            "alt":"МТ Доставка - знак натурального качества"
+        },
+        {
+            "grouplink":"/?group=26",
+            "image":"/img/slider-mobile-page/mobiledown1.png",
+            "alt":"МТ Доставка - знак натурального качества"
+        },
+        {
+            "grouplink":"/?group=57",
+            "image":"/img/slider-mobile-page/mobiledown2.png",
+            "alt":"МТ Доставка - знак натурального качества"
+        },
+        {
+            "grouplink":"/groups?group=31",
+            "image":"/img/slider-mobile-page/mobiledown3.png",
+            "alt":"МТ Доставка - знак натурального качества"
+        }
+    ]
+}

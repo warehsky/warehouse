@@ -1,0 +1,52 @@
+{
+    "vacancys":[
+        {
+            "name":"courier",
+            "title":"Курьер",
+            "image":"/img/icons/package.svg",
+            "description":{
+                "title":"Курьер"
+            }
+        },
+        {
+            "name":"manager",
+            "title":"Менеджер",
+            "image":"/img/icons/process.svg",
+            "description":{
+                "title":"Менеджер"
+            }
+        },
+        {
+            "name":"copywriter",
+            "title":"Копирайтер",
+            "image":"/img/icons/copywriting.svg",
+            "description":{
+                "title":"Копирайтер"
+            }
+        },
+        {
+            "name":"contentManager",
+            "title":"Контент менеджер",
+            "image":"/img/icons/content-management.svg",
+            "description":{
+                "title":"Контент менеджер"
+            }
+        },
+        {
+            "name":"administrator",
+            "title":"Администратор",
+            "image":"/img/icons/maintenance.svg",
+            "description":{
+                "title":"Администратор"
+            }
+        },
+        {
+            "name":"photographer",
+            "title":"Фотограф",
+            "image":"/img/icons/photo-camera.svg",
+            "description":{
+                "title":"Фотограф"
+            }
+        }
+    ]
+}

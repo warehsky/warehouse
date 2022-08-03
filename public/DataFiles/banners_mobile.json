@@ -1,0 +1,24 @@
+{
+    "banners":[
+        {
+            "grouplink":"/spesial",
+            "image":"/img/slider-mobile-page/mobile0.png",
+            "alt":"Мастер Торг - знак натурального качества"
+        },
+        {
+            "grouplink":"/groups",
+            "image":"/img/slider-mobile-page/mobile1.png",
+            "alt":"Мастер Торг - знак натурального качества"
+        },
+        {
+            "grouplink":"/?group=0&tags=[202]",
+            "image":"/img/slider-mobile-page/mobile2.png",
+            "alt":"Мастер Торг - знак натурального качества"
+        },
+        {
+            "grouplink":"/stocks",
+            "image":"/img/slider-mobile-page/mobile3.png",
+            "alt":"Мастер Торг - знак натурального качества"
+        }
+    ]
+}

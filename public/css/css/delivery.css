@@ -1,0 +1,502 @@
+@import url('reset.css');
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+body{
+    margin: 0;
+    font-family: 'Arsenal', sans-serif; 
+ 
+}
+*,
+*:before,
+*:after{
+    box-sizing: border-box;
+}
+.container{
+   width: 100%;
+   max-width: 1170px;
+   margin: 0 auto;
+}
+.good-path{
+   padding: 15px 10px;
+   border-bottom: 1px solid #c4c4c4;
+}
+/* Блок доставки */
+.delivery{
+   display: flex;
+   flex-direction: column;
+}
+.delivery-desc{
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   grid-gap: 50px;
+}
+.delivery-desc-mt{
+   display: flex;
+   flex-direction: column;
+   justify-content: space-around;
+   padding-bottom: 25px;
+   border-bottom: 2px solid#C4C4C4;;
+}
+.delivery-title{
+   padding-top: 25px;
+   padding-bottom: 25px;
+   text-transform: uppercase;
+   font-weight: 700;
+   font-size: 20px;
+   line-height: 23px;
+   color: #000000;
+}
+.delivery-desc_text{
+   font-weight: 500;
+   font-size: 14px;
+   color: #181818;
+   text-align: justify;
+   line-height: 133.3%;
+   padding-bottom: 15px;
+}
+
+.delivery-img{
+   width: 100%;
+   height: auto;
+}
+/* Блок доставки */
+/* вы оформите заказ через */
+.registration{
+   padding-top: 35px;
+   padding-bottom: 35px;
+   border-bottom: 2px solid #C4C4C4;
+}
+.registration-title{
+   font-weight: 700;
+   font-size: 20px;
+   line-height: 23px;
+   color: #000000;
+   padding-bottom: 30px;
+}
+.registration-block{
+   display: flex;
+   justify-content: flex-start;
+}
+.registration-block_item{
+   display: flex;
+   margin-right: 140px;
+}
+.registration-img{
+   min-width: 45px;
+   height: 45px;
+   border-radius: 50%;
+   background-color: #931515;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-right: 20px;
+}
+.registration-img_picture{
+   width: 25px;
+   height: 25px;
+   filter: brightness(0) invert(1);
+}
+.registration-desc{
+   display: flex;
+   flex-direction: column;
+}
+.registration-block-title{
+   font-weight: 700;
+   font-size: 20px;
+   line-height: 23px;
+   color: #931515;
+   padding-bottom: 10px;
+   border-bottom: 1px solid #ffffff;
+}
+.registration-block-title.registration-block-title_link{
+   text-decoration: none;
+   padding-bottom: 0;
+   margin-bottom: 10px;
+   width: auto;
+}
+.registration-block-title.registration-block-title_link:hover{
+   border-bottom: 1px solid #931515;
+}
+.registration-block-desc{
+   font-weight: 400;
+   font-size: 14px;
+   line-height: 16px;
+   color: #000000;
+}
+.desc-num{
+   font-weight: 700;
+}
+/* вы оформите заказ через */
+/* Преимущества доставки нашего интернет-магазина */
+.advantages{
+   padding-top: 35px;
+   padding-bottom: 35px;
+   border-bottom: 2px solid #c4c4c4;
+}
+.advantages-block{
+   display: flex;
+}
+.advantages-item{
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   align-items: center;
+   width: 300px;
+   padding-left: 25px;
+   padding-right: 25px;
+   padding-bottom: 10px;
+   box-sizing: border-box;
+}
+.advantages-item:not(:last-child){
+   border-right: 1px solid #c4c4c4;
+}
+.advantages-title{
+   text-align: center;
+   font-weight: 700;
+   font-size: 14px;
+   line-height: 16px;
+   color: #181818;
+   padding-bottom: 20px;
+}
+.advantages-text{
+   text-align: center;
+   font-weight: 400;
+   font-size: 14px;
+   line-height: 20px;
+   color: #181818;
+}
+.registration-img.advantages-img{
+   margin-right: 0;
+   margin-bottom: 20px;
+}
+/* Преимущества доставки нашего интернет-магазина */
+
+/* зоны доставки */
+.zones{
+   padding-bottom: 35px;
+   padding-top: 35px;
+   border-bottom: 2px solid #C4C4C4;;
+}
+.advantages-text.zones-text{
+   color: #000000;
+   text-align: left;
+   padding-bottom: 20px;
+}
+.zones-img{
+   width: 100%;
+   height: auto;
+   border-radius: 16px;
+}
+/* зоны доставки */
+
+/* Территория действия услуги доставки */
+.territory{
+   padding-top: 35px;
+   padding-bottom: 35px;
+   border-bottom: 2px solid #C4C4C4;
+}
+.territory-text{
+   font-weight: 400;
+   font-size: 14px;
+   line-height: 16px;
+   color: #000000;
+}
+.territory-block{
+   display: flex;
+   justify-content: space-between;
+   padding-top: 15px;
+   padding-bottom: 15px;
+}
+.territory-item{
+   height: 375px;
+   border: 2px solid #931515;
+   box-sizing: border-box;
+   border-radius: 16px;
+   padding: 15px 15px;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+}
+.zone-ab{
+   width: 270px;
+}
+.zone-old{
+   width: 560px;
+
+}
+.territory-zone{
+   display: flex;
+   padding-bottom: 15px;
+   border-bottom: 2px solid #C4C4C4;
+}
+
+.zone_green, 
+.zone_red{
+   width: 22px;
+   height: 22px;
+   border-radius: 50%;
+   background: #25B10E;
+   flex-shrink: 0;
+}
+.zone_red{
+   background: #EF5553;
+}
+.zone-img{
+   width: 30px;
+   height: 27px;
+   color: #000000;
+}
+.zone-desc{
+   padding-left: 10px;
+}
+.zone-desc_title{
+   font-weight: 500;
+   font-size: 14px;
+   line-height: 16px;
+   color: #000000;
+}
+.zone-desc_text{
+   font-weight: 400;
+   font-size: 11px;
+   line-height: 13px;
+   color: #3E3E3E;
+}.territory-item_desc{
+   font-weight: 400;
+   font-size: 12px;
+   line-height: 14px;
+   color: #3E3E3E;
+}
+.territory-price{
+   display: flex;
+   justify-content: space-between;
+}
+.price-item{
+   padding: 10px 9px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: flex-start;
+}
+.price-item_old{
+   border: 1px solid #c4c4c4;
+   border-radius: 8px;
+   width: 190px;
+   height: 130px;
+   justify-content: space-between;
+}
+.price-item_red{
+
+   background: #931515;
+   border-radius: 8px;
+   color: #ffffff;
+   justify-content: space-between;
+}
+.price-item_red-ab{
+   border: 1px solid #931515;
+   padding: 0;
+   color: #ffffff;
+   border-radius: 8px;
+   justify-content: space-between;
+   height: 130px;
+}
+.price-item_red-item{
+   padding: 10px 9px;
+   background: #931515;
+   border-radius: 0px 0px 6px 6px;
+   width: 100%;
+   height: 100%;
+}
+.price-text_sm{
+   font-weight: 500;
+   font-size: 14px;
+   line-height: 16px;
+}
+.price-text{
+   font-weight: 500;
+   font-size: 18px;
+   line-height: 21px;
+}
+.territory-img{
+   width: 120px;
+   height: 120px;
+   align-self: center;
+}
+.zone-delivery{
+   display: flex;
+}
+.del-item{
+   display: flex;
+   padding-left: 10px;
+   padding-right: 10px;
+   padding: 5px 10px;
+}
+.price-item_old .del-item{
+   padding: 0;
+}
+.free-del_item{
+   font-weight: 400;
+   font-size: 14px;
+   line-height: 166.3%;
+   color: #000000;
+}
+.free-del_text{
+   font-weight: 700;
+   font-size: 14px;
+   line-height: 16px;
+   color: #000000;
+}
+.free-delivery{
+   margin-left: 15px;
+}
+.free-del_item{
+   font-weight: 400;
+   font-size: 13px;
+   line-height: 166.3%;
+   color: #000000;
+   list-style: disc;
+}
+.notation{
+   font-style: italic;
+   font-weight: 400;
+   font-size: 14px;
+   line-height: 16px;
+   color: #000000;
+}
+.notation-astericks{
+   font-style: normal;
+   font-weight: 700;
+   font-size: 20px;
+   line-height: 23px;
+   color: #931515;
+}
+.zone-old .territory-zone{
+   padding-bottom: 29px;
+}
+
+/* Территория действия услуги доставки */
+
+/* Доставка и оплата */
+.payment{
+   padding-top: 35px;
+   padding-bottom: 35px;
+   border-bottom: 2px solid #C4C4C4;
+}
+/* Доставка и оплата */
+
+/* Время подтверждения заказа */
+.confirmation{
+   padding-top: 35px;
+   padding-bottom: 35px;
+   border-bottom: 2px solid #c4c4c4;
+}
+.confirmation-block{
+   display: flex;
+   align-items: center;
+   justify-content: space-around;
+}
+.confirmation-item{
+   width: 300px;
+   height: 200px;
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   align-items: center;
+   padding: 10px 50px;
+   box-sizing: border-box;
+}
+.confirmation-item.cancel{
+   width: 600px;
+}
+.confirmation-item:nth-child(2){
+   border-left: 1px solid #c4c4c4;
+   border-right: 1px solid #c4c4c4;
+
+}
+.confirmation-item .registration-img{
+   flex-shrink: 0;
+   margin-right: 0;
+   margin-bottom: 20px;
+}
+.conf-text{
+   font-weight: 400;
+   font-size: 14px;
+   line-height: 16px;
+   text-align: center;
+   color: #000000;
+   padding-bottom: 10px;
+   text-align: center;
+}
+.conf-text.conf-text_bold{
+   font-weight: 700;
+}
+.conf-text_red{
+   font-weight: 700;
+   color: #931515;
+}
+/* Время подтверждения заказа */
+
+/* Время осуществления доставки */
+.delivery-time{
+   padding-top: 35px;
+   padding-bottom: 35px;
+}
+.delivery-time-item{
+   display: flex;
+   align-items: center;
+   padding-bottom: 15px;
+}
+/* Время осуществления доставки */
+/* стили для страницы специальные цены */
+.special-banner{
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   padding-bottom: 25px;
+   border-bottom: 1px solid #c4c4c4;
+}
+.special-price{
+   display: grid;
+   grid-template-columns: 2fr 1fr;
+   grid-column-gap: 50px;
+   padding-top: 20px;
+   padding-bottom: 20px;
+}
+.price-item{
+   display: flex;
+   justify-content: flex-start;
+   align-items: flex-start;
+   position: relative;
+}
+.price-item_text{
+   font-weight: normal;
+   font-size: 23px;
+   line-height: 210.1%;
+   color: #000000;
+   z-index: 5;
+   text-align: justify;
+   display: block;
+   padding-left: 25px;
+   padding-right: 25px;
+   
+}
+.price-item_text-red{
+   color: #931515;
+   font-weight: 700;
+}
+.price-item_arrow{
+   display: block;
+   width: 335px;
+   height: 335px;
+   transform: rotate(30deg);
+   z-index: 2;
+   position: absolute;
+   right: -120px;
+   bottom: -50px;
+}
+.special-main{
+   min-height: calc(100vh - 242px);
+}
+.special-banner_img{
+   width: 100%;
+   height: auto;
+}
+/* стили для страницы специальные цены */

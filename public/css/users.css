@@ -1,0 +1,91 @@
+@import url('main.css');
+table.dataTable.hover tbody tr:hover, 
+    table.dataTable.display tbody tr:hover{
+        background-color: #a09c9c81 !important;
+}
+#frmAttrContent li{
+   list-style-type: none;
+}
+.td-title{
+   font-weight: 900;
+}
+.tdguid-slim{
+   width: 100px!important;
+   overflow: hidden;
+   position: relative;
+}
+.tdguid-wide{
+   width: auto;
+}
+table {
+   empty-cells: show;
+}
+
+table td,
+table th {
+   min-width: 2em;
+   min-height: 2em;
+   padding: 5px 5px 5px 5px;
+}
+table td{
+   padding: 5px 10px 5px 5px;
+   font-size: 12px;
+}
+.users-items table thead{
+   font-weight: 900;
+}
+.users-items{
+   display: none;
+}
+.users-items table{
+   margin-left: 10px;
+}
+.users-items table td{
+   padding: 5px;
+}
+.userss-links{
+   margin-top: 10px;
+}
+.users-title{
+   font-size: 16px;
+}
+.users-title {
+   font-weight: 900;
+   float: left;
+   text-align: left;
+}
+.users-search{
+   float: right;
+   text-align: right;
+}
+.sortable{
+   cursor: pointer;
+}
+.sortable::after{
+   content: "\25be";
+   color: white;
+}
+.sorting_asc::after{
+   content: "\25be";
+   color: black;
+}
+.sorting_desc::after{
+   content: '\25b4';
+   color: black;
+}
+.tpoint-title{
+   cursor: pointer;
+   font-style: italic;
+}
+.client-title{
+   font-weight: 900;
+}
+.tbl-reg{
+   display: none;
+}
+#id-search{
+   width: 100px;
+}
+#td-search{
+   max-width: 300px;
+}

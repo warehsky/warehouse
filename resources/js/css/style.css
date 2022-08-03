@@ -1,0 +1,234 @@
+@import url('reset.css');
+@font-face {
+    font-family: 'Helvetica', sans-serif; /* Имя шрифта */
+    src: url(fonts/Helvetica.otf); /* Путь к файлу со шрифтом */
+}
+body{
+    margin: 0;
+    font-family: 'Arsenal', sans-serif; 
+ 
+}
+*,
+*:before,
+*:after{
+    box-sizing: border-box;
+}
+/*header start*/
+.container{
+    width: 100%;
+    max-width: 1105px;
+    margin: 0 auto;
+}
+.header{
+    background-color: #E95D2A;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.header_inner{
+    display: flex;
+    align-items: center;
+}
+.logo{
+    display: flex;
+}
+.logo_img{
+    display: block;
+    width: 51px;
+    height: 41px;
+    /* color: #fff; */
+    background: url(img/logo.svg);
+}
+.logo_inf{
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 18px;
+    margin-right: 18px;
+}
+.logo_inf-num{
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 24px;
+    text-align: center;
+    text-transform: uppercase;
+    font-style: normal;
+}
+.logo_inf-text{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+}
+/*form*/
+.form{
+    display: flex;
+}
+.form-search{
+    width: 720px;
+    height: 32px;
+    border: none;
+    border-radius: 2px;
+    padding: 5px 5px 8px 50px;
+}
+.form-button{
+    margin-left: 30px;
+    cursor: pointer;
+    display: block;
+}
+.form-button.search{
+    width: 25px;
+    height: 25px;
+    background: #E95D2A url(img/search.svg) no-repeat;
+    border: none;
+}
+.form-button.user{
+    width: 25px;
+    height: 25px;
+    background: #E95D2A url(img/user.svg) no-repeat;
+    border: none;
+}
+.form-button.shopping-cart{
+    width: 30px;
+    height: 30px;
+    background: #E95D2A url(img/shopping-cart.svg) no-repeat;
+    border: none;
+}
+.form-triangle{
+    position: relative;
+}
+.triangle{
+    position: absolute;
+    width: 30px;
+    height: 32px;
+    left: 0;
+    background: rgba(233, 93, 42, 0.6);
+    border-radius: 2px 0px 0px 2px;
+}
+
+/*main block*/
+.main{
+    background-color: #FFF5EB;
+    height: 706px;
+
+}
+.blocks{
+    display: flex;
+}
+.block{
+    display: flex;
+    flex-direction: column;;
+    align-items: center;
+    width: 164px;
+    height: 114px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 15px 20px 15px 20px;
+    position: relative;
+    z-index: 555;
+}
+.block_img{
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin-bottom: 15px;
+}
+.block_text{
+    text-align: center;
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 17px;
+    text-transform: uppercase;
+}
+.block_img.wine{
+    background: #FFF5EB url(img/wine-bottle.svg) no-repeat;
+}
+.block_img.pivo{
+    background: #FFF5EB url(img/pivo.svg) no-repeat;
+}.block_img.not-alcohol{
+    background: #FFF5EB url(img/not-alcohol.svg) no-repeat;
+}.block_img.tea{
+    background: #FFF5EB url(img/tea.svg) no-repeat;
+}.block_img.cake{
+    background: #FFF5EB url(img/cake.svg) no-repeat;
+}.block_img.balakeya{
+    background: #FFF5EB url(img/бакалея.svg) no-repeat;
+}.block_img.nonfoods{
+    background: #FFF5EB url(img/nonfoods.svg) no-repeat;
+}
+
+.block:hover{
+    background-color: #fff;
+    box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.14);
+    border-radius: 4px;
+    width: 174px;
+    height: 390px;
+}
+
+
+.block:hover .block_list-item{
+    display: flex;
+    flex-direction: column;;
+    align-self: center;
+}
+.block:hover .block_img{
+    background-color: #fff;
+    fill: #E95D2A;
+}
+.block:hover .block_text{
+    color: #E95D2A;
+}
+/*выпадающий список*/
+.block_list{
+    display: none;
+    list-style: none;
+}
+.block:hover .block_list{
+    display: flex;
+    flex-direction: column;;
+    align-items: center;
+    justify-content: space-between;
+}
+.block_list-item{
+    text-align: center;
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 17px;
+    text-transform: uppercase;
+    list-style: none;
+    width: 100%;
+    margin:0 auto;
+    padding-top: 15px;
+}
+.block_list-item:hover{
+    color: #E95D2A;
+}
+/*main information*/
+.main_inf{
+    display: flex;
+    position: fixed;
+    top: 210px;
+    z-index: 1;
+}
+.main_inf-photo{
+    border-radius: 8px 0px 0px 8px;
+    width: 604px;
+    height: 479px;
+}
+.main_inf-desc{
+    width: 320px;
+    height: 300px;
+    padding-top: 80px;
+    padding-left: 57px;
+}
+.main_inf-text{
+    font-weight: 400;
+    font-style: normal;
+    font-size: 17px;
+    line-height: 21px;
+    padding-bottom: 20px;
+}

@@ -1,0 +1,24 @@
+{
+    "banners":[
+        {
+            "grouplink":"/?group=57",
+            "image":"/img/slider-main-page/sous-bocado.png",
+            "alt":"МТ Доставка - знак натурального качества"
+        },
+        {
+            "grouplink":"/groups?group=31",
+            "image":"/img/slider-main-page/textile.png",
+            "alt":"МТ Доставка - знак натурального качества"
+        },
+        {
+            "grouplink":"/?group=26",
+            "image":"/img/slider-main-page/wash.png",
+            "alt":"МТ Доставка - знак натурального качества"
+        },
+        {
+            "grouplink":"/?group=[18, 48]",
+            "image":"/img/slider-main-page/tea.png",
+            "alt":"МТ Доставка - знак натурального качества"
+        }
+    ]
+}

@@ -1,0 +1,333 @@
+/* стили карточка товара */
+@import url('reset.css');
+body{
+    margin: 0;
+    font-family: 'Arsenal', sans-serif; 
+ 
+}
+*,
+*:before,
+*:after{
+    box-sizing: border-box;
+}
+a{
+   text-decoration: none;
+}
+/* link effect start */
+.product-alcohol_link{
+   text-decoration: none;
+   display: inline-block;
+	cursor: pointer;
+   position: relative;
+   color: #039BE5;
+}
+.product-alcohol_link:after{
+   display: block;
+	content: "";
+	background-color: #039BE5;
+	height: 1px;
+	width: 0%;
+	left: 50%;
+	position: absolute;
+	-webkit-transition: width .3s ease-in-out;
+	-moz--transition: width .3s ease-in-out;
+	transition: width .3s ease-in-out;
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
+.product-alcohol_link:hover:after,
+.product-alcohol_link:focus:after{
+   width: 100%;
+}
+.product-alcohol{
+	padding-bottom: 15px;
+}
+.product-alc_text{
+	font-weight: bold;
+	font-size: 14px;
+	line-height: 135%;
+	color: #000000;
+}
+
+/* link effect end */
+.container{
+   width: 100%;
+   max-width: 1170px;
+   margin: 0 auto;
+}
+.single-main{
+   min-height: calc(100vh - 242px);
+}
+button{
+	outline: none;
+}
+.product{
+   padding-top: 25px;
+   padding-bottom: 25px;
+}
+.product-title{
+   font-weight: 700;
+   font-size: 20px;
+   line-height: 25px;
+   color: #000000;
+   margin-bottom: 25px;
+}
+/* карточка товара */
+.product-set{
+   position: relative;
+}
+.product-set img{
+   width: 255px;
+   height: 255px;
+}
+.product-set .good-sale_procent-stock{
+   width: 65px;
+   height: 65px;
+   line-height: 65px;
+   margin-top: -15px;
+   margin-right: -25px;
+}
+.product-set .good-sale_procent-stock .text-procent{
+   font-size: 22px;
+   line-height: 23px;
+}
+.product-block{
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   grid-column-gap: 80px;
+}
+.product-inf{
+   display: flex;
+}
+.product-desc{
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-end;
+}
+.product-exist{
+   display: flex;
+   align-items: center;
+   padding-bottom: 15px;
+}
+.exist-done{
+   color: #60BA24;
+   margin-right: 10px;
+}
+.quantity{
+   margin-bottom: 35px;
+}
+.exist-text{
+   font-weight: normal;
+   font-size: 14px;
+   line-height: 18px;
+   color: #000000;
+
+}
+.product-counter{
+   padding-top: 20px;
+}
+.product-counter .plus-square,
+.product-counter .minus-square{
+   width: 30px;
+   height: 30px;
+   padding: 8px 12px;
+   line-height: 30px;
+   background: #0D2137;
+   border-radius: 5px;
+   color:#FFFFFF;
+   text-align: center;
+	cursor: pointer;
+	-moz-user-select: none;
+   -ms-user-select: none;
+   -o-user-select: none;
+   -webkit-user-select: none;
+   user-select: none;
+}
+.counter_num{
+   width: 30px;
+   height: 20px;
+   text-align: center;
+   appearance: none;
+   -webkit-appearance: none;
+   -moz-appearance: textfield;
+   border: none;
+   outline: none;
+}
+.size-buttons{
+   display: flex;
+   padding-top: 20px;
+}
+.size-btn{
+   font-weight: 400;
+   font-size: 14px;
+   line-height: 18px;
+   color: #000000;
+   padding: 3px 8px;
+   border-radius: 4px;
+   border: none;
+   background: #FFFFFF;
+   cursor: pointer;
+   margin-right: 20px;
+}
+.size-btn_border{
+   border: 1px solid #c4c4c4;
+}
+.pay-box{
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+   height: 200px;
+   position: relative;
+   padding: 10px 15px;
+}
+.pay-box .btn.btn-buy {
+   width: 230px;
+}
+.pay-box .quantity-item{
+   margin: 0;
+   width: 110px;
+   padding: 10px 6px;
+}
+.pay-box .good-items-btn{
+   position: absolute;
+   bottom: 0;
+   height: 35px;
+}
+.pay-box .good-counter
+.pay-price{
+   font-weight: 700;
+   font-size: 25px;
+   line-height: 31px;
+   color: #000000;
+}
+.pay-btn{
+   background: #931515;
+   border-radius: 4px;
+   text-align: center;
+   padding: 10px 40px;
+   font-weight: bold;
+   font-size: 17px;
+   line-height: 21px;
+   color: #FFF5EB;
+   border: none;
+   outline: none;
+   margin-left: 25px;
+   margin-right: 25px;
+}
+.size{
+   margin-bottom: 35px;
+}
+/* карточка товара */
+
+/* описание карточки товара */
+.product-quality{
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-end;
+}
+.general-inf{
+   display: flex;
+}
+.desc-product{
+   padding-bottom: 15px;
+}
+.desc-product_title, .inf-el{
+   font-weight: 700;
+   font-size: 14px;
+   line-height: 18px;
+   color: #000000;
+   padding-bottom: 10px;
+}
+.general-inf_item{
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-end;
+}
+.inf-el{
+   font-weight: 400;
+   padding-bottom: 5px;
+}
+/* описание карточки товара */
+
+/* rating start */
+.rating{
+   /* display: grid;
+   grid-template-columns: repeat(4, 1fr); */
+   padding: 20px 0;
+   display: flex;
+   align-items: center;
+   justify-content: space-around;
+}
+.rating-text{
+   font-weight: 700;
+   font-size: 14px;
+   line-height: 18px;
+   color: #000000;
+   text-transform: uppercase;
+}
+.rating-average,
+.rating-quantity{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+.rating-average_text{
+   font-weight: 700;
+   font-size: 23px;
+   line-height: 29px;
+   color: #000000;
+}
+.rating-quantity_text{
+   font-weight: 500;
+   font-size: 14px;
+   line-height: 18px;
+   color: #000000;
+}
+.rating-line{
+   display: flex;
+   padding-bottom: 7px;
+}
+.rating-line_label{
+   padding-right: 5px;
+}
+.rating-line_star{
+   width: 13px;
+   height: 13px;
+}
+.rating-line_star-yellow{
+   width: 13px;
+   height: 13px;
+   filter: invert(91%) sepia(11%) saturate(7166%) hue-rotate(325deg) brightness(125%) contrast(90%);
+}
+.rating-line_current{
+   background: #F2F2F2;
+   width: 216px;
+   height: 14px;
+   border-radius: 8px;
+}
+.rating-line_voices{
+   background: #F2D057;
+   width: 0%;
+}
+.rating-line_quantity{
+   margin-left: 5px;
+}
+/* rating end */
+
+/* с этим товаром покупают */
+.share .product-subtitle{
+   font-weight: 700;
+   font-size: 14px;
+   line-height: 18px;
+   color: #000000;
+   text-transform: uppercase;
+   padding-bottom: 35px;
+   padding-top: 30px;
+}
+/* с этим товаром покупают */
+.product-buttons{
+   height: 50px;
+}

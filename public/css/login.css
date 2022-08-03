@@ -1,0 +1,87 @@
+.form__auth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form {
+    width: 380px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 16px #ccc;
+}
+
+.form__title {
+    margin-bottom: 35px;
+    text-align: center;
+    font-family: 'Merriweather', serif;
+    font-weight: normal;
+}
+
+.form__group {
+    margin-bottom: 30px;
+}
+
+.form__checkout {
+    margin-bottom: 20px;
+}
+
+.form__label {
+    display: block;
+    margin-bottom: 10px;
+    font-family: 'Merriweather', serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: #555555;
+}
+
+.form__input {
+    width: 100%;
+    height: 40px;
+    position: relative;
+    box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
+    border: none;
+    outline: none;
+    transition: .3s linear;
+}
+
+#email {
+    background: url("../img/login.png") 4px no-repeat;
+}
+
+#password {
+    background: url("../img/pass.png") 4px no-repeat;
+}
+
+
+#email:focus,
+#password:focus,
+#email:not(:placeholder-shown),
+#password:not(:placeholder-shown) {
+    background: none;
+}
+
+.form__input:focus {
+    box-shadow: 0px 0px 12px #24388671;
+}
+
+.form__btn {
+    padding: 14px 80px;
+    border: none;
+    background: #05316D;
+    box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
+    font-size: 15px;
+    line-height: 20px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.form__btn:focus,
+.form__btn:hover {
+    background: rgba(5, 48, 109, 0.897);
+    outline: none;
+}

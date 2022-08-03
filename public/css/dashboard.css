@@ -1,0 +1,18 @@
+@import url('main.css');
+
+.d-item a{
+   padding: 5px;
+   font-size: 20px;
+}
+.d-items li{
+   list-style-type: none;
+}
+.tbl-refresh td{
+   padding: 5px;
+}
+.alert{
+   color: red;
+}
+.topline{
+   border-top: 1px solid blue;
+}

@@ -1,0 +1,51 @@
+@import url('main.css');
+table {
+   empty-cells: show;
+}
+
+table td,
+table th {
+   min-width: 2em;
+   min-height: 2em;
+   padding: 5px 5px 5px 5px;
+}
+table td{
+   padding: 5px 10px 5px 5px;
+   font-size: 12px;
+}
+.pko-items table thead{
+   font-weight: 900;
+}
+.pko-items{
+   display: none;
+}
+.pko-items table{
+   margin-left: 10px;
+}
+.pko-items table td{
+   padding: 5px;
+}
+.pkos-links{
+   margin-top: 10px;
+}
+.pko-title{
+   font-size: 16px;
+}
+.pko-title .pko-user-fio{
+   font-weight: 900;
+}
+input{
+   width: 60%;
+   font-size: 12px;
+}
+#pkoDates{
+   position: absolute;
+   width: 300px;
+   padding: 5px;
+   background-color: rgb(223, 230, 223);
+   border-radius: 5px;
+   color: rgb(0, 0, 3);
+}
+.pkoDates:hover {
+   color: darkgoldenrod;
+}

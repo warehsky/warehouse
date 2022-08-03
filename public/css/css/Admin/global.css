@@ -1,0 +1,9 @@
+.input-loader{
+	position: absolute;
+	bottom: 50%;
+	right: 10px;
+	transform: translateY(50%);
+}
+.input-loader .loader{
+	border-left-color: #931515;
+}

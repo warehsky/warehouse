@@ -1,0 +1,116 @@
+.section-arrow_rotate{
+   transform: rotate(360deg);
+}
+.help-box{
+   display: grid;
+   grid-template-columns: 2fr 1fr;
+   grid-column-gap: 70px;
+}
+.delivery-time-help{
+   border-top: 1px solid #c4c4c4;
+   border-bottom: 1px solid #c4c4c4;
+}
+.delivery-time-help .registration-block-desc{
+   font-size: 18px;
+}
+/* выпадающие списки вопрос-ответ */
+.section-img{
+   display: block;
+   width: 30px;
+   height: 30px;
+   color: #202020;
+}
+.help-section{
+   display: flex;
+   flex-direction: column;
+   cursor: pointer;
+}
+.help-section_title{
+   display: flex;
+   align-items: center;
+   padding-bottom: 25px;
+   width: 270px;
+}
+.help-section_block{
+   border-radius: 8px;
+   border: 1px solid #c4c4c4;
+   padding: 15px 15px;
+   margin-bottom: 15px;
+   box-sizing: border-box;
+}
+.section-text{
+   font-weight: 400;
+   font-size: 22px;
+   line-height: 26px;
+   color: #202020;
+   padding-left: 15px;
+   padding-right: 15px;
+}
+.section-block-title span{
+   font-weight: 400;
+   font-size: 22px;
+   line-height: 26px;
+   color: #202020;
+   padding-right: 15px;
+}
+.section-arrow, .section-block-arrow{
+   transform: rotate(180deg);
+   width: 12px;
+   height: 12px;
+   transition-duration: 0.3s;
+   font-weight: 700;
+   font-size: 30px;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   -o-user-select: none;
+   -webkit-user-select: none;
+   user-select: none;
+}
+.section-arrow_rotate{
+   transform: rotate(360deg);
+}
+.help-section_title:hover .section-img{
+   filter: invert(13%) sepia(80%) saturate(3348%) hue-rotate(354deg) brightness(91%) contrast(90%);
+}
+.help-section_title:hover .section-text{
+   color: #931515;
+}
+.help-section_title:hover .section-arrow{
+   filter: invert(13%) sepia(80%) saturate(3348%) hue-rotate(354deg) brightness(91%) contrast(90%);
+}
+.section-block-title:hover span{
+   color: #931515;
+}
+.section-block-title:hover .section-block-arrow{
+   filter: invert(13%) sepia(80%) saturate(3348%) hue-rotate(354deg) brightness(91%) contrast(90%);
+}
+.section-block:not(:last-child){
+   border-bottom: 1px solid #c4c4c4;
+}
+.section-block .section-block-title{
+   padding-left: 0;
+   padding-top: 10px;
+   padding-bottom: 7px;
+}
+.section-block-text{
+   font-weight: 300;
+   font-size: 17px;
+   line-height: 20px;
+   color: #000000;
+   padding-top: 5px;
+   padding-bottom: 10px;
+   text-align: justify;
+}
+.product-alcohol_link{
+	color: #039BE5;
+	text-decoration: none;
+	border-bottom: 1px solid #FFFFFF;
+	transition-duration: 0.3s;
+}
+.product-alcohol_link:hover{
+	border-bottom: 1px solid #039BE5;
+}
+.product-alcohol .link-effect{
+   color: #000;
+}
+/* выпадающие списки вопрос-ответ */

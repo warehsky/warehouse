@@ -1,0 +1,107 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+.alcohol-title{
+   font-weight: 700;
+   font-size: 24px;
+   line-height: 30px;
+   color: #931515;
+   padding-top: 15px;
+   padding-bottom: 15px;
+}
+.alc-box{
+   display: flex;
+   padding-bottom: 25px;
+}
+.alc-box-cart{
+   justify-content: space-around;
+}
+.alc-box-item{
+   display: flex;
+   flex-direction: column;
+   justify-content: space-around;
+}
+.item-el{
+   display: flex;
+   align-items: center;
+}
+.item-el_icon{
+   padding-right: 15px;
+}
+.alc-box-img{
+   padding-left: 15px;
+   padding-right: 15px;
+}
+.item-el_text{
+   font-weight: normal;
+   font-size: 18px;
+   line-height: 28px;
+   color: #000000;
+}
+.item-el_text-bold{
+   font-weight: 700;
+}
+.item-el_text-up{
+   text-transform: uppercase;
+}
+/* карточки шаг 1 \ шаг 2 */
+.box-cart{
+   width: 496px;
+   height: 293px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   background: #E5E5E5;
+   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+   border-radius: 18px;
+   padding: 15px 15px;
+}
+.box-cart-item span{
+   font-weight: 700;
+   font-size: 24px;
+   line-height: 30px;
+   color: #B31A1A;
+   text-transform: uppercase;
+}
+.box-cart-item p{
+   font-weight: 500;
+   font-size: 14px;
+   line-height: 20px;
+   color: #000000;
+   padding-top: 20px;
+}
+/* карточки шаг 1 \ шаг 2 */
+.alc-box-operator{
+   justify-content: space-around;
+   padding-bottom: 0;
+}
+.alc-box-operator_text{
+   font-weight: 500;
+   font-size: 24px;
+   line-height: 45px;
+   color: #000000;
+}
+/* оферта start */
+.offer{
+   padding-bottom: 25px;
+}
+.offer-title{
+   text-transform: uppercase;
+}
+.offer-list_item{
+   font-weight: 500;
+   list-style-type: none;
+}
+.offer-text{
+   font-weight: 500;
+}
+.main-list_item{
+   font-weight: 900;
+}
+.offer-list_item,
+.offer-text{
+   padding-top: 10px;
+   padding-bottom: 10px;
+   font-size: 16px;
+   line-height: 20px;
+   text-align: justify;
+}
+/* оферта end */

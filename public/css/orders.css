@@ -1,0 +1,70 @@
+@import url('main.css');
+table {
+   empty-cells: show;
+}
+
+table td,
+table th {
+   min-width: 2em;
+   min-height: 2em;
+   padding: 5px 5px 5px 5px;
+}
+table td{
+   padding: 5px 10px 5px 5px;
+   font-size: 12px;
+}
+.order-items table thead{
+   font-weight: 900;
+}
+.order-items{
+   display: none;
+}
+.order-items table{
+   margin-left: 10px;
+}
+.order-items table td{
+   padding: 5px;
+}
+.orders-links{
+   margin-top: 10px;
+}
+.oder-title{
+   font-size: 16px;
+}
+.oder-title .oder-user-fio{
+   font-weight: 900;
+}
+input{
+   width: 60%;
+   font-size: 12px;
+}
+#orderDates{
+   position: absolute;
+   width: 300px;
+   padding: 5px;
+   background-color: rgb(223, 230, 223);
+   border-radius: 5px;
+   color: rgb(0, 0, 3);
+   border-radius: 10px;
+}
+.orderDates:hover {
+   color: darkgoldenrod;
+}
+.btn-active {
+   background: linear-gradient(#17a2b8, #22ddfa) #17a2b8;
+   border-color: #17a2b8;
+   box-shadow: none!important;
+}
+button {
+   box-shadow: 0 0 0 60px rgba(0,0,0,0) inset, .1em .1em .2em #17a2b8;
+}
+.guid{
+   font-size: 10px;
+}
+.invoiceitems-tbl{
+   padding-left: 10px;
+   background-color: gainsboro;
+}
+.invoiceitems-tbl th{
+   font-size: 12px;
+}

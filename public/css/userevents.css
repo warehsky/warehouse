@@ -1,0 +1,77 @@
+@import url('main.css');
+table {
+   empty-cells: show;
+}
+
+table td,
+table th {
+   min-width: 2em;
+   min-height: 2em;
+   padding: 5px 5px 5px 5px;
+}
+table td{
+   padding: 5px 10px 5px 5px;
+   font-size: 12px;
+}
+.event-items table thead{
+   font-weight: 900;
+}
+.event-title{
+   font-size: 16px;
+}
+.event-title .event-user-fio{
+   font-weight: 900;
+}
+input{
+   font-size: 12px;
+}
+.event-flt{
+   background-image: url(/img/search.png) ;
+   background-repeat: no-repeat;
+   background-position: center center;
+   background-size: 50%;
+   width: 30px;
+   height: 30px;
+}
+.sortable{
+   cursor: pointer;
+}
+.sortable::after{
+   content: "\25be";
+   color: white;
+}
+.sorting_asc::after{
+   content: "\25be";
+   color: black;
+}
+.sorting_desc::after{
+   content: '\25b4';
+   color: black;
+}
+#eventDates{
+   position: absolute;
+   width: 300px;
+   padding: 5px;
+   background-color: rgb(223, 230, 223);
+   border-radius: 5px;
+   color: rgb(0, 0, 3);
+}
+.eventDates:hover {
+   color: darkgoldenrod;
+}
+.event-advance{
+   position: relative;
+   float: right;
+   color: rgb(4, 112, 67);
+}
+.event-user-visit{
+   color: rgb(4, 112, 67);
+}
+.event-advance td{
+   font-size: 14px;
+   font-weight: 900;
+}
+.alert{
+   color: red;
+   font-weight: 900;
+}

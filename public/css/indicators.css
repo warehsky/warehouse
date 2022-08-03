@@ -1,0 +1,29 @@
+.indicators{
+    display: flex;
+    justify-content: space-around;
+    min-width: 20%;
+}
+.indicator{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-content: center;
+    min-height: 34px;
+    margin-right: 10px;
+}
+.indicator.indicate .i-panel{
+    border: 2px solid red;
+    background: #ff00001c;
+}
+.indicator .i-panel{
+    min-height: inherit;
+    padding: 4px 10px;
+    border: 1px solid;
+}
+.indicator .i-panel.left{
+    border-right: none;
+    border-radius: 5px 0px 0px 5px;
+}
+.indicator .i-panel.right{
+    border-radius: 0px 5px 5px 0px;
+}

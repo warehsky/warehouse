@@ -1,0 +1,48 @@
+@import url(https://fonts.googleapis.com/css?family=Arsenal);
+.ownorders{
+	display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+	background: white;
+}
+.ownorders *{font-family: Arsenal;}
+.ownorders .profile{
+    display: flex;
+justify-content: flex-end;
+}
+.orders-header{
+    border-radius: 4px;
+    background: #e5e5e5;
+    margin: 5px 10px;
+}
+.profile .profile-info{
+    margin: 10px;
+    display: flex;
+    border: 1px solid;
+    border-radius: 4px;
+}
+.profile .profile-info input{
+    border: none;
+    outline: none;
+    height: 30px;
+    background: transparent;
+    text-align: center;
+    cursor: default;
+}
+.page-title{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+  background: #e5e5e5;
+  border-radius: 8px;
+  margin: 0 10px 20px 10px;
+  padding: 15px 50px;
+}
+.ownorders-title{
+  font-weight: 700;
+  font-size: 18px;
+  text-transform: uppercase;
+  color: #151515;
+  display: flex;
+  align-items: center;
+}

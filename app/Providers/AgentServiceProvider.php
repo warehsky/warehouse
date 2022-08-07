@@ -29,11 +29,10 @@ class AgentServiceProvider extends ServiceProvider
     {
         $agent = new Agent();
         $base = new Basectrl();
-        $course = \App\Model\Courses::getCourse();
+        
 
         \View::share('agent', $agent);
         \View::share('meta', $base->getOption('meta'));
-        \View::share('course', $course);
         \View::share('api_token', csrf_token());
     }
 }

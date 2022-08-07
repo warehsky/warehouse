@@ -15,36 +15,12 @@
 //     return view('welcome');
 // });
 //Route::get('/', 'HomeController@index')->name('/');
-Route::get('/cart', 'HomeController@cart')->name('/cart');
-Route::get('/thanks', 'HomeController@thanks')->name('/thanks');
-Route::get('/groups', 'HomeController@groups')->name('/groups');
-Route::get('/delivery', 'HomeController@delivery')->name('/delivery');
-Route::get('/contacts', 'HomeController@contacts')->name('/contacts');
-Route::get('/about', 'HomeController@about')->name('/about');
-Route::get('/steps', 'HomeController@steps')->name('/steps');
-Route::get('/single', 'HomeController@single')->name('/single');
-Route::get('/offer', 'HomeController@offer')->name('/offer');
-Route::get('/article/{id}', 'ArticlesController@article')->name('/article/{id}');
-Route::get('/articles', 'ArticlesController@articles')->name('/articles');
-Route::get('/vacancy', 'HomeController@vacancy')->name('/vacancy');
-Route::get('/spesial', 'HomeController@spesial')->name('/spesial');
-Route::get('/partner', 'HomeController@partner')->name('/partner');
-Route::get('/help', 'HomeController@help')->name('/help');
-Route::get('/stocks', 'HomeController@stocks')->name('/stocks');
-Route::get('/alcohol', 'HomeController@alcohol')->name('/alcohol');
-Route::get('/test', 'HomeController@test')->name('/test');
-Route::get('/ownorder/{id}', 'OrdersController@order')->name('/ownorder');
-Route::get('/ownorders/{phone}', 'OrdersController@orders')->name('/ownorders');
-Route::get('/ownlogin', 'OrdersController@ownLogin')->name('/ownlogin');
-Route::get('/sendOrder', 'OrdersController@sendOrder')->name('/sendOrder');
-Route::post('/sendOrder', 'OrdersController@sendOrder')->name('/sendOrder');
-Route::get('/ownLoginUpdate', 'OrdersController@ownLoginUpdate')->name('/ownLoginUpdate');
-Route::get('/ownUnLogin', 'OrdersController@ownUnLogin')->name('/ownUnLogin');
-Route::get('/ownConfirmed', 'OrdersController@ownConfirmed')->name('/ownConfirmed');
+
 
 Auth::routes();
 Route::middleware(['adminauth'])->group(function () {
     Route::get('/', function(){ return view('Admin.dashboard'); })->name('home');
+    Route::resource('orders', 'OrdersController');
 });
 //Route::get('/home', function(){ return redirect(route('admin')); })->name('home');
 
@@ -57,7 +33,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminauth']], function () {
         return view('Admin.dashboard');
     });
     Route::resource('userAdmins', 'Admin\UsersController');
-    Route::resource('itemgroups', 'Admin\ItemGroupsController');
+    
     Route::delete('itemgroups_mass_destroy', 'Admin\ItemGroupsController@massDestroy')->name('itemgroups.mass_destroy');
     Route::resource('items', 'Admin\ItemsLinkController');
     Route::get('itemsSearch', 'Admin\ItemsLinkController@itemsSearch')->name('items.search');

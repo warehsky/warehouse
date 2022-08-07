@@ -16,7 +16,7 @@
     <style type="text/css">.nav-link:hover{color: #0056b3}</style>
     @yield('styles')
     <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
-    <script defer>window.course = Number('{{ $course }}');</script>
+    
     <!-- Globals and Permissions -->
     <script src="/js/globals.js"></script>
     <script>
@@ -105,159 +105,17 @@
               <a class="nav-link" href="{{ route('userAdmins.index') }}">Admin пользователи</a>
             </li>
             @endif
-            @if(auth()->guard('admin')->user()->can('itemGroups_view'))
-            <li class="nav-item" style="padding: 0px 5px 0px 5px;">
-              <a class="nav-link" href="{{ route('itemgroups.index') }}">Группы товаров</a>
-            </li>
-            @endif
-            @if(auth()->guard('admin')->user()->can('items_view'))
-            <li class="nav-item" style="padding: 0px 5px 0px 5px;">
-              <a class="nav-link" href="{{ route('items.index') }}">Товары</a>
-            </li>        
-            @endif
-            @if(auth()->guard('admin')->user()->can('articles_all'))
-            <li class="nav-item" style="padding: 0px 5px 0px 5px;">
-              <a class="nav-link" href="{{ route('articles') }}">Рецепты</a>
-            </li>
-            @endif
-            @if(auth()->guard('admin')->user()->can('suggests_view'))
-            <li class="nav-item" style="padding: 0px 5px 0px 5px;">
-              <a class="nav-link" href="{{ route('suggests') }}">Сопутств. товары</a>
-            </li>
-            @endif
+            
             @if(auth()->guard('admin')->user()->can('options_all'))
             <li class="nav-item" style="padding: 0px 5px 0px 5px;">
               <a class="nav-link" href="{{ route('optionsIndex') }}">Настройки</a>
             </li>
             @endif
-            @if(auth()->guard('admin')->user()->can('comments_all'))
-            <li class="nav-item" style="padding: 0px 5px 0px 5px;">
-              <a class="nav-link" href="{{ route('comments') }}">Отзывы</a>
-            </li>
-            @endif
-            @if(auth()->guard('admin')->user()->can('commentsFirm_all'))
-            <li class="nav-item" style="padding: 0px 5px 0px 5px;">
-              <a class="nav-link" href="{{ route('commentsFirm') }}">Сервис отзывы</a>
-            </li>
-            @endif
-            @if(auth()->guard('admin')->user()->can('banners_view'))
-            <li class="nav-item" style="padding: 0px 5px 0px 5px;">
-              <a class="nav-link" href="{{ route('banners.index') }}">Банеры</a>
-            </li>
-            @endif
-            @if(auth()->guard('admin')->user()->can('email_view'))
-              <?php $tmp = \App\Model\Backlink::getCountNewMessage();?>
-            <li class="nav-item" style="padding: 0px 5px 0px 5px;">
-              <a class="nav-link" @if($tmp>0) style="color:#ff0000" @endif href="{{ route('email') }}">Обратная связь: {{$tmp}}</a>
-            </li> 
-            @endif
-            @if(auth()->guard('admin')->user()->can('pageStock_view'))
-            <li class="nav-item" style="padding: 0px 5px 0px 5px;">
-              <a class="nav-link" href="{{ route('pageStock.index') }}">Акции</a>
-            </li>
-            @endif
-            @if(auth()->guard('admin')->user()->can('vacancy_view'))
-            <li class="nav-item" style="padding: 0px 5px 0px 5px;">
-              <a class="nav-link" href="{{ route('vacancy.index') }}"> Вакансии</a>
-            </li>
-            @endif
-            @if(auth()->guard('admin')->user()->can('Promocode_view'))
-            <li  class="nav-item" style="padding: 0px 5px 0px 5px;">
-              <a class="nav-link" href="{{ route('promocode.index') }}">Промокоды</a>
-            </li>
-            @endif
-            @if(auth()->guard('admin')->user()->can('phoneNumber_all'))
-            <li class="nav-item" style="padding: 0px 5px 0px 5px;">
-              <a class="nav-link" href="{{ route('phoneNumber.index') }}">Номера телефонов</a>
-            </li>
-            @endif
-            @if(auth()->guard('admin')->user()->can('changeSequenceStock_all'))
-            <li  class="nav-item" style="padding: 0px 5px 0px 5px;">
-              <a class="nav-link" href="{{ route('changeSequence.index') }}">Акции товаров</a>
-            </li>
-            @endif
-            @if(auth()->guard('admin')->user()->can('webUsers_view'))
-            <li  class="nav-item" style="padding: 0px 5px 0px 5px;">
-              <a class="nav-link" href="{{ route('WebUsers') }}">Покупатели</a>
-            </li>
-            @endif  
-            @if(auth()->guard('admin')->user()->can('deliveryZone_view'))
-            <li  class="nav-item" style="padding: 0px 5px 0px 5px;">
-              <div style="display:flex; border:1px solid; border-radius:5px">
-                <a class="nav-link" style="border-right:1px solid black" href="{{ route('deliveryZone.index') }}">Зоны доставки</a>
-                <a class="nav-link" href="{{ route('zonesEditor') }}">Редактирование зон</a>
-              </div>
-            </li>
-            @endif
-            @if(auth()->guard('admin')->user()->can('TimeWaves_view'))
-            <li class="nav-item" style="padding: 0px 5px 0px 5px;">
-             <a class="nav-link" href="{{ route('timeWaves') }}">Волны</a>
-            </li>
-            @endif
-            @if(auth()->guard('admin')->user()->can('itemKassa_view'))
-            <li  class="nav-item" style="padding: 0px 5px 0px 5px;">
-            <p title="Товары в слайдере 'Возможно вы забыли заказать?'"><a class="nav-link" href="{{ route('itemsKassa') }}">Товары при кассе</a></p>
-            </li>
-            @endif
-            @if(auth()->guard('admin')->user()->can('imageLoad_view'))
-            <li  class="nav-item" style="padding: 0px 5px 0px 5px;">
-             <a class="nav-link" href="{{ route('imageload') }}">Загрузка изображений</a>
-            </li>
-            @endif
-            @if(auth()->guard('admin')->user()->can('imageForGallery_view'))
-            <li  class="nav-item" style="padding: 0px 5px 0px 5px;">
-             <a class="nav-link" href="{{ route('loadImageForGallery') }}">Галерея</a>
-            </li>
-            @endif
-            @if(auth()->guard('admin')->user()->can('ItemsMain_view'))
-            <li  class="nav-item" style="padding: 0px 5px 0px 5px;">
-             <a class="nav-link" href="{{ route('itemsMain') }}">Группировка товаров</a>
-            </li>
-            @endif
-              
+
             @if(auth()->guard('admin')->user()->can('report_view'))
             <li  class="nav-item" style="padding: 0px 5px 0px 5px;">
              <a id="ReportLi" class="nav-link" href="/admin/report"><p id='reportP'>Отчеты</p></a>
             </li>
-            @endif
-
-            @if(auth()->guard('admin')->user()->can('warehouse_view'))
-            <li class="nav-item" style="padding: 0px 5px 0px 5px;">
-             <a class="nav-link" href="/admin/warehouse?dFrom={{$_REQUEST['dFrom']??''}}&dTo={{$_REQUEST['dTo']??''}}">Склад(весовой товар)</a>
-            </li>
-            @endif
-            @if(auth()->guard('admin')->user()->can('warehouse_view'))
-            <li class="nav-item" style="padding: 0px 5px 0px 5px;">
-             <a class="nav-link" href="/admin/warehousepacks?dFrom={{$_REQUEST['dFrom']??''}}&dTo={{$_REQUEST['dTo']??''}}">Склад(пакеты)</a>
-            </li>
-            @endif
-            @if(auth()->guard('admin')->user()->can('warehouse_admin'))
-            <li  class="nav-item" style="padding: 0px 5px 0px 5px;">
-             <a class="nav-link" href="{{ route('warehousePickup') }}">Склад(назначение)</a>
-            </li>
-            @endif
-
-            @if(auth()->guard('admin')->user()->can('phoneNumberStatistic_view'))
-            <li  class="nav-item" style="padding: 0px 5px 0px 5px;">
-             <a class="nav-link" href="{{ route('phoneNumberStatistic') }}">Статистика звонков</a>
-            </li>
-            @endif
-
-            @if(auth()->guard('admin')->user()->can('phoneNumberBackLink_view'))
-            <li  class="nav-item" style="padding: 0px 5px 0px 5px;">
-             <a class="nav-link" href="{{ route('backLinkPhoneIndex') }}">Обратная связь 377</a>
-            </li>
-            @endif
-            
-            @if(auth()->guard('admin')->user()->can('TimeWaves_OrderLimit'))
-             <li  class="nav-item" style="padding: 0px 5px 0px 5px;">
-               <a class="nav-link" href="{{ route('timeWaves/OrderLimit') }}">Заказы на волну</a>
-             </li>
-            @endif
-            @if(auth()->guard('admin')->user()->can('advertising_Img'))
-             <li  class="nav-item" style="padding: 0px 5px 0px 5px;">
-               <a class="nav-link" href="{{ route('loadOneImageIndex') }}">Рекламные изображения</a>
-             </li>
             @endif
             
           </ul>

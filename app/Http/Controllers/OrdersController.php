@@ -33,13 +33,12 @@ class OrdersController extends BaseController
      */
     public function create(Request $request){
         $phone = $request->input('phone') ?? '';
-        $dFrom = $request->input('dFrom')||empty($request->input('dFrom'))?$request->input('dFrom'):Carbon::parse(Carbon::now());
+        $dFrom = $request->input('dFrom')&&!empty($request->input('dFrom'))?$request->input('dFrom'):Carbon::parse(Carbon::now());
         $dTo = $request->input('dTo')&&!empty($request->input('dTo'))?$request->input('dTo'):Carbon::parse(Carbon::now());
         $status = $request->input('status') ?? 0;
-        $errorRate = $this->getOption('errorRate');
         $api_token = \Auth::guard('admin')->user()->getToken();
         
-        $data = ['phone' => $phone, 'dFrom' => $dFrom, 'dTo' => $dTo, 'status' => $status, 'api_token' => $api_token, 'errorRate' => $errorRate];
+        $data = ['orderId' => 0, 'dFrom' => $dFrom, 'dTo' => $dTo, 'status' => $status, 'api_token' => $api_token];
         return view('orders.order', $data);
     }
 

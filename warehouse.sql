@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.0.0-alpha1
 -- https://www.phpmyadmin.net/
 --
--- Хост: 127.0.0.1:3306
--- Время создания: Авг 07 2022 г., 19:31
--- Версия сервера: 10.3.22-MariaDB
--- Версия PHP: 7.4.5
+-- Хост: localhost
+-- Время создания: Авг 08 2022 г., 17:18
+-- Версия сервера: 8.0.30-0ubuntu0.20.04.2
+-- Версия PHP: 7.4.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -20,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- База данных: `warehouse`
 --
-CREATE DATABASE IF NOT EXISTS `warehouse` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `warehouse`;
 
 -- --------------------------------------------------------
 
@@ -30,23 +29,23 @@ USE `warehouse`;
 --
 
 CREATE TABLE `admins` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `chatName` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ' ',
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `chatName` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ' ',
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `api_token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `api_token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `login` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `warehousep` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ' ' COMMENT 'пароль для api склада',
-  `role` int(11) NOT NULL DEFAULT 0,
-  `note` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `areaId` int(11) NOT NULL DEFAULT 1,
-  `mobUserId` int(11) NOT NULL DEFAULT 0
+  `login` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `warehousep` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ' ' COMMENT 'пароль для api склада',
+  `role` int NOT NULL DEFAULT '0',
+  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `areaId` int NOT NULL DEFAULT '1',
+  `mobUserId` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -59,13 +58,26 @@ INSERT INTO `admins` (`id`, `name`, `chatName`, `email`, `email_verified_at`, `p
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `clients`
+--
+
+CREATE TABLE `clients` (
+  `id` int NOT NULL,
+  `client` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `migrations`
 --
 
 CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
+  `id` int UNSIGNED NOT NULL,
+  `migration` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -75,9 +87,9 @@ CREATE TABLE `migrations` (
 --
 
 CREATE TABLE `model_has_permissions` (
-  `permission_id` int(10) UNSIGNED NOT NULL,
-  `model_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model_id` bigint(20) UNSIGNED NOT NULL
+  `permission_id` int UNSIGNED NOT NULL,
+  `model_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -87,9 +99,9 @@ CREATE TABLE `model_has_permissions` (
 --
 
 CREATE TABLE `model_has_roles` (
-  `role_id` int(10) UNSIGNED NOT NULL,
-  `model_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model_id` bigint(20) UNSIGNED NOT NULL
+  `role_id` int UNSIGNED NOT NULL,
+  `model_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -99,16 +111,16 @@ CREATE TABLE `model_has_roles` (
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (1, 'App\\Model\\Admin', 1),
 (1, 'App\\Model\\Admin', 3),
-(1, 'App\\Model\\Admin', 36),
-(1, 'App\\Model\\Admin', 48),
-(1, 'App\\Model\\Admin', 49),
-(1, 'App\\Model\\Admin', 50),
-(1, 'App\\Model\\Admin', 53),
 (4, 'App\\Model\\Admin', 31),
 (4, 'App\\Model\\Admin', 32),
 (4, 'App\\Model\\Admin', 33),
 (4, 'App\\Model\\Admin', 35),
+(1, 'App\\Model\\Admin', 36),
 (4, 'App\\Model\\Admin', 37),
+(1, 'App\\Model\\Admin', 48),
+(1, 'App\\Model\\Admin', 49),
+(1, 'App\\Model\\Admin', 50),
+(1, 'App\\Model\\Admin', 53),
 (4, 'App\\Model\\Admin', 55),
 (4, 'App\\Model\\Admin', 56),
 (4, 'App\\Model\\Admin', 58),
@@ -127,15 +139,15 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 --
 
 CREATE TABLE `options` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `field` varchar(20) NOT NULL,
   `value` longtext NOT NULL,
   `type` varchar(10) NOT NULL,
   `description` varchar(255) NOT NULL,
   `groupId` varchar(30) DEFAULT NULL COMMENT 'основная группа',
   `subgroup` varchar(30) DEFAULT NULL COMMENT 'подгруппа',
-  `visible` int(11) NOT NULL DEFAULT 1 COMMENT '1 - Отображается в настройках; 0 - не отображается'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `visible` int NOT NULL DEFAULT '1' COMMENT '1 - Отображается в настройках; 0 - не отображается'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Дамп данных таблицы `options`
@@ -151,20 +163,20 @@ INSERT INTO `options` (`id`, `field`, `value`, `type`, `description`, `groupId`,
 --
 
 CREATE TABLE `orderitem` (
-  `id` int(11) NOT NULL,
-  `orderId` int(11) NOT NULL,
-  `itemId` int(11) NOT NULL,
-  `warehouse_id` int(11) NOT NULL DEFAULT 0,
-  `quantity_base` double NOT NULL DEFAULT 0 COMMENT 'кол-во в первоначальном заказе',
+  `id` int NOT NULL,
+  `orderId` int NOT NULL,
+  `itemId` int NOT NULL,
+  `warehouse_id` int NOT NULL DEFAULT '0',
+  `quantity_base` double NOT NULL DEFAULT '0' COMMENT 'кол-во в первоначальном заказе',
   `quantity` double NOT NULL,
-  `quantity_warehouse` double NOT NULL DEFAULT 0 COMMENT 'Кол-во указанное складом',
+  `quantity_warehouse` double NOT NULL DEFAULT '0' COMMENT 'Кол-во указанное складом',
   `price` double NOT NULL,
-  `priceType` int(11) NOT NULL DEFAULT 2,
-  `percent` int(11) NOT NULL DEFAULT 0,
-  `workerId` int(11) DEFAULT NULL COMMENT 'ID рабочего склада',
-  `manually` tinyint(4) NOT NULL DEFAULT 0,
+  `priceType` int NOT NULL DEFAULT '2',
+  `percent` int NOT NULL DEFAULT '0',
+  `workerId` int DEFAULT NULL COMMENT 'ID рабочего склада',
+  `manually` tinyint NOT NULL DEFAULT '0',
   `pickTm` timestamp NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'признак товар собран складом'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -173,9 +185,9 @@ CREATE TABLE `orderitem` (
 --
 
 CREATE TABLE `orderlocks` (
-  `orderId` bigint(11) NOT NULL,
-  `userId` bigint(20) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `orderId` bigint NOT NULL,
+  `userId` bigint UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -184,58 +196,14 @@ CREATE TABLE `orderlocks` (
 --
 
 CREATE TABLE `orders` (
-  `id` int(11) NOT NULL,
-  `number` varchar(32) NOT NULL DEFAULT ' ',
-  `course` double NOT NULL DEFAULT 0 COMMENT 'текущий курс гривны',
-  `name` varchar(100) NOT NULL COMMENT 'имя закзчика',
-  `webUserId` int(11) NOT NULL DEFAULT 0,
-  `phone` varchar(20) NOT NULL,
-  `phoneConsignee` varchar(20) DEFAULT NULL,
-  `addr` varchar(255) NOT NULL,
-  `entrance` tinyint(4) NOT NULL DEFAULT -1 COMMENT 'подъезд',
-  `floor` tinyint(4) NOT NULL DEFAULT -1 COMMENT 'этаж',
-  `flat` int(11) NOT NULL DEFAULT -1 COMMENT 'квартира',
-  `deliveryCost` float NOT NULL DEFAULT 0,
-  `status` int(11) NOT NULL DEFAULT 0,
-  `pickupStatus` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'состояние сборки на складе',
-  `deliveryZone` int(11) NOT NULL DEFAULT 0,
-  `deliveryZoneIn` int(11) NOT NULL DEFAULT 0,
-  `userId` int(11) NOT NULL DEFAULT 0,
-  `workerId` int(11) NOT NULL COMMENT 'ID рабочего склада',
-  `note` text DEFAULT NULL,
+  `id` int NOT NULL,
+  `status` int NOT NULL DEFAULT '0',
+  `clientId` int NOT NULL DEFAULT '0',
+  `note` text,
   `sum_total` double NOT NULL,
-  `sum_last` double NOT NULL DEFAULT 0,
-  `sms` tinyint(4) NOT NULL DEFAULT 0,
-  `lat` double NOT NULL DEFAULT 0,
-  `lng` double NOT NULL DEFAULT 0,
-  `guid` varchar(36) NOT NULL,
-  `deliveryFrom` timestamp NULL DEFAULT NULL,
-  `deliveryTo` timestamp NULL DEFAULT NULL,
-  `deliveryDate` date DEFAULT current_timestamp(),
-  `waveId` int(11) NOT NULL DEFAULT 1 COMMENT 'ID волны доставки',
-  `gift` varchar(50) NOT NULL DEFAULT '0',
-  `deviceType` int(11) DEFAULT NULL,
-  `deviceInfo` varchar(255) DEFAULT NULL,
-  `pension` tinyint(4) NOT NULL DEFAULT 0,
-  `payment` int(11) NOT NULL DEFAULT 1,
-  `order_number` varchar(36) NOT NULL DEFAULT '0',
-  `bonus` int(11) NOT NULL DEFAULT 0 COMMENT 'число бонусов от операции',
-  `discountId` int(11) NOT NULL DEFAULT 0 COMMENT 'промо код или дисконтная карта',
-  `bonus_pay` int(11) NOT NULL DEFAULT 0 COMMENT 'бонусы расходуемые на оплату заказа',
-  `discount_sum` float NOT NULL DEFAULT 0 COMMENT 'сумма скидки',
-  `discount_proc` int(11) NOT NULL DEFAULT 0,
-  `action` varchar(36) DEFAULT NULL COMMENT 'учавствует в акции',
-  `orderNumber` varchar(50) DEFAULT NULL COMMENT 'банковский чек заказа',
-  `sum_pay` double NOT NULL DEFAULT 0 COMMENT 'полученная сумма оплаты',
-  `url_pay` varchar(255) NOT NULL DEFAULT '',
-  `visiteTime` timestamp NULL DEFAULT NULL COMMENT 'ожидаемое время визита курьера',
-  `remindSms` tinyint(4) NOT NULL DEFAULT 0 COMMENT 'счетчик отосланных смс (напоминание о визите курьера)',
-  `nopacks` tinyint(4) NOT NULL DEFAULT 0 COMMENT 'признак заказ без пакетов',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `locked` int(11) NOT NULL DEFAULT 0,
-  `codeView` varchar(10) NOT NULL DEFAULT ' '
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -244,8 +212,8 @@ CREATE TABLE `orders` (
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -256,9 +224,9 @@ CREATE TABLE `password_resets` (
 --
 
 CREATE TABLE `permissions` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` int UNSIGNED NOT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -279,9 +247,9 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 --
 
 CREATE TABLE `roles` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` int UNSIGNED NOT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -301,8 +269,8 @@ INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VAL
 --
 
 CREATE TABLE `role_has_permissions` (
-  `permission_id` int(10) UNSIGNED NOT NULL,
-  `role_id` int(10) UNSIGNED NOT NULL
+  `permission_id` int UNSIGNED NOT NULL,
+  `role_id` int UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -311,9 +279,9 @@ CREATE TABLE `role_has_permissions` (
 
 INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (1, 1),
-(1, 4),
 (3, 1),
-(55, 1);
+(55, 1),
+(1, 4);
 
 -- --------------------------------------------------------
 
@@ -325,10 +293,10 @@ CREATE TABLE `usersmobile` (
   `phone` varchar(20) NOT NULL,
   `deviceId` varchar(64) NOT NULL,
   `token` varchar(50) NOT NULL,
-  `code` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `code` int NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Индексы сохранённых таблиц
@@ -341,6 +309,12 @@ ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`),
   ADD KEY `login` (`login`);
 ALTER TABLE `admins` ADD FULLTEXT KEY `users_email_unique` (`email`);
+
+--
+-- Индексы таблицы `clients`
+--
+ALTER TABLE `clients`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `migrations`
@@ -390,20 +364,10 @@ ALTER TABLE `orderlocks`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `guid` (`guid`),
   ADD KEY `status` (`status`),
-  ADD KEY `webUserId` (`webUserId`),
   ADD KEY `updated_at` (`updated_at`),
   ADD KEY `created_at` (`created_at`),
-  ADD KEY `deliveryFrom` (`deliveryFrom`),
-  ADD KEY `deliveryDate` (`deliveryDate`),
-  ADD KEY `deliveryTo` (`deliveryTo`),
-  ADD KEY `deliveryZone` (`deliveryZone`),
-  ADD KEY `pickupStatus` (`pickupStatus`),
-  ADD KEY `phone` (`phone`),
-  ADD KEY `number` (`number`),
-  ADD KEY `userId` (`userId`),
-  ADD KEY `payment` (`payment`);
+  ADD KEY `userId` (`clientId`);
 
 --
 -- Индексы таблицы `password_resets`
@@ -444,43 +408,49 @@ ALTER TABLE `usersmobile`
 -- AUTO_INCREMENT для таблицы `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+
+--
+-- AUTO_INCREMENT для таблицы `clients`
+--
+ALTER TABLE `clients`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `options`
 --
 ALTER TABLE `options`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `orderitem`
 --
 ALTER TABLE `orderitem`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1667062;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1667062;
 
 --
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70730;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70730;
 
 --
 -- AUTO_INCREMENT для таблицы `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT для таблицы `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -521,3 +491,4 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+

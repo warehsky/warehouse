@@ -1,169 +1,81 @@
 <template>
   <div class="orders">
-    <orders-view 
-      v-if="!editableOrder"
-      v-bind="data"
-      :orders="orders"
-      :phone="phone"
-      :dateRange="[d_from,d_to]"
-      :stat="status"
-      :filterWaves="filterWaves"
-      :state="state"
-      :showCorrects="showCorrects"
-      :showDelivery="showDelivery"
-      :correctsCount="correctsOrders.length"
-      @order-created="orders.unshift($event); openOrder($event, modes.edit);"
-      @refuse="refuseOrder"
-      @requestItems="updateItems"
-      @filter="filterOrders"
-      @edit="_onClickEdit"
-      @order-cloned="_onClickEdit($event, true)">
-      <template #actions="{ order }">
-        <async-button v-if="[1, 7].includes(order.status) || superEdit"
-          :class="['btn edit',{ locked:order.locked }]"
-          @click="_onClickEdit(order)">
-          {{order.locked?'Заблокировано':'Изменить'}}
-        </async-button>
-        <async-button v-if="showCorrects && [7, 2, 5].includes(order.status)"
-          :class="['btn edit',{ isCorrects:order.correctsColor, locked:order.locked }]"
-          :style="{ '--corrects-background':order.correctsColor }"
-          @click="tryTakeOrder(order,modes.correct)">
-          {{order.locked?'Заблокировано':'Корректировки'}}
-        </async-button>
+    <div>
+      <span>№ заказа</span><span>{{this.order?this.order.id:''}}</span>
+      <span>Дата заказа</span>
+      <span><input 
+              name="Дата"
+              type="date"
+              v-model="order.orderDate"
+              min="today.toShortDateString()"/>
+      </span>
+      <span>Клиент</span><span>[#{{this.order?this.order.clientId:''}}]{{this.order?this.order.client:''}}</span>
+      <input type="button" value="Выбрать" @click="modalOpened.clients = true;"/>
+    </div>
+    <modal class="waves-report-modal"
+      v-show="modalOpened.clients"
+      :show="['cancel']"
+      cancel='Выход'
+      @close="modalOpened.clients = false"
+      @confirm="modalOpened.clients = false">
+      <template #header>
+        <h2 class="modalHeaderItem">Клиенты</h2>
       </template>
-      <template #buttons>
-        <async-button v-if="canUnlock" :disabled="!orders.filter(o=>o.locked).length" @click="freeOrder">
-          Разблокировать все заказы
-        </async-button>
+      <template #body>
+        <clients-view ref="report"
+          @select="onSelectClient">
+        </clients-view>
       </template>
-    </orders-view>
-    <order-edit-view ref="editView"
-      v-if="editableOrder && (mode==modes.edit || mode==modes.fixEdit)"
-      v-bind="data"
-      :phonePrefixes="phonePrefixes"
-      :limitedMode="mode==modes.fixEdit"
-      @cancel="onCancelEdit"
-      @save="saveOrder">
-    </order-edit-view>
-    <create-corrections-panel
-      v-if="editableOrder && mode==modes.correct"
-      v-bind="data"
-      @cancel="onCancelEdit"
-      @saved="freeOrder(editableOrder)">
-    </create-corrections-panel>
-    <apply-corrections-panel
-      v-if="editableOrder && mode==modes.applyCorrect"
-      v-bind="data"
-      @cancel="onCancelEdit"
-      @saved="freeOrder(editableOrder)">
-    </apply-corrections-panel>
+    </modal>
   </div>
 </template>
 
 <script>
-import OrdersView from "./view/orders-view.vue";
-import OrderEditView from "./editor/panels/edit/order-edit-view.vue";
-import Order from './order';
-import OrdersMixin from './mixins/orders.js';
 import CircleLoading from '../UI/mini/circle-loading.vue';
-import CreateCorrectionsPanel from './editor/panels/corrections/create-corrections-panel/create-corrections-panel.vue';
-import ApplyCorrectionsPanel from './editor/panels/corrections/apply-corrections-panel/apply-corrections-panel.vue';
-import AsyncButton from "../UI/mini/async-button.vue";
-
+import modal from "../UI/panels/modal.vue";
+import clientsView from "../clients/clients-view.vue";
 export default {
-  name:"orders",
-  mixins:[OrdersMixin],
-  components:{ OrdersView, OrderEditView, CircleLoading, CreateCorrectionsPanel, ApplyCorrectionsPanel, AsyncButton },
+  name:"order",
   props:{
-    phone:String,
+    order_id:Number,
     d_from:String,
     d_to:String,
     status:[Number,String],
     shop_url:String,
-    "error-rate":Number,
     "show-pickup":Boolean,
+  },
+  components: {
+    modal,
+    clientsView
   },
   data(){
     return{
-      editableOrder:null,
-      discountMethodsTypes:{
-        dontUse:-1,
-        discountCard:0,
-        promocode:1,
-        bonus:2,
-        certificate:3
+      isModalVisible: false,
+      modalOpened:{
+        clients:false,
       },
-      editLoading:-1,
-      searchParams:new URL(document.URL).searchParams,
-      correctsOrders:[],
-      canUnlock:UserPermissions.can("order_unlock"),
-      showCorrects:UserPermissions.can("order_corrects"),
-      showDelivery:UserPermissions.can("order_additional_delivery"),
-      superEdit:UserPermissions.can("order_edit_super"),
+      today:new Date(),
+      order: {"id":0,"orderDate":(new Date()).toShortDateString(),"clientId":0,"client":'', "orderItems":[{"id":1,"title":'пример', "price":1, "quantity":1}]}
     }
   },
   computed:{
     data(){
       return {
-        shop_url:this.shop_url,
-        waves:this.waves,
-        availableWaves:this.availableWaves,
-        payments:this.payments,
-        statuses:this.statuses,
-        order:this.editableOrder,
-        sots:this.sots,
-        zones:this.zones,
-        errorRate:this.errorRate,
-        discountMethodsTypes:this.discountMethodsTypes,
+        order_id: null
       }
     }
   },
   mounted(){
-    this.getPolygons({ sotId:-1, disabled:0, zoneDisable:1 })//Получаем полигоны для карты
-      .then(({zones,sots})=>{ this.zones = zones; this.sots = sots });
-    window.addEventListener('getAlerts',({ detail:{ locks, corrects } })=>{//обновляем данные о заказах
-      this.correctsOrders = Object.keys(corrects) || [];
-      this.orders.forEach((order)=>{
-        order.locked = locks.includes(order.id);
-        order.correctsColor = corrects[order.id];
-      });
-    });
-    window.addEventListener('beforeunload',()=>{//освобождаем заказ перед перезагрузкой
-      if(this.editableOrder) this.freeOrder(this.editableOrder);
-    })
+    // if(this.order_id)
+    //   this.getOrder({"orderId":this.order_id});
   },
   methods:{
-    getPolygons(params){
+    getOrder(params){
 			return new Promise((resolve,reject)=>{
 				axios
-					.get("/Api/getPoligons",{ params })
+					.get("/Api/getOrder",{ params })
 					.then(({data})=>{
-						let getPolygons = (type,polys)=>{
-							return polys.map((poly)=>{ return {
-								geometry:JSON.parse(poly.geometry),
-								options:{
-									description:poly.description || ((type=='sot'?"Сота ":"Зона ")+poly.id),
-									fillColor:poly.fillColor|| "#1A78EE",
-									fillOpacity:poly.fillOpacity || (type=='sot'?0:0.6),
-									strokeColor:poly.strokeColor || "#1A78EE",
-									strokeOpacity:(type=='sot'?"0":(poly.strokeOpacity || "0")),
-									strokeWidth: 3
-								},
-								properties:{
-									id:poly.id,
-									type,
-								},
-                conditions:{
-                  cost:poly.cost,
-                  limit:poly.limit,
-                  limit_lgot:poly.limit_lgot,
-                  limit_min:poly.limit_min,
-                  balloon:poly.balloon,
-                  description:poly.description,
-                }
-							}});
-						}
-						resolve({	zones:getPolygons('zone',data.zones),	sots:data.sots?getPolygons('sot',data.sots):null	}, data);
+						return data.order;
 					})
 					.catch((e)=>{ console.error(e); reject(e) });
 			})

@@ -4,16 +4,14 @@
 <script src="{{ mix('js/app.js') }}" defer></script>
 <!-- <div class="container"> -->
     <div id="goods">
-        <orders 
-            :error-rate="{{$errorRate}}"
+        <order 
             api_token="{{$api_token}}"
-            phone="{{$phone}}"
+            :order_id="{{$orderId}}"
             d_from="{{$dFrom}}"
             d_to="{{$dTo}}"
             status="{{$status}}"
-            shop_url="{{ env('SHOP_URL',false) }}"
-            :show-pickup="Boolean({{ env('SHOW_PICKUP') }})">
-        </orders>
+            wareh_url="{{ env('WAREH_URL',false) }}">
+        </order>
     </div>    
         
 <!-- </div> -->

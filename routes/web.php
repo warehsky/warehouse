@@ -21,6 +21,7 @@ Auth::routes();
 Route::middleware(['adminauth'])->group(function () {
     Route::get('/', function(){ return view('Admin.dashboard'); })->name('home');
     Route::resource('orders', 'OrdersController');
+    Route::get('getClients', 'ClientsController@getClients')->name('getClients');
 });
 //Route::get('/home', function(){ return redirect(route('admin')); })->name('home');
 

@@ -55,7 +55,7 @@ export default {
         clients:false,
       },
       today:new Date(),
-      order: {"id":0,"orderDate":(new Date()).toShortDateString(),"clientId":0,"client":'', "orderItems":[{"id":1,"title":'пример', "price":1, "quantity":1}]}
+      order: {"id":0,"orderDate":(new Date()).toShortDateString(),"clientId":0,"client":'', "orderItems":[{"id":1,"title":'пример', "price":1, "quantity":1,"orderItems": []}]}
     }
   },
   computed:{
@@ -66,14 +66,14 @@ export default {
     }
   },
   mounted(){
-    // if(this.order_id)
-    //   this.getOrder({"orderId":this.order_id});
+     if(this.order_id)
+       this.getOrder({"orderId":this.order_id});
   },
   methods:{
     getOrder(params){
 			return new Promise((resolve,reject)=>{
 				axios
-					.get("/Api/getOrder",{ params })
+					.get("/getOrder",{ params })
 					.then(({data})=>{
 						return data.order;
 					})
@@ -88,9 +88,8 @@ export default {
           headers: {'X-Access-Token': Globals.api_token, "content-type": "application/json"},
           params: {
             order:{
-              ...order,
-              phone:order.phonePrefix+order.phone,
-              phoneConsignee:order.phoneConsigneePrefix+order.phoneConsignee
+              ...order
+              
             },
           },
         },

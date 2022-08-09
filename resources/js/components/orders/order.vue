@@ -169,6 +169,11 @@ export default {
           alert("Ошибка: "+error);
         })
     },
+    onSelectClient(client){
+      this.modalOpened.clients = false;
+      this.order.clientId=client.id;
+      this.order.client=client.client;
+    },
     /**
      * @param {Order} order Заказ
      * @description Открывает заказ в режиме корректировки

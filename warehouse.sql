@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Авг 08 2022 г., 17:18
+-- Время создания: Авг 09 2022 г., 16:53
 -- Версия сервера: 8.0.30-0ubuntu0.20.04.2
 -- Версия PHP: 7.4.30
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- База данных: `warehouse`
 --
+CREATE DATABASE IF NOT EXISTS `warehouse` DEFAULT CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci;
+USE `warehouse`;
 
 -- --------------------------------------------------------
 
@@ -64,8 +66,32 @@ INSERT INTO `admins` (`id`, `name`, `chatName`, `email`, `email_verified_at`, `p
 CREATE TABLE `clients` (
   `id` int NOT NULL,
   `client` varchar(255) NOT NULL,
+  `nip` varchar(200) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `phone` varchar(15) NOT NULL,
+  `note` text,
+  `operatorId` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Дамп данных таблицы `clients`
+--
+
+INSERT INTO `clients` (`id`, `client`, `nip`, `address`, `phone`, `note`, `operatorId`, `created_at`) VALUES
+(1, 'Test', '777777777', 'Гражданин мира', '888888888888888', 'хз', 1, '2022-08-09 12:28:24');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `items`
+--
+
+CREATE TABLE `items` (
+  `id` int NOT NULL,
+  `item` varchar(255) NOT NULL,
+  `price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
@@ -166,16 +192,9 @@ CREATE TABLE `orderitem` (
   `id` int NOT NULL,
   `orderId` int NOT NULL,
   `itemId` int NOT NULL,
-  `warehouse_id` int NOT NULL DEFAULT '0',
-  `quantity_base` double NOT NULL DEFAULT '0' COMMENT 'кол-во в первоначальном заказе',
   `quantity` double NOT NULL,
-  `quantity_warehouse` double NOT NULL DEFAULT '0' COMMENT 'Кол-во указанное складом',
   `price` double NOT NULL,
-  `priceType` int NOT NULL DEFAULT '2',
-  `percent` int NOT NULL DEFAULT '0',
-  `workerId` int DEFAULT NULL COMMENT 'ID рабочего склада',
-  `manually` tinyint NOT NULL DEFAULT '0',
-  `pickTm` timestamp NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'признак товар собран складом'
+  `note` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
@@ -201,6 +220,7 @@ CREATE TABLE `orders` (
   `clientId` int NOT NULL DEFAULT '0',
   `note` text,
   `sum_total` double NOT NULL,
+  `operatorId` int NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
@@ -317,6 +337,12 @@ ALTER TABLE `clients`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `items`
+--
+ALTER TABLE `items`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `migrations`
 --
 ALTER TABLE `migrations`
@@ -414,6 +440,12 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT для таблицы `clients`
 --
 ALTER TABLE `clients`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT для таблицы `items`
+--
+ALTER TABLE `items`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --

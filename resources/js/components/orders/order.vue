@@ -1,6 +1,6 @@
 <template>
   <div class="orders">
-    <div>
+    <div class="order-head">
       <span>№ заказа</span><span>{{this.order?this.order.id:''}}</span>
       <span>Дата заказа</span>
       <span><input 
@@ -11,6 +11,29 @@
       </span>
       <span>Клиент</span><span>[#{{this.order?this.order.clientId:''}}]{{this.order?this.order.client:''}}</span>
       <input type="button" value="Выбрать" @click="modalOpened.clients = true;"/>
+    </div>
+    <div class="order-list">
+      <table v-if="!updating && order.order_items.length>0" class="report-table">
+			<thead>
+				<td>ID</td>
+				<td>Название</td>
+				<td>Кол-во</td>
+				<td>Цена</td>
+				<td>Примечание</td>
+				<td>Действие</td>
+				<!-- <td></td> -->
+			</thead>
+			<tbody>
+				<tr v-for="item in order.order_items" :key="item.id" :item="item">
+					<td>{{item.id}}</td>
+					<td>{{item.itemId}}</td>
+					<td>{{item.quantity}}</td>
+					<td>{{item.price}}</td>
+					<td>{{item.note}}</td>
+					<td></td>
+				</tr>
+			</tbody>
+		  </table>
     </div>
     <modal class="waves-report-modal"
       v-show="modalOpened.clients"
@@ -51,6 +74,7 @@ export default {
   data(){
     return{
       isModalVisible: false,
+      updating:false,
       modalOpened:{
         clients:false,
       },
@@ -75,7 +99,8 @@ export default {
 				axios
 					.get("/getOrder",{ params })
 					.then(({data})=>{
-						return data.order;
+            this.order = data.order;
+            
 					})
 					.catch((e)=>{ console.error(e); reject(e) });
 			})

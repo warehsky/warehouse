@@ -32,7 +32,7 @@ class OrdersController extends BaseController
      * окно редактирования заказа
      */
     public function create(Request $request){
-        $id=0;
+        $id=70730;
         $phone = $request->input('phone') ?? '';
         $dFrom = $request->input('dFrom')&&!empty($request->input('dFrom'))?$request->input('dFrom'):Carbon::parse(Carbon::now());
         $dTo = $request->input('dTo')&&!empty($request->input('dTo'))?$request->input('dTo'):Carbon::parse(Carbon::now());
@@ -51,7 +51,8 @@ class OrdersController extends BaseController
             return response()->json(['code'=>700]);
         }
         $id = $request->input('orderId') ?? 0;
-        $order = Orders::find($id);
+        $order = Orders::where("id", $id)->with("orderItems")->first();
+        
         return response()->json(['code'=>200, 'order'=>$order]);
     }
 }

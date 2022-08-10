@@ -13,6 +13,7 @@
       <input type="button" value="Выбрать" @click="modalOpened.clients = true;"/>
     </div>
     <div class="order-list">
+      <div>Услуги</div>
       <table v-if="!updating && order.order_items.length>0" class="report-table">
 			<thead>
 				<td>ID</td>
@@ -26,7 +27,7 @@
 			<tbody>
 				<tr v-for="item in order.order_items" :key="item.id" :item="item">
 					<td>{{item.id}}</td>
-					<td>{{item.itemId}}</td>
+					<td>{{item.item}}</td>
 					<td>{{item.quantity}}</td>
 					<td>{{item.price}}</td>
 					<td>{{item.note}}</td>
@@ -34,7 +35,9 @@
 				</tr>
 			</tbody>
 		  </table>
+      <div><input type="button" value="Добавить" @click="modalOpened.items = true;"/></div>
     </div>
+    <div><input type="button" value="Сохранить" @click="saveOrder(order);"/></div>
     <modal class="waves-report-modal"
       v-show="modalOpened.clients"
       :show="['cancel']"
@@ -50,6 +53,21 @@
         </clients-view>
       </template>
     </modal>
+    <modal class="waves-report-modal"
+      v-show="modalOpened.items"
+      :show="['cancel']"
+      cancel='Выход'
+      @close="modalOpened.items = false"
+      @confirm="modalOpened.items = false">
+      <template #header>
+        <h2 class="modalHeaderItem">Услуги</h2>
+      </template>
+      <template #body>
+        <items-view ref="report"
+          @select="onSelectItem">
+        </items-view>
+      </template>
+    </modal>
   </div>
 </template>
 
@@ -57,6 +75,7 @@
 import CircleLoading from '../UI/mini/circle-loading.vue';
 import modal from "../UI/panels/modal.vue";
 import clientsView from "../clients/clients-view.vue";
+import itemsView from "../items/items-view.vue";
 export default {
   name:"order",
   props:{
@@ -64,12 +83,12 @@ export default {
     d_from:String,
     d_to:String,
     status:[Number,String],
-    shop_url:String,
-    "show-pickup":Boolean,
+    wareh_url:String,
   },
   components: {
     modal,
-    clientsView
+    clientsView,
+    itemsView
   },
   data(){
     return{
@@ -77,9 +96,10 @@ export default {
       updating:false,
       modalOpened:{
         clients:false,
+        items:false
       },
       today:new Date(),
-      order: {"id":0,"orderDate":(new Date()).toShortDateString(),"clientId":0,"client":'', "orderItems":[{"id":1,"title":'пример', "price":1, "quantity":1,"orderItems": []}]}
+      order: {"id":0,"orderDate":(new Date()).toShortDateString(),"clientId":0,"client":'', "order_items":[]}
     }
   },
   computed:{
@@ -109,7 +129,7 @@ export default {
       return new Promise((resolve,reject)=>{
         if(!order) reject(new Error("(setOrder) Не передан order"));
         axios
-        .post('/Api/setOrder', {
+        .post('/saveOrder', {
           headers: {'X-Access-Token': Globals.api_token, "content-type": "application/json"},
           params: {
             order:{
@@ -197,6 +217,11 @@ export default {
       this.modalOpened.clients = false;
       this.order.clientId=client.id;
       this.order.client=client.client;
+    },
+    onSelectItem(item){
+      this.modalOpened.items = false;
+      let itm = {"itemId":item.id, "item":item.item, "quantity":0, "price":0, "note":''};
+      this.order.order_items.push(itm);
     },
     /**
      * @param {Order} order Заказ

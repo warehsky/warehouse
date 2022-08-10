@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <a href="{{ route("orders.create", [0]) }}" class="btn btn-primary">Добавить</a>
+        <a href="{{ route("orders.edit", [0]) }}" class="btn btn-primary">Добавить</a>
         <div class="table-responsive">
             <table class=" table table-bordered table-striped table-hover">
                 <thead>

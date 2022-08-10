@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Авг 09 2022 г., 16:53
+-- Время создания: Авг 10 2022 г., 16:28
 -- Версия сервера: 8.0.30-0ubuntu0.20.04.2
 -- Версия PHP: 7.4.30
 
@@ -21,7 +21,7 @@ SET time_zone = "+00:00";
 --
 -- База данных: `warehouse`
 --
-CREATE DATABASE IF NOT EXISTS `warehouse` DEFAULT CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci;
+CREATE DATABASE IF NOT EXISTS `warehouse` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `warehouse`;
 
 -- --------------------------------------------------------
@@ -185,14 +185,15 @@ INSERT INTO `options` (`id`, `field`, `value`, `type`, `description`, `groupId`,
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `orderitem`
+-- Структура таблицы `orderItem`
 --
 
-CREATE TABLE `orderitem` (
+CREATE TABLE `orderItem` (
   `id` int NOT NULL,
   `orderId` int NOT NULL,
   `itemId` int NOT NULL,
   `quantity` double NOT NULL,
+  `quantity_loss` int NOT NULL DEFAULT '0',
   `price` double NOT NULL,
   `note` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
@@ -206,7 +207,7 @@ CREATE TABLE `orderitem` (
 CREATE TABLE `orderlocks` (
   `orderId` bigint NOT NULL,
   `userId` bigint UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -303,21 +304,6 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (55, 1),
 (1, 4);
 
--- --------------------------------------------------------
-
---
--- Структура таблицы `usersmobile`
---
-
-CREATE TABLE `usersmobile` (
-  `phone` varchar(20) NOT NULL,
-  `deviceId` varchar(64) NOT NULL,
-  `token` varchar(50) NOT NULL,
-  `code` int NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
 --
 -- Индексы сохранённых таблиц
 --
@@ -370,9 +356,9 @@ ALTER TABLE `options`
   ADD UNIQUE KEY `field` (`field`);
 
 --
--- Индексы таблицы `orderitem`
+-- Индексы таблицы `orderItem`
 --
-ALTER TABLE `orderitem`
+ALTER TABLE `orderItem`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `mult` (`orderId`,`itemId`),
   ADD KEY `order_id` (`orderId`),
@@ -421,12 +407,6 @@ ALTER TABLE `role_has_permissions`
   ADD KEY `role_has_permissions_role_id_foreign` (`role_id`);
 
 --
--- Индексы таблицы `usersmobile`
---
-ALTER TABLE `usersmobile`
-  ADD UNIQUE KEY `mult` (`deviceId`,`phone`);
-
---
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
@@ -461,16 +441,16 @@ ALTER TABLE `options`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT для таблицы `orderitem`
+-- AUTO_INCREMENT для таблицы `orderItem`
 --
-ALTER TABLE `orderitem`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1667062;
+ALTER TABLE `orderItem`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70730;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `permissions`
@@ -501,16 +481,23 @@ ALTER TABLE `model_has_roles`
   ADD CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `orderitem`
+-- Ограничения внешнего ключа таблицы `orderItem`
 --
-ALTER TABLE `orderitem`
-  ADD CONSTRAINT `orderItem_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `orders` (`id`) ON DELETE CASCADE;
+ALTER TABLE `orderItem`
+  ADD CONSTRAINT `orderItem_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  ADD CONSTRAINT `orderItem_ibfk_2` FOREIGN KEY (`itemId`) REFERENCES `items` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `orderlocks`
 --
 ALTER TABLE `orderlocks`
   ADD CONSTRAINT `orderLocks_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `admins` (`id`) ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`clientId`) REFERENCES `clients` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `role_has_permissions`

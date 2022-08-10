@@ -122,8 +122,31 @@ export default {
         })
       
 		},
-		clientSave(){
-			this.clients.push(this.clientEdit);
+		clientSave(client){
+			axios
+        .post('/saveClient', {
+          headers: {'X-Access-Token': Globals.api_token, "content-type": "application/json"},
+          params: {
+            client:{
+              ...client
+              
+            },
+          },
+        },
+        {headers: {'X-Access-Token': Globals.api_token, "content-type": "application/json"}})
+        .then(response => {
+          if(!response.data.error && response.data.code==200){
+            this.clients.push(response.data.client);
+            resolve(response);
+          }
+          else {
+            reject({ type:"thrown", response });
+          }
+        })
+        .catch(error => {
+          reject({ type:"catched", response:error });
+        });
+			
 		}
 	}
 }

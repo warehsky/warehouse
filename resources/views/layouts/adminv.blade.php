@@ -52,10 +52,8 @@ use Illuminate\Support\Facades\Auth;
         <script src="/js/admin/createIndicators.js"></script>
         <script>
           let orders = JSON.parse("{{ auth()->guard('admin')->user()->can('orders_all') }}");
-          let messages = JSON.parse("{{ auth()->guard('admin')->user()->can('chat_view') }}");
-          let notification = JSON.parse("{{ auth()->guard('admin')->user()->can('chat_notification') }}");
           let api_token = "<?= Auth::guard('admin')->user()->getToken() ?>";
-          setupIndicators(orders, messages, notification, api_token);//From /js/admin/createIndicators.js
+          setupIndicators(orders, api_token);//From /js/admin/createIndicators.js
         </script>
         @if(auth()->guard('admin')->user()->can('report_view'))
         <script>

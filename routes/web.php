@@ -22,7 +22,9 @@ Route::middleware(['adminauth'])->group(function () {
     Route::get('/', function(){ return view('Admin.dashboard'); })->name('home');
     Route::resource('orders', 'OrdersController');
     Route::get('getClients', 'ClientsController@getClients')->name('getClients');
+    Route::get('saveClient', 'ClientsController@saveClient')->name('saveClient');
     Route::get('getOrder', 'OrdersController@getOrder')->name('getOrder');
+    Route::any('saveOrder', 'OrdersController@saveOrder')->name('saveOrder');
 });
 //Route::get('/home', function(){ return redirect(route('admin')); })->name('home');
 
@@ -223,17 +225,4 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminauth']], function () {
     Route::get('/commentsFirm', 'Admin\CommentsController@commentsFirm')->name('commentsFirm');
     Route::resource('commentFirmAnswer', 'Admin\CommentFirmAnswersController');
 });
-Route::get('/checkOrderLock', 'Admin\AdminController@checkOrderLock')->name('checkOrderLock');
-Route::get('/ordersUnlock', 'Admin\AdminController@ordersUnlock')->name('ordersUnlock');
-Route::get('/doc', 'Admin\AdminController@doc')->name('doc');
-Route::get('/catalog', 'CatalogController@getCatalog')->name('catalog');
-Route::get('/setItemCart', 'CatalogController@setItemCart')->name('setItemCart');
-Route::get('/unsetItemCart', 'CatalogController@unsetItemCart')->name('unsetItemCart');
 
-// Route::get('/sendOrder', 'CatalogController@sendOrder')->name('sendOrder');
-Route::get('/getItemsJson', 'CatalogController@getItems')->name('getItemsJson');
-Route::get('/fixFileName', 'CatalogController@fixFileName')->name('fixFileName');
-Route::resource('/users', 'Admins');
-Route::any('/Api/Login', 'Auth\LoginController@loginapi')->name('/index.php/Api/Login');
-
-Route::get('/computeDiscount','Api\DiscountController@computeDiscount');

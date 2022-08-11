@@ -22,7 +22,9 @@ Route::middleware(['adminauth'])->group(function () {
     Route::get('/', function(){ return view('Admin.dashboard'); })->name('home');
     Route::resource('orders', 'OrdersController');
     Route::get('getClients', 'ClientsController@getClients')->name('getClients');
-    Route::get('saveClient', 'ClientsController@saveClient')->name('saveClient');
+    Route::any('saveClient', 'ClientsController@saveClient')->name('saveClient');
+    Route::get('getItems', 'ItemsController@getItems')->name('getItems');
+    Route::any('saveItem', 'ItemsController@saveItem')->name('saveItem');
     Route::get('getOrder', 'OrdersController@getOrder')->name('getOrder');
     Route::any('saveOrder', 'OrdersController@saveOrder')->name('saveOrder');
 });

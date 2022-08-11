@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Clients;
+use App\Model\Items;
 use Carbon\Carbon;
 
-class ClientsController extends BaseController
+class ItemsController extends BaseController
 {
     /**
      * Create a new controller instance.
@@ -20,42 +20,42 @@ class ClientsController extends BaseController
     /**
      * 
      */
-    public function getClients(Request $request){
+    public function getItems(Request $request){
         if (! \Auth::guard('admin')->user()->can('orders_all')) {
             return response()->json(['code'=>700]);
         }
-        $clients = Clients::orderBy('client', 'asc')->get();
-        return response()->json(['code'=>200, 'clients'=>$clients]);
+        $items = Items::orderBy('item', 'asc')->get();
+        return response()->json(['code'=>200, 'items'=>$items]);
     }
     
     /**
-     * Сохраняет Клиента
+     * Сохраняет Услугу
      */
-    public function saveClient(Request $request){
+    public function saveItem(Request $request){
         if (! \Auth::guard('admin')->user()->can('orders_all')) {
             return response()->json(['code'=>700]);
         }
-        @$client =  $request->input('params')['client'];
+        @$item =  $request->input('params')['item'];
         
-        if(!$client)
-            return json_encode( ['code' => 700, 'msg' => 'Клиент не обновлен - нет данных'], JSON_UNESCAPED_UNICODE );
-        if($client['id']>0)
-            $_client = Clients::find($client['id']);
+        if(!$item)
+            return json_encode( ['code' => 700, 'msg' => 'Услуга не обновлена - нет данных'], JSON_UNESCAPED_UNICODE );
+        if($item['id']>0)
+            $_item = Items::find($item['id']);
         else
-            $_client = null;
+            $_item = null;
             \DB::beginTransaction();
             try{
                 $data = [
     
                 ];
-                $client['operatorId'] = \Auth::guard('admin')->user()->id;
-                if($client['id']>0){
-                    if($_client)
-                        $update = $_client->update($client);
+                $item['operatorId'] = \Auth::guard('admin')->user()->id;
+                if($item['id']>0){
+                    if($_item)
+                        $update = $_item->update($item);
                     else
                         $update = false;
                 }else{
-                    $_client = Clients::create($client);
+                    $_item = Items::create($item);
                     $update = true;
                 }
                 

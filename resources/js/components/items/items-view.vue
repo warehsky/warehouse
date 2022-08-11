@@ -40,7 +40,7 @@
 			
 			<div class="client-edit-row">
 				<input type="button" value="Отмена" @click="editMode=!editMode">
-				<input type="button" value="Сохранить" @click="itemSave();editMode=!editMode">
+				<input type="button" value="Сохранить" @click="itemSave(itemEdit);editMode=!editMode">
 			</div>
 		</div>
 	</div>
@@ -52,9 +52,7 @@ import circleLoading from '../UI/mini/circle-loading.vue';
 export default {
   components: { circleLoading },
 	computed:{
-		reportWaves(){
-			return this.groupWaves(this.ordersLimit.waves)
-		}
+		
 	},
 	data(){
 		return{
@@ -79,7 +77,7 @@ export default {
 		getItems(){
 			this.updating = true;
 			axios
-        .get('/getOrderItems', {
+        .get('/getItems', {
           headers: {'X-Access-Token': Globals.api_token, "content-type": "application/json"},
           params: {
             
@@ -101,8 +99,30 @@ export default {
         })
       
 		},
-		itemSave(){
-			this.items.push(this.itemEdit);
+		itemSave(item){
+			axios
+			.post('/saveItem', {
+			headers: {'X-Access-Token': Globals.api_token, "content-type": "application/json"},
+			params: {
+				item:{
+				...item
+				
+				},
+			},
+			},
+			{headers: {'X-Access-Token': Globals.api_token, "content-type": "application/json"}})
+			.then(response => {
+			if(!response.data.error && response.data.code==200){
+				this.items.push(response.data.item);
+			}
+			else {
+				alert(response.data.msg);
+			}
+			})
+			.catch(error => {
+			alert(error);
+			});
+			
 		}
 	}
 }

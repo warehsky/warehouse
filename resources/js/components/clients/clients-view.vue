@@ -61,7 +61,7 @@
 			</div>
 			<div class="client-edit-row">
 				<input type="button" value="Отмена" @click="editMode=!editMode">
-				<input type="button" value="Сохранить" @click="clientSave();editMode=!editMode">
+				<input type="button" value="Сохранить" @click="clientSave(clientEdit);editMode=!editMode">
 			</div>
 		</div>
 	</div>
@@ -137,14 +137,13 @@ export default {
         .then(response => {
           if(!response.data.error && response.data.code==200){
             this.clients.push(response.data.client);
-            resolve(response);
           }
           else {
-            reject({ type:"thrown", response });
+            alert(response.data.msg);
           }
         })
         .catch(error => {
-          reject({ type:"catched", response:error });
+          alert(error);
         });
 			
 		}

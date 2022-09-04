@@ -24,6 +24,7 @@ Vue.prototype.$course = window.course;
 Vue.component('modal', require('./components/UI/panels/modal.vue').default);
 Vue.component('orders', require('./components/orders/orders.vue').default);
 Vue.component('order', require('./components/orders/order.vue').default);
+Vue.component('expense', require('./components/expenses/expense.vue').default);
 Vue.component('article-editor', require('./components/article-editor/article-editor.vue').default);
 Vue.component('chat',require('./components/chat/chat.vue').default);
 Vue.component('zones-editor',require("./components/zonesEditor/zones-editor.vue").default);

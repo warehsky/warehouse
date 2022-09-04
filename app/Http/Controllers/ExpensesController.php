@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Expenses;
-use App\Model\OrderItem;
+use App\Model\ExpenseItem;
 use Carbon\Carbon;
 
 class ExpensesController extends BaseController
@@ -44,75 +44,75 @@ class ExpensesController extends BaseController
         return view('expenses.order', $data);
     }
     /**
-     * Возвращает заказ по ID
+     * Возвращает ордер по ID
     */
-    public function getOrder(Request $request){
+    public function getExpense(Request $request){
         if (! \Auth::guard('admin')->user()->can('orders_all')) {
             return response()->json(['code'=>700]);
         }
-        $id = $request->input('orderId') ?? 0;
-        $order = Expenses::where("id", $id)->with("orderItems")->first();
+        $id = $request->input('expenseId') ?? 0;
+        $expense = Expenses::where("id", $id)->with("expenseItems")->first();
         
-        return response()->json(['code'=>200, 'order'=>$order]);
+        return response()->json(['code'=>200, 'expense'=>$expense]);
     }
     /**
-     * Сохраняет заказ
+     * Сохраняет ордер
      */
-    public function saveOrder(Request $request){
+    public function saveExpense(Request $request){
         if (! \Auth::guard('admin')->user()->can('orders_all')) {
             return response()->json(['code'=>700]);
         }
-        @$order = $request->input('params')['order'];
+        @$expense = $request->input('params')['expense'];
         
-        if(!$order)
-            return json_encode( ['code' => 700, 'msg' => 'заказ не обновлен - нет данных'], JSON_UNESCAPED_UNICODE );
-        if($order['id']>0)
-            $_order = Expenses::find($order['id']);
+        if(!$expense)
+            return json_encode( ['code' => 700, 'msg' => 'ордер не обновлен - нет данных'], JSON_UNESCAPED_UNICODE );
+        if($expense['id']>0)
+            $_expense = Expenses::find($expense['id']);
         else
-            $_order = null;
-        if($_order && ($_order["status"] == 100 ))
-            return json_encode( ['code' => 700, 'msg' => 'заказ не обновлен - редактирование запрещено'], JSON_UNESCAPED_UNICODE );
+            $_expense = null;
+        if($_expense && ($_expense["status"] == 100 ))
+            return json_encode( ['code' => 700, 'msg' => 'ордер не обновлен - редактирование запрещено'], JSON_UNESCAPED_UNICODE );
         \DB::beginTransaction();
         try{
             $data = [
 
             ];
-            $order['operatorId'] = \Auth::guard('admin')->user()->id;
-            if($order['id']>0){
-                if($_order)
-                    $update = $_order->update($order);
+            $expense['operatorId'] = \Auth::guard('admin')->user()->id;
+            if($expense['id']>0){
+                if($_expense)
+                    $update = $_expense->update($expense);
                 else
                     $update = false;
             }else{
-                $_order = Expenses::create($order);
+                $_expense = Expenses::create($expense);
                 $update = true;
             }
             if($update){
                 // Сохраняем перечень услуг
                 $sum = 0;
                 $ids = [];
-                foreach($order['order_items'] as $item){
+                foreach($expense['expense_items'] as $item){
                     // @$itm = json_decode($item);
                     // if(!$itm) continue;
                     $price = $item['price'];
                     $sum += $price * $item['quantity'];
-                    $sql = "INSERT INTO orderItem (`orderId`, `itemId`, `price`, `quantity`) " .
-                    "VALUES ({$_order['id']}, {$item['itemId']}, {$price}, {$item['quantity']}) ".
+                    $sql = "INSERT INTO expenseItem (`expenseId`, `itemId`, `price`, `quantity`) " .
+                    "VALUES ({$_expense['id']}, {$item['itemId']}, {$price}, {$item['quantity']}) ".
                     "ON DUPLICATE KEY UPDATE `price`=VALUES(`price`), `quantity`=VALUES(`quantity`)";
                     $result = \DB::connection()->select( $sql );
                     $ids[] = $item['itemId'];
                 }
-                $orderItems = OrderItem::where('orderId', $order['id'])->get();
-                foreach($orderItems as $orderItem){
-                    if(!in_array($orderItem->itemId, $ids)){
-                        OrderItem::where('orderId', $order['id'])->where('itemId', $orderItem->itemId)->delete();
+                $expenseItems = ExpenseItem::where('expenseId', $expense['id'])->get();
+                foreach($expenseItems as $expenseItem){
+                    if(!in_array($expenseItem->itemId, $ids)){
+                        ExpenseItem::where('expenseId', $expense['id'])->where('itemId', $expenseItem->itemId)->delete();
                     }
                 }
-                $order=[
+                $expense=[
                     
                     "sum_total" => $sum,
                 ];
-                $update = $_order->update($order);
+                $update = $_expense->update($expense);
             }
 
         }catch(\Exception $e){

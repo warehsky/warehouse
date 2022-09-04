@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-body">
-        <a href="{{ route("expenses.edit", [0]) }}" class="btn btn-primary">Добавить</a>
+        <a href="{{ route("expenses.edit", [0]) }}" class="btn btn-primary btn-sm">Добавить</a>
         <div class="table-responsive">
             <table class=" table table-bordered table-striped table-hover">
                 <thead>

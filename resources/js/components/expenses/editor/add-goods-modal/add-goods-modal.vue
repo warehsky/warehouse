@@ -380,7 +380,6 @@ export default {
 
 	color: #931515;
 	justify-content: space-between;
-  padding-left: 50px ;
  }
 
  .modal-footer {

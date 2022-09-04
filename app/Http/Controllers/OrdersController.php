@@ -122,4 +122,22 @@ class OrdersController extends BaseController
         \DB::commit();
         return json_encode( ['code' => 200, 'msg' => 'Заказ обновлен'], JSON_UNESCAPED_UNICODE );
     }
+    /**
+     * Возвращает остатки Клиента
+    */
+    public function getReminds(Request $request){
+        if (! \Auth::guard('admin')->user()->can('orders_all')) {
+            return response()->json(['code'=>700]);
+        }
+        $id = $request->input('clientId') ?? 0;
+        $reminds = OrderItem::select('*', \DB::raw('count(orderItem.id) as wcount'), \DB::raw("(select count(expenseItem.id) from expenseItem join expenses on expenses.id=expenseItem.expenseId where expenseItem.itemId=orderItem.itemId and expenses.clientId=$id) as expenseCount"))
+        ->join('orders', "orders.id", "orderItem.orderId")
+        ->where("orders.clientId", $id)
+        ->where(\DB::raw("count(orderItem.id)-(select count(expenseItem.id) from expenseItem join expenses on expenses.id=expenseItem.expenseId where expenseItem.itemId=orderItem.itemId and expenses.clientId=$id)"), ">", 0)
+        ->groupBy("itemId")
+        ->with("items")
+         ->first();
+        
+        return response()->json(['code'=>200, 'reminds'=>$reminds], JSON_UNESCAPED_UNICODE );
+    }
 }

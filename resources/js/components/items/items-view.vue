@@ -22,7 +22,7 @@
 				<tr v-for="item in items" :key="item.id" :client="item">
 					<td>{{item.id}}</td>
 					<td>{{item.item}}</td>
-					<td><input type="button" value="Выбрать" @click="$emit('select',item)"></td>
+					<td><input class="btn-choose" type="button" value="Выбрать" @click="$emit('select',item)"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -151,5 +151,10 @@ export default {
 }
 .item-edit-row{
 	padding: 5px;
+}
+.btn-choose{
+	height: 20px;
+    font-size: 12px!important;
+    line-height: 1!important;
 }
 </style>

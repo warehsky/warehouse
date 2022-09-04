@@ -1,5 +1,5 @@
 
-@foreach($orders as $el)
+@foreach($expenses as $el)
     <tr>
         <td>{{ $el->id}}</td>
         <td>{{ $el->created_at}}</td>
@@ -19,6 +19,6 @@
 @endforeach
     <tr>
        <td colspan="7" align="right">
-        {!! $orders->links() !!}
+        {!! $expenses->links() !!}
        </td>
     </tr>

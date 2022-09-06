@@ -130,13 +130,12 @@ class OrdersController extends BaseController
             return response()->json(['code'=>700]);
         }
         $id = $request->input('clientId') ?? 0;
-        $reminds = OrderItem::select('*', \DB::raw('count(orderItem.id) as wcount'), \DB::raw("(select count(expenseItem.id) from expenseItem join expenses on expenses.id=expenseItem.expenseId where expenseItem.itemId=orderItem.itemId and expenses.clientId=$id) as expenseCount"))
+        $reminds = OrderItem::select('*', "items.item", \DB::raw('count(orderItem.id) as wcount'), \DB::raw('count(orderItem.id) as remind'))
         ->join('orders', "orders.id", "orderItem.orderId")
+        ->join("items", "items.id", "orderItem.itemId")
         ->where("orders.clientId", $id)
-        ->where(\DB::raw("count(orderItem.id)-(select count(expenseItem.id) from expenseItem join expenses on expenses.id=expenseItem.expenseId where expenseItem.itemId=orderItem.itemId and expenses.clientId=$id)"), ">", 0)
         ->groupBy("itemId")
-        ->with("items")
-         ->first();
+         ->get();
         
         return response()->json(['code'=>200, 'reminds'=>$reminds], JSON_UNESCAPED_UNICODE );
     }

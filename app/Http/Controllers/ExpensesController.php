@@ -72,6 +72,7 @@ class ExpensesController extends BaseController
             $_expense = null;
         if($_expense && ($_expense["status"] == 100 ))
             return json_encode( ['code' => 700, 'msg' => 'ордер не обновлен - редактирование запрещено'], JSON_UNESCAPED_UNICODE );
+            
         \DB::beginTransaction();
         try{
             $data = [

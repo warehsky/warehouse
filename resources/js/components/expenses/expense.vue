@@ -62,7 +62,7 @@
       @close="modalOpened.items = false"
       @confirm="modalOpened.items = false">
       <template #header>
-        <h2 class="modalHeaderItem">Услуги</h2>
+        <h2 class="modalHeaderItem">Остатки</h2>
       </template>
       <template #body>
         <items-view ref="report"
@@ -77,7 +77,7 @@
 import CircleLoading from '../UI/mini/circle-loading.vue';
 import modal from "../UI/panels/modal.vue";
 import clientsView from "../clients/clients-view.vue";
-import itemsView from "../items/items-view.vue";
+import itemsView from "../items/reminds-view.vue";
 export default {
   name:"expense",
   props:{
@@ -119,7 +119,7 @@ export default {
     getexpense(params){
 			return new Promise((resolve,reject)=>{
 				axios
-					.get("/getexpense",{ params })
+					.get("/getExpense",{ params })
 					.then(({data})=>{
             this.expense = data.expense;
             
@@ -131,7 +131,7 @@ export default {
       return new Promise((resolve,reject)=>{
         if(!expense) reject(new Error("(setexpense) Не передан expense"));
         axios
-        .post('/saveexpense', {
+        .post('/saveExpense', {
           headers: {'X-Access-Token': Globals.api_token, "content-type": "application/json"},
           params: {
             expense:{
@@ -222,7 +222,7 @@ export default {
     },
     onSelectItem(item){
       this.modalOpened.items = false;
-      let itm = {"itemId":item.id, "item":item.item, "quantity":0, "price":0, "note":''};
+      let itm = {"itemId":item.itemId, "item":item.item, "quantity":0, "price":item.price, "note":''};
       this.expense.expense_items.push(itm);
     },
     /**
@@ -231,8 +231,8 @@ export default {
      * TODO: replace /Api/getAlerts
      */
     async correct(expense){
-      let { data:{ corrects } } = await axios.get("/Api/getAlerts",{ headers:{ 'X-Access-Token': Globals.api_token } })
-      this.openexpense(expense, expense.id in corrects?this.modes.applyCorrect:this.modes.correct);
+      // let { data:{ corrects } } = await axios.get("/Api/getAlerts",{ headers:{ 'X-Access-Token': Globals.api_token } })
+      // this.openexpense(expense, expense.id in corrects?this.modes.applyCorrect:this.modes.correct);
     },
     _onClickEdit(expense, isClone=false){
       let mode;

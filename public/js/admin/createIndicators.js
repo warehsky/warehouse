@@ -17,7 +17,7 @@ window.setupIndicators = function(orders){
 				
 			}
 		});
-		setTimeout(()=>{ request() },6000);
+		// setTimeout(()=>{ request() },6000);
 	}
 	request();
 	delete window.setupIndicators;

@@ -6,12 +6,12 @@
     <div id="goods">
         <expense 
             api_token="{{$api_token}}"
-            :order_id="{{$orderId}}"
+            :expense_id="{{$orderId}}"
             d_from="{{$dFrom}}"
             d_to="{{$dTo}}"
             status="{{$status}}"
             wareh_url="{{ env('WAREH_URL',false) }}">
-</expense>
+        </expense>
     </div>    
         
 <!-- </div> -->

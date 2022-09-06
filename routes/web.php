@@ -29,6 +29,9 @@ Route::middleware(['adminauth'])->group(function () {
     Route::get('getOrder', 'OrdersController@getOrder')->name('getOrder');
     Route::any('saveOrder', 'OrdersController@saveOrder')->name('saveOrder');
     Route::get('getReminds', 'OrdersController@getReminds')->name('getReminds');
+    Route::any('saveExpense', 'ExpensesController@saveExpense')->name('saveExpense');
+    Route::get('getExpense', 'ExpensesController@getExpense')->name('getExpense');
+
 });
 //Route::get('/home', function(){ return redirect(route('admin')); })->name('home');
 

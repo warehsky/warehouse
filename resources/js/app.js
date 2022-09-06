@@ -25,13 +25,9 @@ Vue.component('modal', require('./components/UI/panels/modal.vue').default);
 Vue.component('orders', require('./components/orders/orders.vue').default);
 Vue.component('order', require('./components/orders/order.vue').default);
 Vue.component('expense', require('./components/expenses/expense.vue').default);
-Vue.component('article-editor', require('./components/article-editor/article-editor.vue').default);
-Vue.component('chat',require('./components/chat/chat.vue').default);
-Vue.component('zones-editor',require("./components/zonesEditor/zones-editor.vue").default);
-Vue.component('zone-list-item',require("./components/zonesEditor/zone-list-item.vue").default);
-Vue.component('zones-editor-page',require("./components/zonesEditor/zones-editor-page.vue").default);
+
 Vue.component('warehouse',require('./components/warehouse/warehouse.vue').default);
-Vue.component('warehousepacks',require('./components/warehouse/packs/warehousepacks.vue').default);
+
 Vue.component('v-html',require("./components/UI/mini/v-html.js").default);
 Vue.component('v-style',require("./components/UI/mini/v-style.js").default);
 Vue.component('group-box', require("./components/UI/mini/group-box.vue").default);

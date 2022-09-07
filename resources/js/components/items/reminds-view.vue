@@ -11,7 +11,7 @@
 		<div>
 			<input type="button" value="Добавить" @click="editMode=!editMode">
 		</div>
-		<table v-if="!updating && items.length>0" class="report-table">
+		<table v-if="!updating && items.length!=0" class="report-table">
 			<thead>
 				<td>ID</td>
 				<td>Наименование</td>

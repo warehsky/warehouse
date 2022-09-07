@@ -30,18 +30,22 @@
 				<tr v-for="item in expense.expense_items" :key="item.id" :item="item">
 					<td>{{item.id}}</td>
 					<td>{{item.item}}</td>
-					<td>{{item.quantity}}</td>
-					<td>{{item.price}}</td>
+          <td class="tdinput">
+            <input type="number" v-model="item.quantity" min="0"/>
+          </td>
+					<td class="tdinput">
+            <input type="number" v-model="item.price" min="0"/>
+          </td>
 					<td>{{item.note}}</td>
 					<td></td>
 				</tr>
 			</tbody>
 		  </table>
-      <div class="order_add"><input class="btn btn-primary btn-sm" type="button" value="Добавить" @click="modalOpened.items = true;"/></div>
+      <div class="order_add"><input class="btn btn-primary btn-sm" type="button" value="Добавить" @click="addGoods();"/></div>
     </div>
     <div class="order_bottom"><input class="btn btn-success btn-sm" type="button" value="Сохранить" @click="saveexpense(expense);"/></div>
     <modal class="waves-report-modal"
-      v-show="modalOpened.clients"
+      v-if="modalOpened.clients"
       :show="['cancel']"
       cancel='Выход'
       @close="modalOpened.clients = false"
@@ -56,7 +60,7 @@
       </template>
     </modal>
     <modal class="waves-report-modal"
-      v-show="modalOpened.items"
+      v-if="modalOpened.items"
       :show="['cancel']"
       cancel='Выход'
       @close="modalOpened.items = false"
@@ -66,6 +70,7 @@
       </template>
       <template #body>
         <items-view ref="report"
+          :client_id="expense.clientId"
           @select="onSelectItem">
         </items-view>
       </template>
@@ -163,6 +168,14 @@ export default {
         .then(()=>resolve?.())
         .catch(error=>reject?.(error));
     },
+    addGoods(){
+      if(this.expense.clientId==0)
+      {
+        alert('Клиент не выбран');
+        return;
+      } 
+      this.modalOpened.items = true;
+    },
     refuseexpense(expense){//обработка клика кнопки отмены заказа
       if(!confirm("Подтвердите отмену заказа №"+expense.id+" !"))
         return;
@@ -222,7 +235,7 @@ export default {
     },
     onSelectItem(item){
       this.modalOpened.items = false;
-      let itm = {"itemId":item.itemId, "item":item.item, "quantity":0, "price":item.price, "note":''};
+      let itm = {"itemId":item.itemId, "item":item.item, "quantity":item.quantity, "price":item.price, "note":item.note};
       this.expense.expense_items.push(itm);
     },
     /**
@@ -284,5 +297,8 @@ button.unlock{
 }
 .btn-points{
   line-height: 0.5!important;
+}
+.tdinput,.tdinput input {
+  width: 100px;
 }
 </style>

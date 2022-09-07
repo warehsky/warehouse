@@ -15,6 +15,8 @@
 			<thead>
 				<td>ID</td>
 				<td>Наименование</td>
+				<td>Цена</td>
+				<td>Остаток</td>
 				<td>Действие</td>
 				<!-- <td></td> -->
 			</thead>
@@ -22,11 +24,13 @@
 				<tr v-for="item in items" :key="item.id" :client="item">
 					<td>{{item.itemId}}</td>
 					<td>{{item.item}}</td>
+					<td>{{item.price}}</td>
+					<td>{{item.remind}}</td>
 					<td><input class="btn-choose" type="button" value="Выбрать" @click="$emit('select',item)"></td>
 				</tr>
 			</tbody>
 		</table>
-		<span v-if="!updating && !items.length" style="color:#931515; font-weight:bold;">Нет услуг для заданного критерия отбора.</span>
+		<span v-if="!updating && items.length==0" style="color:#931515; font-weight:bold;">Нет услуг для заданного критерия отбора.</span>
 		<circle-loading v-if="updating" :radius="41" :ringWeight="14"></circle-loading>
 		</div>
 		<div class="item-edit"  v-show="editMode">
@@ -83,7 +87,7 @@ export default {
         .get('/getReminds', {
           headers: {'X-Access-Token': Globals.api_token, "content-type": "application/json"},
           params: {
-            
+            clientId:this.client_id
           },
         },
         {headers: {'X-Access-Token': Globals.api_token, "content-type": "application/json"}})

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Orders;
 use App\Model\OrderItem;
+use App\Model\ExpenseItem;
 use Carbon\Carbon;
 
 class OrdersController extends BaseController
@@ -96,9 +97,9 @@ class OrdersController extends BaseController
                     // if(!$itm) continue;
                     $price = $item['price'];
                     $sum += $price * $item['quantity'];
-                    $sql = "INSERT INTO orderItem (`orderId`, `itemId`, `price`, `quantity`) " .
-                    "VALUES ({$_order['id']}, {$item['itemId']}, {$price}, {$item['quantity']}) ".
-                    "ON DUPLICATE KEY UPDATE `price`=VALUES(`price`), `quantity`=VALUES(`quantity`)";
+                    $sql = "INSERT INTO orderItem (`orderId`, `itemId`, `price`, `quantity`,`note`) " .
+                    "VALUES ({$_order['id']}, {$item['itemId']}, {$price}, {$item['quantity']}, '{$item['note']}') ".
+                    "ON DUPLICATE KEY UPDATE `price`=VALUES(`price`), `quantity`=VALUES(`quantity`), `note`=VALUES(`note`)";
                     $result = \DB::connection()->select( $sql );
                     $ids[] = $item['itemId'];
                 }
@@ -130,13 +131,33 @@ class OrdersController extends BaseController
             return response()->json(['code'=>700]);
         }
         $id = $request->input('clientId') ?? 0;
-        $reminds = OrderItem::select('*', "items.item", \DB::raw('count(orderItem.id) as wcount'), \DB::raw('count(orderItem.id) as remind'))
+
+        $reminds = OrderItem::select('orderItem.price', 'orderItem.itemId', 'orderItem.quantity', 'orderItem.note', 'items.item', \DB::raw('sum(orderItem.quantity) as wcount'))
         ->join('orders', "orders.id", "orderItem.orderId")
         ->join("items", "items.id", "orderItem.itemId")
         ->where("orders.clientId", $id)
-        ->groupBy("itemId")
+        ->groupBy("orderItem.itemId")
+        ->groupBy("orderItem.price")
          ->get();
+         $expenses = ExpenseItem::select('*', \DB::raw('sum(quantity) as ecount'))
+        ->join('expenses', "expenses.id", "expenseItem.expenseId")
+        ->where("expenses.clientId", $id)
+        ->groupBy("itemId")
+        ->groupBy("price")
+        ->get();
+        $exs = [];
+        foreach($expenses as $ex)
+            $exs[$ex->itemId] = $ex;
         
+        foreach($reminds as $i=>$r){
+            if(key_exists($r->itemId, $exs))
+                $r->remind = (double)$r->wcount - (double)$exs[$r->itemId]->ecount;
+            else
+                $r->remind = (double)$r->wcount;
+            if($r->remind <= 0)
+                unset($reminds[$i]);
+        }
+        // array_values($reminds);
         return response()->json(['code'=>200, 'reminds'=>$reminds], JSON_UNESCAPED_UNICODE );
     }
 }

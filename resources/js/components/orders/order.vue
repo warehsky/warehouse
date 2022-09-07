@@ -28,9 +28,15 @@
 				<tr v-for="item in order.order_items" :key="item.id" :item="item">
 					<td>{{item.id}}</td>
 					<td>{{item.item}}</td>
-					<td>{{item.quantity}}</td>
-					<td>{{item.price}}</td>
-					<td>{{item.note}}</td>
+					<td class="tdinput">
+            <input type="number" v-model="item.quantity" min="0"/>
+          </td>
+					<td class="tdinput">
+            <input type="number" v-model="item.price" min="0"/>
+          </td>
+					<td>
+            <input type="text" v-model="item.note"/>
+          </td>
 					<td></td>
 				</tr>
 			</tbody>
@@ -271,5 +277,8 @@ export default {
 }
 button.unlock{
   position: relative;
+}
+.tdinput,.tdinput input {
+  width: 100px;
 }
 </style>

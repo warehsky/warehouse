@@ -95,6 +95,7 @@ class ExpensesController extends BaseController
                 foreach($expense['expense_items'] as $item){
                     // @$itm = json_decode($item);
                     // if(!$itm) continue;
+                    
                     $price = $item['price'];
                     $sum += $price * $item['quantity'];
                     $sql = "INSERT INTO expenseItem (`expenseId`, `itemId`, `price`, `quantity`) " .

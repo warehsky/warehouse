@@ -27,11 +27,17 @@ class CargosController extends BaseController
         $cargos = Cargos::where("deleted", 0)->orderBy('cargo', 'asc')->get();
         return response()->json(['code'=>200, 'cargos'=>$cargos]);
     }
-    
+    public function index()
+    {
+        $cargos = Cargos::orderBy('updated_at', 'desc')->paginate(20);
+
+        return view('cargos/index', ['cargos' => $cargos]);
+
+    }
     /**
      * Сохраняет 
      */
-    public function saveItem(Request $request){
+    public function saveCargo(Request $request){
         if (! \Auth::guard('admin')->user()->can('orders_all')) {
             return response()->json(['code'=>700]);
         }

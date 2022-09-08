@@ -245,7 +245,7 @@ export default {
         });
     },
     freeOrder(order){
-      return axios.get("/ordersUnlock",{ params:{ orderId:order.id || -1 } })//разблокировать зказ
+      return axios.get("/orderUnlock",{ params:{ orderId:order.id || -1 } })//разблокировать зказ
         .then(({ data })=>{
           if(!data.success){
             console.error(data);

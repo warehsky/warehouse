@@ -27,12 +27,20 @@ Route::middleware(['adminauth'])->group(function () {
     Route::get('getItems', 'ItemsController@getItems')->name('getItems');
     Route::any('saveItem', 'ItemsController@saveItem')->name('saveItem');
     Route::get('getOrder', 'OrdersController@getOrder')->name('getOrder');
+    Route::get('orderUnlock', 'OrdersController@orderUnlock')->name('orderUnlock');
     Route::any('saveOrder', 'OrdersController@saveOrder')->name('saveOrder');
     Route::get('getReminds', 'OrdersController@getReminds')->name('getReminds');
     Route::any('saveExpense', 'ExpensesController@saveExpense')->name('saveExpense');
     Route::get('getExpense', 'ExpensesController@getExpense')->name('getExpense');
+    Route::get('expenseUnlock', 'ExpensesController@expenseUnlock')->name('expenseUnlock');
 
+    Route::resource('permissions', 'Admin\PermissionsController');
+    Route::delete('permissions_mass_destroy', 'Admin\PermissionsController@massDestroy')->name('permissions.mass_destroy');
+    Route::resource('roles', 'Admin\RolesController');
+    Route::delete('roles_mass_destroy', 'Admin\RolesController@massDestroy')->name('roles.mass_destroy');
 });
+
+    
 //Route::get('/home', function(){ return redirect(route('admin')); })->name('home');
 
 //Route::get('loginadmin', 'Auth\LoginController@loginadmin')->name('login.admin');
@@ -44,37 +52,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminauth']], function () {
         return view('Admin.dashboard');
     });
     Route::resource('userAdmins', 'Admin\UsersController');
-    
-    Route::delete('itemgroups_mass_destroy', 'Admin\ItemGroupsController@massDestroy')->name('itemgroups.mass_destroy');
-    Route::resource('items', 'Admin\ItemsLinkController');
-    Route::get('itemsSearch', 'Admin\ItemsLinkController@itemsSearch')->name('items.search');
-    Route::get('/suggests', 'Admin\ItemGroupsController@suggests')->name('suggests');
-    
-    Route::resource('banners', 'Admin\BannersController');
-    Route::delete('bannersMassDestroy','Admin\BannersController@massDestroy')->name('banners.MassDestroy');
-    Route::resource('bannerItems', 'Admin\BannerItemsController');
-    Route::delete('bannerItemsMassDestroy','Admin\BannerItemsController@massDestroy')->name('bannerItems.MassDestroy');
-    
-
-
-    //Пользователи
-    Route::get('WebUsers','Admin\WebUsersController@showWebUsers')->name('WebUsers');
-    Route::get('WebUsers/{id}','Admin\WebUsersController@show')->name('WebUsers_show');
-    Route::post('WebUsers/addDiscount','Admin\WebUsersController@addDiscount')->name('WebUsers_addDiscount');
-    Route::get('WebUsers/sendSMS/{id}','Admin\WebUsersController@WebUsersSMS')->name('WebUsers_WebUsersSMS');
-    Route::get('WebUserNote','Admin\WebUsersController@WebUserNote')->name('WebUserNote');
-    Route::delete('WebUserNoteDelete/{id}','Admin\WebUsersController@WebUserNoteDelete')->name('WebUserNoteDelete');
-    Route::get('changeStatusDiscount','Admin\WebUsersController@changeStatusDiscount')->name('changeStatusDiscount');
-    Route::get('getHistorySms','Admin\WebUsersController@getHistorySms')->name('getHistorySms');
-    Route::get('/getStockForPerson','Admin\WebUsersController@getStockForPerson')->name('getStockForPerson');
-    Route::get('/addNewNoteForWebUser','Admin\WebUsersController@addNewNoteForWebUser')->name('addNewNoteForWebUser');
-    Route::get('/getHistoryNoteForPerson','Admin\WebUsersController@getHistoryNoteForPerson')->name('getHistoryNoteForPerson');
-    Route::get('/updateNoteForWebUser','Admin\WebUsersController@updateNoteForWebUser')->name('updateNoteForWebUser');
-    Route::get('/changeStatusWebUsersNote','Admin\WebUsersController@changeStatusWebUsersNote')->name('changeStatusWebUsersNote');
-    Route::get('/getAllLostDelivery','Admin\WebUsersController@getAllLostDelivery')->name('getAllLostDelivery');
-    Route::get('/changeWebUserAutoown','Admin\WebUsersController@changeWebUserAutoown')->name('changeWebUserAutoown');
-    Route::get('/getSettings','Admin\WebUsersController@getSettings')->name('getSettings');
-
     
  
     //Отчеты

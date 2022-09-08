@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Orders;
 use App\Model\OrderItem;
 use App\Model\ExpenseItem;
+use App\Model\OrderLocks;
 use Carbon\Carbon;
 
 class OrdersController extends BaseController
@@ -52,7 +53,11 @@ class OrdersController extends BaseController
             return response()->json(['code'=>700]);
         }
         $id = $request->input('orderId') ?? 0;
-        $order = Orders::where("id", $id)->with("orderItems")->first();
+        $order = Orders::select("orders.*", "clients.client")
+        ->join("clients", "clients.id", "orders.clientId")
+        ->where("orders.id", $id)
+        ->with("orderItems")
+        ->first();
         
         return response()->json(['code'=>200, 'order'=>$order]);
     }
@@ -159,5 +164,16 @@ class OrdersController extends BaseController
         }
         // array_values($reminds);
         return response()->json(['code'=>200, 'reminds'=>$reminds], JSON_UNESCAPED_UNICODE );
+    }
+    /**
+     * Разблокировка заказов
+     */
+    public function orderUnlock(Request $request){
+        $orderId = $request->input('orderId') ?? 0;
+        if($orderId > 0)
+            OrderLocks::where('orderId', $orderId)->delete();
+        else
+            OrderLocks::query()->truncate();
+        return json_encode( ['success' => true], JSON_UNESCAPED_UNICODE );
     }
 }

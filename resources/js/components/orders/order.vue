@@ -1,16 +1,17 @@
 <template>
   <div class="orders">
     <div class="order-head">
-      <span>№ заказа</span><span>{{this.order?this.order.id:''}}</span>
+      <span>№ заказа</span><span>{{this.order?this.order.id:''}}</span><span>&nbsp;&nbsp;&nbsp;</span>
       <span>Дата заказа</span>
       <span><input 
               name="Дата"
               type="date"
               v-model="order.orderDate"
               min="today.toShortDateString()"/>
-      </span>
-      <span>Клиент</span><span>[#{{this.order?this.order.clientId:''}}]{{this.order?this.order.client:''}}</span>
-      <input type="button" value="Выбрать" @click="modalOpened.clients = true;"/>
+      </span><span>&nbsp;&nbsp;&nbsp;</span>
+      <span>Клиент </span>
+      <button type="button" @click="modalOpened.clients = true;" class="btn btn-points">...</button>
+      <span>[#{{this.order?this.order.clientId:''}}]{{!this.order || this.order.clientId==0 ? "не выбран" : this.order.client}}</span>
     </div>
     <div class="order-list">
       <div>Услуги</div>
@@ -41,9 +42,12 @@
 				</tr>
 			</tbody>
 		  </table>
-      <div><input type="button" value="Добавить" @click="modalOpened.items = true;"/></div>
+      <div  class="order_add"><input type="button" value="Добавить" @click="modalOpened.items = true;"/></div>
     </div>
-    <div><input type="button" value="Сохранить" @click="saveOrder(order);"/></div>
+    <div class="order_bottom">
+      <input type="button" value="Сохранить" @click="saveOrder(order);"/>
+      <input type="button" value="Отмена" @click="onCancelEdit(order);"/>
+    </div>
     <modal class="waves-report-modal"
       v-show="modalOpened.clients"
       :show="['cancel']"
@@ -181,7 +185,7 @@ export default {
         let index = this.orders.indexOf(order);
         Vue.set(this.orders,index,new Order().set(draft));// изначально draft не реактивный
       }
-      this.closeOrder();
+      // this.closeOrder();
       this.freeOrder(order);
     },
     tryTakeOrder(order, mode = this.modes.edit){
@@ -207,13 +211,14 @@ export default {
         });
     },
     freeOrder(order){
-      return axios.get("/ordersUnlock",{ params:{ orderId:order.id || -1 } })//разблокировать зказ
+      return axios.get("/orderUnlock",{ params:{ orderId:order.id || -1 } })//разблокировать зказ
         .then(({ data })=>{
           if(!data.success){
             console.error(data);
             return;
           }
           order.locked = false;
+          window.location = this.wareh_url+"/orders";
         }).catch((error)=>{
           console.log(error);
           alert("Ошибка: "+error);
@@ -280,5 +285,17 @@ button.unlock{
 }
 .tdinput,.tdinput input {
   width: 100px;
+}
+order-head, .order_bottom{
+  padding: 5px;
+  background: #e2e2e2;
+}
+.order_add{
+  text-align: right;
+  width: 100%;
+  margin: 3px 0;
+}
+.btn-points{
+  line-height: 0.5!important;
 }
 </style>

@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Items extends Model
+class Operatins extends Model
 {
     protected $table = 'items';
     public $timestamps = true;
@@ -14,7 +14,7 @@ class Items extends Model
      * @var array
      */
     protected $fillable = [
-        'item', 'cargoId', 'note', 'price'
+        'operation' 
     ];
 
 }

@@ -51,7 +51,10 @@ class ExpensesController extends BaseController
             return response()->json(['code'=>700]);
         }
         $id = $request->input('expenseId') ?? 0;
-        $expense = Expenses::where("id", $id)->with("expenseItems")->first();
+        $expense = Expenses::select("expenses.*", "clients.client")
+        ->join("clients", "clients.id", "expenses.clientId")
+        ->where("expenses.id", $id)
+        ->with("expenseItems")->first();
         
         return response()->json(['code'=>200, 'expense'=>$expense]);
     }
@@ -123,5 +126,11 @@ class ExpensesController extends BaseController
         }
         \DB::commit();
         return json_encode( ['code' => 200, 'msg' => 'Заказ обновлен'], JSON_UNESCAPED_UNICODE );
+    }
+    /**
+     * Разблокировка ордера
+    */
+    public function expenseUnlock(Request $request){
+        return json_encode( ['success' => true], JSON_UNESCAPED_UNICODE );
     }
 }

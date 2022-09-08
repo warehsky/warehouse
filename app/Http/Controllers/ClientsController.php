@@ -66,6 +66,6 @@ class ClientsController extends BaseController
                 throw $e;
             }
             \DB::commit();
-            return json_encode( ['code' => 200, 'msg' => 'Клиент обновлен'], JSON_UNESCAPED_UNICODE );
+            return json_encode( ['code' => 200, 'msg' => 'Клиент обновлен', 'client' => $_client], JSON_UNESCAPED_UNICODE );
     }
 }

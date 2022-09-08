@@ -41,9 +41,13 @@
 				</tr>
 			</tbody>
 		  </table>
-      <div class="order_add"><input class="btn btn-primary btn-sm" type="button" value="Добавить" @click="addGoods();"/></div>
+      <div class="order_add"><input type="button" value="Добавить" @click="addGoods();"/></div>
     </div>
-    <div class="order_bottom"><input class="btn btn-success btn-sm" type="button" value="Сохранить" @click="saveexpense(expense);"/></div>
+    <div class="order_bottom">
+      <input type="button" value="Сохранить" @click="saveexpense(expense);"/>
+      <input type="button" value="Отмена" @click="onCancelEdit(expense);"/>
+    </div>
+
     <modal class="waves-report-modal"
       v-if="modalOpened.clients"
       :show="['cancel']"
@@ -190,7 +194,7 @@ export default {
         let index = this.expenses.indexOf(expense);
         Vue.set(this.expenses,index,new expense().set(draft));// изначально draft не реактивный
       }
-      this.closeexpense();
+      // this.closeexpense();
       this.freeexpense(expense);
     },
     tryTakeexpense(expense, mode = this.modes.edit){
@@ -216,13 +220,14 @@ export default {
         });
     },
     freeexpense(expense){
-      return axios.get("/expensesUnlock",{ params:{ expenseId:expense.id || -1 } })//разблокировать зказ
+      return axios.get("/expenseUnlock",{ params:{ expenseId:expense.id || -1 } })//разблокировать зказ
         .then(({ data })=>{
           if(!data.success){
             console.error(data);
             return;
           }
           expense.locked = false;
+          window.location = this.wareh_url+"/expenses"
         }).catch((error)=>{
           console.log(error);
           alert("Ошибка: "+error);
@@ -294,6 +299,7 @@ button.unlock{
 .order_add{
   text-align: right;
   width: 100%;
+  margin: 3px 0;
 }
 .btn-points{
   line-height: 0.5!important;

@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Items;
 use App\Model\Cargos;
 use Carbon\Carbon;
 
-class ItemsController extends BaseController
+class CargosController extends BaseController
 {
     /**
      * Create a new controller instance.
@@ -16,22 +15,21 @@ class ItemsController extends BaseController
      */
     public function __construct()
     {
-        //$this->middleware('authapi');
+        
     }
     /**
      * 
      */
-    public function getItems(Request $request){
+    public function getCargos(Request $request){
         if (! \Auth::guard('admin')->user()->can('orders_all')) {
             return response()->json(['code'=>700]);
         }
-        $items = Items::orderBy('item', 'asc')->get();
         $cargos = Cargos::where("deleted", 0)->orderBy('cargo', 'asc')->get();
-        return response()->json(['code'=>200, 'items'=>$items, 'cargos'=>$cargos]);
+        return response()->json(['code'=>200, 'cargos'=>$cargos]);
     }
     
     /**
-     * Сохраняет Услугу
+     * Сохраняет 
      */
     public function saveItem(Request $request){
         if (! \Auth::guard('admin')->user()->can('orders_all')) {
@@ -68,6 +66,6 @@ class ItemsController extends BaseController
                 throw $e;
             }
             \DB::commit();
-            return json_encode( ['code' => 200, 'msg' => 'Клиент обновлен', 'item' => $_item], JSON_UNESCAPED_UNICODE );
+            return json_encode( ['code' => 200, 'msg' => 'Клиент обновлен'], JSON_UNESCAPED_UNICODE );
     }
 }

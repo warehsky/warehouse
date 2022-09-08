@@ -30,6 +30,7 @@
 		<circle-loading v-if="updating" :radius="41" :ringWeight="14"></circle-loading>
 		</div>
 		<div class="item-edit"  v-show="editMode">
+			<h3>Новая услуга</h3>
 			<div class="item-edit-row">
 				<label>ID:</label>{{itemEdit.id}}
 			</div>
@@ -37,7 +38,20 @@
 				<label>Наименование:</label>
 				<input type="text" v-model="itemEdit.item" />
 			</div>
-			
+			<div class="item-edit-row">
+				<label for="cargoId">Тип груза:</label>
+                <select v-model="itemEdit.cargoId" id="cargoId" name="cargoId" :value="itemEdit.cargoId || 0" >
+                  <option  v-for="(cargo) in cargos" :key="cargo.id" :value="cargo.id">{{cargo.cargo}}</option>
+                </select>
+			</div>
+			<div class="item-edit-row">
+				<label>Цена:</label>
+				<input type="number" v-model="itemEdit.price" />
+			</div>
+			<div class="item-edit-row">
+				<label>Примечание:</label>
+				<input type="text" v-model="itemEdit.note" />
+			</div>
 			<div class="client-edit-row">
 				<input type="button" value="Отмена" @click="editMode=!editMode">
 				<input type="button" value="Сохранить" @click="itemSave(itemEdit);editMode=!editMode">
@@ -57,6 +71,7 @@ export default {
 	data(){
 		return{
 			items:[],
+			cargos:[],
 			updating:false,
 			itemsLimit:{"id":0,"client":''},
 			itemEdit:{"id":0,"client":''},
@@ -88,6 +103,7 @@ export default {
 			this.updating = false;
           if(response.data.code==200){
             this.items = response.data.items;
+			this.cargos = response.data.cargos;
           }
           else {
             reject({ type:"thrown", response });

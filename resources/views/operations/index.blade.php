@@ -3,11 +3,11 @@
 
 <div class="card">
     <div class="card-header">
-        Заказы на хранение
+        Типы операций
     </div>
 
     <div class="card-body">
-        <a href="{{ route("orders.edit", [0]) }}" class="btn btn-primary">Добавить</a>
+    <a href="{{ route("operations.edit", [0]) }}" class="btn btn-primary btn-sm">Добавить</a>
         <div class="table-responsive">
             <table class=" table table-bordered table-striped table-hover">
                 <thead>
@@ -16,26 +16,15 @@
                             ID<br>
                             <input type="text" id="searchID" class="search" value="{{$_GET['id'] ?? ""}}" placeholder="ID" size="4"></input>
                         </th>
-                        <th id="sort" class="search" style="cursor: pointer;">
-                            <div>
-                                <div id="arrow"  style="min-width:150px;">Дата создания &uarr;</div>                     
-                                <input type="date" id="searchDate" class="search" value="{{$_GET['date'] ?? ""}}" placeholder="Дата создания" size="10" style="float: left;"></input>
-                            </div>
+                        <th>
+                            Наименование<br>
+                            <input type="text" id="searName" class="search" value="{{$_GET['name'] ?? ""}}" placeholder="name" size="9"></input>
                         </th>
                         <th>
-                            Клиент<br>
-                            <input type="text" id="searchWeightId" class="search" value="{{$_GET['clientId'] ?? ""}}" placeholder="ID клиента" size="10"></input>
+                            Создан<br>
                         </th>
                         <th>
-                            Услуг<br>
-                            кол-во
-                        </th>
-                        <th>
-                            Услуг<br>
-                            сумма
-                        </th>
-                        <th>
-                            Дни
+                            Состояние<br>
                         </th>
                         <th style="min-width:250px;">
                             &nbsp;
@@ -43,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody id="searchTbody">
-                    @include('orders.pagination_data')
+                    @include('operations.pagination_data')
                 </tbody>
             </table>
             <input type="hidden"  id="sorting" value={{$_GET['sorting'] ?? 'desc'}} />
@@ -67,7 +56,7 @@
         var id1c = $('#searchID1C').val();
         var weightId = $('#searchWeightId').val();
         $.ajax({
-        url:"itemsSearch?page="+page+"&id="+id+"&name="+name+"&longName="+longName+"&date="+date+"&sorting="+sorting+"&id1c="+id1c+"&weightId="+weightId,
+        url:"operationSearch?page="+page+"&id="+id+"&name="+name,
         success:function(data)
         {
             $('#searchTbody').html('');

@@ -123,7 +123,13 @@ use Illuminate\Support\Facades\Auth;
 
             @if(auth()->guard('admin')->user()->can('orders_all'))
             <li  class="nav-item" style="padding: 0px 5px 0px 5px;">
-             <a id="ReportLi" class="nav-link" href="/cargos"><p id='reportP'>Типы товара</p></a>
+             <a id="ReportLi" class="nav-link" href="/cargos"><p id='reportP'>Типы груза</p></a>
+            </li>
+            @endif
+
+            @if(auth()->guard('admin')->user()->can('orders_all'))
+            <li  class="nav-item" style="padding: 0px 5px 0px 5px;">
+             <a id="ReportLi" class="nav-link" href="/operations"><p id='reportP'>Типы операций</p></a>
             </li>
             @endif
 

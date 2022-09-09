@@ -6,25 +6,25 @@
 <link href="{{ asset('css/jquery-ui.min.css') }}" rel="stylesheet">
 <div class="card">
     <div class="card-header">
-        Редактировать тип
+        Редактировать тип операции
     </div>
     <div class="card-body">
         <form 
-        action="/cargos/{{ (isset($cargo) ? $cargo->id : 0) }}"
+        action="/operations/{{ (isset($operation) ? $operation->id : 0) }}"
         
         method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            <div class="form-group {{ $errors->has('cargo') ? 'has-error' : '' }}">
-                <label for="cargo">ID</label>
-                <span>{{ old('cargo', isset($cargo) ? $cargo->id : '') }}</span>
+            <div class="form-group {{ $errors->has('operation') ? 'has-error' : '' }}">
+                <label for="operation">ID</label>
+                <span>{{ old('operation', isset($operation) ? $operation->id : '') }}</span>
             </div>
-            <div class="form-group {{ $errors->has('cargo') ? 'has-error' : '' }}">
-                <label for="cargo">Название*</label>
-                <input type="text" id="cargo" name="cargo" maxlength="100" class="form-control" value="{{ old('cargo', isset($cargo) ? $cargo->cargo : '') }}" required >
-                @if($errors->has('cargo'))
+            <div class="form-group {{ $errors->has('operation') ? 'has-error' : '' }}">
+                <label for="operation">Название*</label>
+                <input type="text" id="operation" name="operation" maxlength="100" class="form-control" value="{{ old('operation', isset($operation) ? $operation->operation : '') }}" required >
+                @if($errors->has('operation'))
                     <em class="invalid-feedback">
-                        {{ $errors->first('cargo') }}
+                        {{ $errors->first('operation') }}
                     </em>
                 @endif
                 <p class="helper-block">
@@ -35,7 +35,7 @@
             <div>
                 <input class="btn btn-danger" type="submit" value="Сохранить">
                 <a style="margin-left:10px;" class="btn btn-default" 
-                    href="/cargos">
+                    href="/operations">
                 к списку
                 </a>
             </div>

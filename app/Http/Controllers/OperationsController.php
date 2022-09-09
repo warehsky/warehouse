@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Cargos;
+use App\Model\Operations;
 use Carbon\Carbon;
 
-class CargosController extends BaseController
+class OperationsController extends BaseController
 {
     /**
      * Create a new controller instance.
@@ -20,18 +20,18 @@ class CargosController extends BaseController
     /**
      * 
      */
-    public function getCargos(Request $request){
+    public function getOperations(Request $request){
         if (! \Auth::guard('admin')->user()->can('orders_all')) {
             return response()->json(['code'=>700]);
         }
-        $cargos = Cargos::where("deleted", 0)->orderBy('cargo', 'asc')->get();
-        return response()->json(['code'=>200, 'cargos'=>$cargos]);
+        $operations = Operations::where("deleted", 0)->orderBy('operation', 'asc')->get();
+        return response()->json(['code'=>200, 'operations'=>$operations]);
     }
     public function index()
     {
-        $cargos = Cargos::orderBy('updated_at', 'desc')->paginate(20);
+        $operations = Operations::orderBy('updated_at', 'desc')->paginate(20);
 
-        return view('cargos/index', ['cargos' => $cargos]);
+        return view('operations/index', ['operations' => $operations]);
 
     }
     /**
@@ -42,11 +42,11 @@ class CargosController extends BaseController
             return response()->json(['code'=>700]);
         }
         if($id)
-            $cargo = Cargos::find($id);
+            $operation = Operations::find($id);
         else
-            $cargo = null;
-        $data = ['cargo' => $cargo];
-        return view('cargos.edit', $data);
+            $operation = null;
+        $data = ['operation' => $operation];
+        return view('operations.edit', $data);
     }
     /**
      * Сохраняет 
@@ -55,21 +55,21 @@ class CargosController extends BaseController
         if (! \Auth::guard('admin')->user()->can('orders_all')) {
             return response()->json(['code'=>700]);
         }
-        if(!isset($request->cargo))
+        if(!isset($request->operation))
             return json_encode( ['code' => 700, 'msg' => 'Услуга не обновлена - нет данных'], JSON_UNESCAPED_UNICODE );
         $data = $request->except(['_token', '_method']);
         if($id>0)
-            $_item = Cargos::where('id', $id)->update($data);
+            $_item = Operations::where('id', $id)->update($data);
         else
-            $_item = Cargos::create($data);
+            $_item = Operations::create($data);
 
-        return redirect()->route('cargos.index');
+        return redirect()->route('operations.index');
     }
     public function destroy(Request $request, $id){
         if (! \Auth::guard('admin')->user()->can('orders_all')) {
             return response()->json(['code'=>700]);
         }
-        $_item = Cargos::where('id', $id)->update(['deleted' => 1]);
-        return redirect()->route('cargos.index');
+        $_item = Operations::where('id', $id)->update(['deleted' => 1]);
+        return redirect()->route('operations.index');
     }
 }

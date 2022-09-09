@@ -7,6 +7,7 @@ use App\Model\Orders;
 use App\Model\OrderItem;
 use App\Model\ExpenseItem;
 use App\Model\OrderLocks;
+use App\Model\Cargos;
 use Carbon\Carbon;
 
 class OrdersController extends BaseController
@@ -28,8 +29,26 @@ class OrdersController extends BaseController
             return redirect()->route('home');
         }
         $paginate = $this->getOption('orders_paginate');
-        $orders = Orders::orderBy('updated_at', 'desc')->paginate($paginate);
-        return view('orders.index', compact('orders'));
+        $orders = Orders::select('orders.*', 'clients.client')
+        ->join('clients', 'orders.clientId', 'clients.id')
+        ->with('orderItems')
+        ->orderBy('updated_at', 'desc')->paginate($paginate);
+        $now = Carbon::now()->timezone('Europe/Moscow')->startOfDay();
+        
+        $cargos = Cargos::where("deleted", 0)->orderBy('cargo', 'asc')->get();
+        foreach($orders as $o){
+            $last = Carbon::parse(($o->created_at));
+            $o->days = $now->diffInDays($last);
+            if($o->days==0)
+                $o->days = 1;
+            $o->count = count($o->orderItems);
+            $o->sum_total = 0;
+            foreach($o->orderItems as $item){
+                $o->sum_total += $item->quantity*$item->price;
+            }
+            $o->sum_total *= $o->days;
+        }
+        return view('orders.index', compact('orders', 'cargos'));
     }
     /**
      * окно редактирования заказа

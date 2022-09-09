@@ -4,9 +4,9 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Operatins extends Model
+class Operations extends Model
 {
-    protected $table = 'items';
+    protected $table = 'operations';
     public $timestamps = true;
     /**
      * The attributes that are mass assignable.

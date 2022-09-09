@@ -22,6 +22,7 @@ Route::middleware(['adminauth'])->group(function () {
     Route::get('/', function(){ return view('Admin.dashboard'); })->name('home');
     Route::resource('orders', 'OrdersController');
     Route::resource('expenses', 'ExpensesController');
+    Route::resource('operations', 'OperationsController');
     Route::resource('cargos', 'CargosController');
     Route::get('getClients', 'ClientsController@getClients')->name('getClients');
     Route::any('saveClient', 'ClientsController@saveClient')->name('saveClient');

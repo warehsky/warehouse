@@ -3,10 +3,11 @@
 
 <div class="card">
     <div class="card-header">
-        Товары
+        Типы груза
     </div>
 
     <div class="card-body">
+    <a href="{{ route("cargos.edit", [0]) }}" class="btn btn-primary btn-sm">Добавить</a>
         <div class="table-responsive">
             <table class=" table table-bordered table-striped table-hover">
                 <thead>
@@ -19,7 +20,12 @@
                             Наименование<br>
                             <input type="text" id="searName" class="search" value="{{$_GET['name'] ?? ""}}" placeholder="name" size="9"></input>
                         </th>
-                      
+                        <th>
+                            Создан<br>
+                        </th>
+                        <th>
+                            Состояние<br>
+                        </th>
                         <th style="min-width:250px;">
                             &nbsp;
                         </th>

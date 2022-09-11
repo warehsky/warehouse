@@ -56,7 +56,8 @@ class ExpensesController extends BaseController
         $expense = Expenses::select("expenses.*", "clients.client")
         ->join("clients", "clients.id", "expenses.clientId")
         ->where("expenses.id", $id)
-        ->with("expenseItems")->first();
+        ->with("expenseItems")
+        ->first();
         
         return response()->json(['code'=>200, 'expense'=>$expense]);
     }

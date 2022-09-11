@@ -30,7 +30,7 @@
 			<tbody>
 				<tr v-for="item in expense.expense_items" :key="item.id" :item="item">
 					<td>{{item.id}}</td>
-					<td>{{item.item}}</td>
+					<td>{{item.items.item}}</td>
           <td class="tdinput">
             <input type="number" v-model="item.quantity" min="0"/>
           </td>

@@ -163,12 +163,14 @@ class OrdersController extends BaseController
         }
         $id = $request->input('clientId') ?? 0;
 
-        $reminds = OrderItem::select('orderItem.price', 'orderItem.itemId', 'orderItem.quantity', 'orderItem.note', 'items.item', \DB::raw('sum(orderItem.quantity) as wcount'))
+        $reminds = OrderItem::select('orderItem.orderId', 'orderItem.price', 'orderItem.itemId', 'orderItem.quantity', 'orderItem.note', 'items.item', \DB::raw('sum(orderItem.quantity) as wcount'))
         ->join('orders', "orders.id", "orderItem.orderId")
         ->join("items", "items.id", "orderItem.itemId")
+        ->join("cargos", "cargos.id", "items.cargoId")
         ->where("orders.clientId", $id)
+        ->where("cargos.evaluationId", 2)
         ->groupBy("orderItem.itemId")
-        ->groupBy("orderItem.price")
+        ->groupBy("orderItem.orderId")
          ->get();
          $expenses = ExpenseItem::select('*', \DB::raw('sum(quantity) as ecount'))
         ->join('expenses', "expenses.id", "expenseItem.expenseId")

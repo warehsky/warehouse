@@ -23,7 +23,7 @@ class Expenses extends Model
     /** */
     public function expenseItems()
     {
-        return $this->hasMany(ExpenseItem::class, 'expenseId');
+        return $this->hasMany(ExpenseItem::class, 'expenseId')->with("items");
     }
     
 }

@@ -35,7 +35,7 @@
             <label for="evaluationId">Тип оценки:</label>
                 <select id="evaluationId" name="evaluationId">
                   @foreach($evaluations as $ev)
-                    <option  value="{{$ev->id}}" @if($ev->id==$cargo->evaluationId) selected @endif >{{$ev->evaluation}}</option>
+                    <option  value="{{$ev->id}}" @if($cargo && $ev->id==$cargo->evaluationId) selected @endif >{{$ev->evaluation}}</option>
                   @endforeach
                 </select>
             </div>

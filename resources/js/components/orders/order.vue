@@ -287,7 +287,7 @@ export default {
     },
     onSelectItem(item){
       this.modalOpened.items = false;
-      let itm = {"itemId":item.id, "item":item.item, "quantity":0, "price":0, "note":''};
+      let itm = {"itemId":item.id, "item":item, "quantity":0, "price":0, "note":''};
       this.order.order_items.push(itm);
     },
     /**

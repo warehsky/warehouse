@@ -25,7 +25,7 @@ class ItemsController extends BaseController
         if (! \Auth::guard('admin')->user()->can('orders_all')) {
             return response()->json(['code'=>700]);
         }
-        $items = Items::orderBy('item', 'asc')->get();
+        $items = Items::with('cargo')->orderBy('item', 'asc')->get();
         $cargos = Cargos::where("deleted", 0)->orderBy('cargo', 'asc')->get();
         return response()->json(['code'=>200, 'items'=>$items, 'cargos'=>$cargos]);
     }

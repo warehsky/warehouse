@@ -16,14 +16,16 @@ class Orders extends Model
         'clientId',
         'operatorId',
         'note',
-        'sum_total'
+        'sum_total',
+        'data',
+        'operationId'
     ];
     
     
     /** */
     public function orderItems()
     {
-        return $this->hasMany(OrderItem::class, 'orderId');
+        return $this->hasMany(OrderItem::class, 'orderId')->with('item');
     }
     
 }

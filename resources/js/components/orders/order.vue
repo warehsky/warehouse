@@ -1,17 +1,22 @@
 <template>
   <div class="orders">
+    <h2>Редактировать приходную накладную</h2>
     <div class="order-head">
       <span>№ заказа</span><span>{{this.order?this.order.id:''}}</span><span>&nbsp;&nbsp;&nbsp;</span>
       <span>Дата заказа</span>
       <span><input 
               name="Дата"
               type="date"
-              v-model="order.orderDate"
+              v-model="order.data"
               min="today.toShortDateString()"/>
       </span><span>&nbsp;&nbsp;&nbsp;</span>
       <span>Клиент </span>
       <button type="button" @click="modalOpened.clients = true;" class="btn btn-points">...</button>
-      <span>[#{{this.order?this.order.clientId:''}}]{{!this.order || this.order.clientId==0 ? "не выбран" : this.order.client}}</span>
+      <span>[#{{this.order?this.order.clientId:''}}]{{!this.order || this.order.clientId==0 ? "не выбран" : this.order.client}}</span><span>&nbsp;&nbsp;&nbsp;</span>
+      <label for="operationId">Тип операции:</label>
+        <select v-model="order.operationId">
+          <option  v-for="(operation) in operations" :key="operation.id" :value="operation.id">{{operation.operation}}</option>
+        </select>
     </div>
     <div class="order-list">
       <div>Услуги</div>
@@ -21,6 +26,7 @@
 				<td>Название</td>
 				<td>Кол-во</td>
 				<td>Цена</td>
+        <td>Сумма</td>
 				<td>Примечание</td>
 				<td>Действие</td>
 				<!-- <td></td> -->
@@ -28,12 +34,15 @@
 			<tbody>
 				<tr v-for="item in order.order_items" :key="item.id" :item="item">
 					<td>{{item.id}}</td>
-					<td>{{item.item}}</td>
+					<td>{{item.item.item}}</td>
 					<td class="tdinput">
             <input type="number" v-model="item.quantity" min="0"/>
           </td>
 					<td class="tdinput">
             <input type="number" v-model="item.price" min="0"/>
+          </td>
+          <td class="tdinput">
+            {{ (item.quantity - item.quantity_loss)*item.price | currencydecimal }}
           </td>
 					<td>
             <input type="text" v-model="item.note"/>
@@ -45,6 +54,17 @@
       <div  class="order_add"><input type="button" value="Добавить" @click="modalOpened.items = true;"/></div>
     </div>
     <div class="order_bottom">
+      <div class="order-itog">
+        <div class="order-itog-row">
+          <label>Сумма услуг: </label><span>{{ service.one | currencydecimal }}</span>
+        </div>
+        <div class="order-itog-row">
+          <label>Сумма хранение: </label><span>{{ service.days | currencydecimal }}</span>
+        </div>
+        <div class="order-itog-row">
+          <label>Сумма всего: </label><span>{{ getTotal() | currencydecimal }}</span>
+        </div>
+      </div>
       <input type="button" value="Сохранить" @click="saveOrder(order);"/>
       <input type="button" value="Отмена" @click="onCancelEdit(order);"/>
     </div>
@@ -93,7 +113,7 @@ export default {
     d_from:String,
     d_to:String,
     status:[Number,String],
-    wareh_url:String,
+    wareh_url:String
   },
   components: {
     modal,
@@ -104,6 +124,11 @@ export default {
     return{
       isModalVisible: false,
       updating:false,
+      operations:[],
+      service:{
+        one:0,
+        days:0
+      },
       modalOpened:{
         clients:false,
         items:false
@@ -119,11 +144,27 @@ export default {
       }
     }
   },
+  filters:{
+		currencydecimal(value){ return `${ value.toFixed(2) }`; }
+	},
   mounted(){
+     this.getOperations();
      if(this.order_id)
        this.getOrder({"orderId":this.order_id});
   },
   methods:{
+    getOperations(){
+			return new Promise((resolve,reject)=>{
+				axios
+					.get("/getOperations",{  })
+					.then(({data})=>{
+            console.log(data);
+            this.operations = data.operations;
+            
+					})
+					.catch((e)=>{ console.error(e); reject(e) });
+			})
+		},
     getOrder(params){
 			return new Promise((resolve,reject)=>{
 				axios
@@ -179,6 +220,21 @@ export default {
       this.freeOrder(order);
 
      // window.location.reload();
+    },
+    getTotal(){
+        this.service.one = 0;
+        this.service.days = 0;
+        let days = 1;
+        let q = 0;
+        this.order.order_items.forEach(item=>{
+          q = (item.quantity - item.quantity_loss) < 0 ? 0 : item.quantity - item.quantity_loss;
+          if(item.item.cargo.evaluationId==2)
+            this.service.days += item.price * q * days;
+          else
+            this.service.one += item.price * q;
+
+        })
+        return this.service.days + this.service.one;
     },
     onCancelEdit(order,draft){
       if(draft){

@@ -4,9 +4,9 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Cargos extends Model
+class Evaluations extends Model
 {
-    protected $table = 'cargos';
+    protected $table = 'evaluations';
     public $timestamps = true;
     /**
      * The attributes that are mass assignable.
@@ -14,7 +14,7 @@ class Cargos extends Model
      * @var array
      */
     protected $fillable = [
-        'cargo', 'evaluationId', 'deleted'
+        'evaluation'
     ];
 
 }

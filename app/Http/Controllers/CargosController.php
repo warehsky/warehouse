@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Cargos;
+use App\Model\Evaluations;
 use Carbon\Carbon;
 
 class CargosController extends BaseController
@@ -45,7 +46,8 @@ class CargosController extends BaseController
             $cargo = Cargos::find($id);
         else
             $cargo = null;
-        $data = ['cargo' => $cargo];
+        $evaluations = Evaluations::all();
+        $data = ['cargo' => $cargo, 'evaluations' => $evaluations];
         return view('cargos.edit', $data);
     }
     /**

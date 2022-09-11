@@ -8,6 +8,7 @@ use App\Model\OrderItem;
 use App\Model\ExpenseItem;
 use App\Model\OrderLocks;
 use App\Model\Cargos;
+use App\Model\Operations;
 use Carbon\Carbon;
 
 class OrdersController extends BaseController
@@ -41,12 +42,18 @@ class OrdersController extends BaseController
             $o->days = $now->diffInDays($last);
             if($o->days==0)
                 $o->days = 1;
-            $o->count = count($o->orderItems);
+            $o->count = 0;
             $o->sum_total = 0;
             foreach($o->orderItems as $item){
-                $o->sum_total += $item->quantity*$item->price;
+                $o->count++;
+                $q = ($item->quantity - $item->quantity_loss) < 0 ? 0 : $item->quantity - $item->quantity_loss;
+                $sum = $q * $item->price;
+                if($item->item->cargo->evaluationId==2)
+                    $o->sum_total += $sum*$o->days;
+                else
+                    $o->sum_total += $sum;
             }
-            $o->sum_total *= $o->days;
+            
         }
         return view('orders.index', compact('orders', 'cargos'));
     }
@@ -60,8 +67,8 @@ class OrdersController extends BaseController
         $status = $request->input('status') ?? 0;
         $api_token = \Auth::guard('admin')->user()->getToken();
         
-        
         $data = ['orderId' => $id, 'dFrom' => $dFrom, 'dTo' => $dTo, 'status' => $status, 'api_token' => $api_token];
+        
         return view('orders.order', $data);
     }
     /**

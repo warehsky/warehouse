@@ -31,7 +31,14 @@
                     
                 </p>
             </div>
-            
+            <div class="form-group {{ $errors->has('cargo') ? 'has-error' : '' }}">
+            <label for="evaluationId">Тип оценки:</label>
+                <select id="evaluationId" name="evaluationId">
+                  @foreach($evaluations as $ev)
+                    <option  value="{{$ev->id}}" @if($ev->id==$cargo->evaluationId) selected @endif >{{$ev->evaluation}}</option>
+                  @endforeach
+                </select>
+            </div>
             <div>
                 <input class="btn btn-danger" type="submit" value="Сохранить">
                 <a style="margin-left:10px;" class="btn btn-default" 

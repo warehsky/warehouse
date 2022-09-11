@@ -16,5 +16,9 @@ class Items extends Model
     protected $fillable = [
         'item', 'cargoId', 'note', 'price'
     ];
-
+    /** */
+	public function cargo()
+    {
+        return $this->belongsTo(Cargos::class, 'cargoId', 'id');
+    }
 }

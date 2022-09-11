@@ -1,5 +1,6 @@
 <template>
   <div class="orders">
+    <h2>Редактировать расходный ордер</h2>
     <div class="order-head">
       <span>№ ордера: </span><span>{{this.expense?this.expense.id:''}}</span><span>&nbsp;&nbsp;&nbsp;</span>
       <span>Дата ордера</span>

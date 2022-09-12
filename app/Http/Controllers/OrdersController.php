@@ -169,6 +169,7 @@ class OrdersController extends BaseController
         ->join("cargos", "cargos.id", "items.cargoId")
         ->where("orders.clientId", $id)
         ->where("cargos.evaluationId", 2)
+        ->with("item")
         ->groupBy("orderItem.itemId")
         ->groupBy("orderItem.orderId")
          ->get();

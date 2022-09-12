@@ -23,7 +23,7 @@
 			<tbody>
 				<tr v-for="item in items" :key="item.id" :client="item">
 					<td>{{item.itemId}}</td>
-					<td>{{item.item}}</td>
+					<td>{{item.item.item}}</td>
 					<td>{{item.price}}</td>
 					<td>{{item.remind}}</td>
 					<td><input class="btn-choose" type="button" value="Выбрать" @click="$emit('select',item)"></td>

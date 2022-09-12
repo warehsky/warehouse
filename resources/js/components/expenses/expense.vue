@@ -20,9 +20,11 @@
       <table v-if="!updating && expense.expense_items.length>0" class="report-table">
 			<thead>
 				<td>ID</td>
+        <td>Заказ№</td>
 				<td>Название</td>
 				<td>Кол-во</td>
 				<td>Цена</td>
+        <td>Сумма</td>
 				<td>Примечание</td>
 				<td>Действие</td>
 				<!-- <td></td> -->
@@ -30,6 +32,7 @@
 			<tbody>
 				<tr v-for="item in expense.expense_items" :key="item.id" :item="item">
 					<td>{{item.id}}</td>
+          <td>{{item.orderId}}</td>
 					<td>{{item.items.item}}</td>
           <td class="tdinput">
             <input type="number" v-model="item.quantity" min="0"/>
@@ -37,7 +40,12 @@
 					<td class="tdinput">
             <input type="number" v-model="item.price" min="0"/>
           </td>
-					<td>{{item.note}}</td>
+          <td class="tdinput">
+            {{item.price*item.quantity  | currencydecimal}}
+          </td>
+					<td>
+            <input type="text" v-model="item.note" />
+          </td>
 					<td></td>
 				</tr>
 			</tbody>
@@ -121,6 +129,9 @@ export default {
       }
     }
   },
+  filters:{
+		currencydecimal(value){ return `${ value.toFixed(2) }`; }
+	},
   mounted(){
      if(this.expense_id)
        this.getexpense({"expenseId":this.expense_id});
@@ -241,7 +252,8 @@ export default {
     },
     onSelectItem(item){
       this.modalOpened.items = false;
-      let itm = {"itemId":item.itemId, "item":item.item, "quantity":item.quantity, "price":item.price, "note":item.note};
+      let itm = {"itemId":item.itemId, "orderId":item.orderId, "items":item.item, "quantity":item.quantity, "price":item.price, "note":item.note};
+
       this.expense.expense_items.push(itm);
     },
     /**

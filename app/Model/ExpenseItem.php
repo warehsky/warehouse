@@ -15,7 +15,7 @@ class ExpenseItem extends Model
      * @var array
      */
     protected $fillable = [
-        'expenseId', 'itemId', 'quantity', 'price', 'operatorId'
+        'expenseId', 'itemId', 'quantity', 'price', 'orderId'
     ];
     
 	/** */

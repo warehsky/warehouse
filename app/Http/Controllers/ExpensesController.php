@@ -104,9 +104,9 @@ class ExpensesController extends BaseController
                     
                     $price = $item['price'];
                     $sum += $price * $item['quantity'];
-                    $sql = "INSERT INTO expenseItem (`expenseId`, `itemId`, `price`, `quantity`) " .
-                    "VALUES ({$_expense['id']}, {$item['itemId']}, {$price}, {$item['quantity']}) ".
-                    "ON DUPLICATE KEY UPDATE `price`=VALUES(`price`), `quantity`=VALUES(`quantity`)";
+                    $sql = "INSERT INTO expenseItem (`expenseId`, `itemId`, `price`, `quantity`, `orderId`, `note`) " .
+                    "VALUES ({$_expense['id']}, {$item['itemId']}, {$price}, {$item['quantity']}, {$item['orderId']}, '{$item['note']}') ".
+                    "ON DUPLICATE KEY UPDATE `price`=VALUES(`price`), `quantity`=VALUES(`quantity`), `orderId`=VALUES(`orderId`), `note`=VALUES(`note`)";
                     $result = \DB::connection()->select( $sql );
                     $ids[] = $item['itemId'];
                 }
@@ -121,6 +121,9 @@ class ExpensesController extends BaseController
                     "sum_total" => $sum,
                 ];
                 $update = $_expense->update($expense);
+                $sql = "UPDATE `orderItem` as o INNER JOIN expenseItem as e on o.id=e.orderId AND o.itemId=e.itemId ".
+                "SET o.`quantity_loss`=(select sum(s.quantity) from expenseItem as s WHERE s.orderId=e.orderId and s.itemId=e.itemId ) WHERE e.expenseId={$_expense['id']}";
+                \DB::connection()->select( $sql );
             }
 
         }catch(\Exception $e){

@@ -40,8 +40,8 @@
 			</div>
 			<div class="item-edit-row">
 				<label for="cargoId">Тип груза:</label>
-                <select v-model="itemEdit.cargoId" id="cargoId" name="cargoId" :value="itemEdit.cargoId || 0" >
-                  <option  v-for="(cargo) in cargos" :key="cargo.id" :value="cargo.id">{{cargo.cargo}}</option>
+                <select v-model="itemEdit.cargo" id="cargoId" name="cargoId" :value="itemEdit.cargo || 0" @change="itemEdit.cargoId=itemEdit.cargo.id">
+                  <option  v-for="(cargo) in cargos" :key="cargo.id" :value="cargo" :data-cargo="cargo">{{cargo.cargo}}</option>
                 </select>
 			</div>
 			<div class="item-edit-row">

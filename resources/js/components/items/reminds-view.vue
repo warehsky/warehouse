@@ -13,6 +13,7 @@
 		</div>
 		<table v-if="!updating && items.length!=0" class="report-table">
 			<thead>
+				<td>Заказ №</td>
 				<td>ID</td>
 				<td>Наименование</td>
 				<td>Цена</td>
@@ -22,6 +23,7 @@
 			</thead>
 			<tbody>
 				<tr v-for="item in items" :key="item.id" :client="item">
+					<td>{{item.orderId}}</td>
 					<td>{{item.itemId}}</td>
 					<td>{{item.item.item}}</td>
 					<td>{{item.price}}</td>

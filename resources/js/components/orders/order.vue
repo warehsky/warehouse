@@ -27,6 +27,7 @@
 				<td>Кол-во</td>
 				<td>Цена</td>
         <td>Сумма</td>
+        <td>Расход</td>
 				<td>Примечание</td>
 				<td>Действие</td>
 				<!-- <td></td> -->
@@ -44,6 +45,7 @@
           <td class="tdinput">
             {{ (item.quantity - item.quantity_loss)*item.price | currencydecimal }}
           </td>
+          <td :class="item.quantity_loss>0?'tdloss':''">{{item.quantity_loss}}</td>
 					<td>
             <input type="text" v-model="item.note"/>
           </td>
@@ -54,15 +56,47 @@
       <div  class="order_add"><input type="button" value="Добавить" @click="modalOpened.items = true;"/></div>
     </div>
     <div class="order_bottom">
+      <div class="order-advance">
+            <div class="field__wrapper">
+              <input
+                ref="uploadFiles"
+                v-on:change="handleFileUploads()"
+                name="uploadFiles"
+                type="file"
+                id="uploadFiles"
+                class="field field__file"
+                accept=".jpg, .jpeg, .png, .gif, .bmp, .doc, .docx, .xls, .xlsx, .txt, .tar, .zip, .7z, .7zip, .pdf"
+                multiple
+              />
+
+              <label class="field__file-wrapper" for="uploadFiles">
+                <div
+                  ref="fileChoose"
+                  class="field__file-fake"
+                  v-bind:class="{
+                    'border-error-vac': this.errors.Files,
+                  }"
+                >
+                  Файл не выбран
+                </div>
+                <div class="field__file-button" @click="chooseFiles()">
+                  Добавить документ
+                </div>
+              </label>
+            </div>
+            <div v-if="this.errors.Files" class="error-item-vac">
+              Выбор файла обязателен
+            </div>
+          </div>
       <div class="order-itog">
         <div class="order-itog-row">
-          <label>Сумма услуг: </label><span>{{ service.one | currencydecimal }}</span>
+          <label>Сумма услуг: </label><span>{{ total.one | currencydecimal }}</span>
         </div>
         <div class="order-itog-row">
-          <label>Сумма хранение: </label><span>{{ service.days | currencydecimal }}</span>
+          <label>Сумма хранение: </label><span>{{ total.days | currencydecimal }}</span>
         </div>
         <div class="order-itog-row">
-          <label>Сумма всего: </label><span>{{ getTotal() | currencydecimal }}</span>
+          <label>Сумма всего: </label><span>{{ total.days+total.one | currencydecimal }}</span>
         </div>
       </div>
       <input type="button" value="Сохранить" @click="saveOrder(order);"/>
@@ -125,14 +159,12 @@ export default {
       isModalVisible: false,
       updating:false,
       operations:[],
-      service:{
-        one:0,
-        days:0
-      },
       modalOpened:{
         clients:false,
         items:false
       },
+      errors:{Files:0},
+      uploadFiles:[],
       today:new Date(),
       order: {"id":0,"orderDate":(new Date()).toShortDateString(),"clientId":0,"client":'', "order_items":[]}
     }
@@ -142,6 +174,21 @@ export default {
       return {
         order_id: null
       }
+    },
+    total(){
+        let service={one:0, days:0};
+        
+        let days = 1;
+        let q = 0;
+        this.order.order_items.forEach(item=>{
+          q = (item.quantity - item.quantity_loss) < 0 ? 0 : item.quantity - item.quantity_loss;
+          if(item.item.cargo.evaluationId==2)
+            service.days += item.price * q * days;
+          else
+            service.one += item.price * q;
+
+        });
+        return service;
     }
   },
   filters:{
@@ -179,10 +226,16 @@ export default {
     setOrder(order){
       return new Promise((resolve,reject)=>{
         if(!order) reject(new Error("(setOrder) Не передан order"));
+        let formData = new FormData();
+      for (let i = 0; i < this.uploadFiles.length; i++) {
+        let file = this.uploadFiles[i];
+        formData.append("uploadFiles[" + i + "]", file);
+      }
         axios
         .post('/saveOrder', {
           headers: {'X-Access-Token': Globals.api_token, "content-type": "application/json"},
           params: {
+            formData:formData,
             order:{
               ...order
               
@@ -220,21 +273,6 @@ export default {
       this.freeOrder(order);
 
      // window.location.reload();
-    },
-    getTotal(){
-        this.service.one = 0;
-        this.service.days = 0;
-        let days = 1;
-        let q = 0;
-        this.order.order_items.forEach(item=>{
-          q = (item.quantity - item.quantity_loss) < 0 ? 0 : item.quantity - item.quantity_loss;
-          if(item.item.cargo.evaluationId==2)
-            this.service.days += item.price * q * days;
-          else
-            this.service.one += item.price * q;
-
-        })
-        return this.service.days + this.service.one;
     },
     onCancelEdit(order,draft){
       if(draft){
@@ -287,7 +325,7 @@ export default {
     },
     onSelectItem(item){
       this.modalOpened.items = false;
-      let itm = {"itemId":item.id, "item":item, "quantity":0, "price":0, "note":''};
+      let itm = {"itemId":item.id, "item":item, "quantity":0, "quantity_loss":0, "price":item.price, "note":''};
       this.order.order_items.push(itm);
     },
     /**
@@ -353,5 +391,8 @@ order-head, .order_bottom{
 }
 .btn-points{
   line-height: 0.5!important;
+}
+.tdloss{
+  color: crimson;
 }
 </style>

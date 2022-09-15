@@ -60,7 +60,7 @@ class ItemsController extends BaseController
                     $_item = Items::create($item);
                     $update = true;
                 }
-                
+                $_item = Items::with('cargo')->where('id', $_item->id)->first();
                 
     
             }catch(\Exception $e){

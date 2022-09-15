@@ -163,7 +163,7 @@ class OrdersController extends BaseController
         }
         $id = $request->input('clientId') ?? 0;
 
-        $reminds = OrderItem::select('orderItem.orderId', 'orderItem.price', 'orderItem.itemId', 'orderItem.quantity', 'orderItem.note', 'items.item', \DB::raw('sum(orderItem.quantity) as wcount'))
+        $reminds = OrderItem::select(\DB::raw("CONCAT(orderItem.orderId,orderItem.itemId) as id"),'orderItem.orderId', 'orderItem.price', 'orderItem.itemId', 'orderItem.quantity', 'orderItem.note', 'items.item', \DB::raw('sum(orderItem.quantity) as wcount'))
         ->join('orders', "orders.id", "orderItem.orderId")
         ->join("items", "items.id", "orderItem.itemId")
         ->join("cargos", "cargos.id", "items.cargoId")
@@ -179,13 +179,14 @@ class OrdersController extends BaseController
         ->groupBy("itemId")
         ->groupBy("price")
         ->get();
+        
         $exs = [];
         foreach($expenses as $ex)
-            $exs[$ex->itemId] = $ex;
-        
+            $exs[$ex->orderId.$ex->itemId] = $ex;
+        // dd($reminds, $exs);
         foreach($reminds as $i=>$r){
-            if(key_exists($r->itemId, $exs))
-                $r->remind = (double)$r->wcount - (double)$exs[$r->itemId]->ecount;
+            if(key_exists($r->orderId.$r->itemId, $exs))
+                $r->remind = (double)$r->wcount - (double)$exs[$r->orderId.$r->itemId]->ecount;
             else
                 $r->remind = (double)$r->wcount;
             if($r->remind <= 0)

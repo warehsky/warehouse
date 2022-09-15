@@ -53,6 +53,17 @@
       <div class="order_add"><input type="button" value="Добавить" @click="addGoods();"/></div>
     </div>
     <div class="order_bottom">
+      <div class="order-itog">
+        <div class="order-itog-row">
+          <label>Сумма услуг: </label><span>{{ total.one | currencydecimal }}</span>
+        </div>
+        <div class="order-itog-row">
+          <label>Сумма хранение: </label><span>{{ total.days | currencydecimal }}</span>
+        </div>
+        <div class="order-itog-row">
+          <label>Сумма всего: </label><span>{{ total.days+total.one | currencydecimal }}</span>
+        </div>
+      </div>
       <input type="button" value="Сохранить" @click="saveexpense(expense);"/>
       <input type="button" value="Отмена" @click="onCancelEdit(expense);"/>
     </div>
@@ -127,6 +138,20 @@ export default {
       return {
         expense_id: null
       }
+    },
+    total(){
+        let service={one:0, days:0};
+        
+        let days = 1;
+        let q = 0;
+        this.expense.expense_items.forEach(item=>{
+          if(true)
+            service.days += item.price * item.quantity * days;
+          else
+            service.one += item.price * q;
+
+        });
+        return service;
     }
   },
   filters:{

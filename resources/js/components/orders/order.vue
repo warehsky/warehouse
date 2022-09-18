@@ -93,7 +93,7 @@
         <table>
           <tr v-for="attach in order.order_attach" :key="attach.id">
             <td>
-              <a  :href="attach.attach" class="attach-link" target="_blank">{{attach.attach}}</a>
+              <a  :href="'/'+attach.attach" class="attach-link" target="_blank">{{attach.attach}}</a>
             </td>
             <td style="padding-left:20px; vertical-align: top;">
               <img style="width:10px;height: 10px;" src="/img/icons/cross.svg" @click="delAttach(attach)"/>

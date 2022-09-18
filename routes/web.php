@@ -15,7 +15,7 @@
 //     return view('welcome');
 // });
 //Route::get('/', 'HomeController@index')->name('/');
-
+Route::get('/', function(){ return view('Admin.dashboard'); })->name('home');
 
 Auth::routes();
 Route::middleware(['adminauth'])->group(function () {

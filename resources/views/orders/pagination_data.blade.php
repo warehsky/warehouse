@@ -7,6 +7,7 @@
         <td>{{ $el->count}}</td>
         <td>{{ $el->sum_total}}</td>
         <td>{{ $el->days}}</td>
+        <td>{{ count($el->orderAttach)}}</td>
         <td>
             <a class='btn btn-xs btn-primary' href='/orders/{{$el->id}}?id={{$id ?? ""}}&name={{$name ?? ""}}&page={{$page ?? ""}}&sorting={{$sorting ?? ""}}'>просмотр</a>
             <a class='btn btn-xs btn-info' href='/orders/{{$el->id}}/edit?ids={{$id ?? ""}}&name={{$name ?? ""}}&page={{$page ?? ""}}'>изменить</a>

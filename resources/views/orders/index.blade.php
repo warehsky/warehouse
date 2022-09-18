@@ -37,6 +37,9 @@
                         <th>
                             Дни
                         </th>
+                        <th>
+                            Файлы
+                        </th>
                         <th style="min-width:250px;">
                             &nbsp;
                         </th>

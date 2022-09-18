@@ -27,5 +27,9 @@ class Orders extends Model
     {
         return $this->hasMany(OrderItem::class, 'orderId')->with('item');
     }
-    
+    /** */
+    public function orderAttach()
+    {
+        return $this->hasMany(OrderAttach::class, 'orderId');
+    }
 }

@@ -87,7 +87,20 @@
             <div v-if="this.errors.Files" class="error-item-vac">
               Выбор файла обязателен
             </div>
-          </div>
+      </div>
+      <div class="order-attach" v-show="order.order_attach.length>0">
+        <div class="attach-header">Документы</div>
+        <table>
+          <tr v-for="attach in order.order_attach" :key="attach.id">
+            <td>
+              <a  :href="attach.attach" class="attach-link" target="_blank">{{attach.attach}}</a>
+            </td>
+            <td style="padding-left:20px; vertical-align: top;">
+              <img style="width:10px;height: 10px;" src="/img/icons/cross.svg" @click="delAttach(attach)"/>
+            </td>
+          </tr>
+        </table>
+      </div>
       <div class="order-itog">
         <div class="order-itog-row">
           <label>Сумма услуг: </label><span>{{ total.one | currencydecimal }}</span>
@@ -166,7 +179,7 @@ export default {
       errors:{Files:0},
       uploadFiles:[],
       today:new Date(),
-      order: {"id":0,"orderDate":(new Date()).toShortDateString(),"clientId":0,"client":'', "order_items":[]}
+      order: {"id":0,"orderDate":(new Date()).toShortDateString(),"clientId":0,"client":'', "order_items":[], "order_attach":[]}
     }
   },
   computed:{
@@ -200,12 +213,37 @@ export default {
        this.getOrder({"orderId":this.order_id});
   },
   methods:{
+    //метод выбора файла для загрузки
+    chooseFiles() {
+      let fields = document.querySelectorAll(".field__file");
+      fields.forEach((input) => {
+        let label = input.nextElementSibling,
+          labelVal = label.querySelector(".field__file-fake").innerText;
+
+        input.addEventListener("change", (e) => {
+          // let countFiles = "";
+          if (
+            this.$refs.uploadFiles.files &&
+            this.$refs.uploadFiles.files.length >= 1
+          ) {
+            this.countFiles = this.$refs.uploadFiles.files.length;
+          }
+
+          if (this.countFiles)
+            label.querySelector(".field__file-fake").innerText =
+              "Выбрано файлов: " + this.countFiles;
+          else label.querySelector(".field__file-fake").innerText = labelVal;
+        });
+      });
+    },
+    handleFileUploads() {
+      this.uploadFiles = this.$refs.uploadFiles.files;
+    },
     getOperations(){
 			return new Promise((resolve,reject)=>{
 				axios
 					.get("/getOperations",{  })
 					.then(({data})=>{
-            console.log(data);
             this.operations = data.operations;
             
 					})
@@ -223,6 +261,17 @@ export default {
 					.catch((e)=>{ console.error(e); reject(e) });
 			})
 		},
+    delAttach(attach){
+      if(!confirm("Удалить файл " + attach.attach + "?"))
+        return;
+      this.order.order_attach.forEach(function(item, index, array) {
+            if(item.id==attach.id){
+              array.splice(index, 1);
+              return false;
+            }
+        });
+
+    },
     setOrder(order){
       return new Promise((resolve,reject)=>{
         if(!order) reject(new Error("(setOrder) Не передан order"));
@@ -232,10 +281,9 @@ export default {
         formData.append("uploadFiles[" + i + "]", file);
       }
         axios
-        .post('/saveOrder', {
+        .post('/saveOrder', formData,{
           headers: {'X-Access-Token': Globals.api_token, "content-type": "application/json"},
           params: {
-            formData:formData,
             order:{
               ...order
               
@@ -395,4 +443,85 @@ order-head, .order_bottom{
 .tdloss{
   color: crimson;
 }
+/* input upload start */
+
+.field__wrapper {
+   width: 100%;
+   position: relative;
+   text-align: center;
+   grid-area: field__wrapper;
+}
+  
+.field.field__file{
+   display: none;
+}
+.field__file {
+   opacity: 0;
+   visibility: hidden;
+   position: absolute;
+}
+  
+.field__file-wrapper {
+   width: 100%;
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-pack: justify;
+       -ms-flex-pack: justify;
+           justify-content: space-between;
+   -webkit-box-align: center;
+       -ms-flex-align: center;
+           align-items: center;
+   -ms-flex-wrap: wrap;
+       flex-wrap: wrap;
+ }
+  
+ .field__file-fake {
+   height: 50px;
+   font-size: 14px;
+   width: calc(100% - 150px);
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-align: center;
+       -ms-flex-align: center;
+           align-items: center;
+   padding: 0 15px;
+   border: 1px solid #c7c7c7;
+   border-radius: 8px 0 0 8px;
+   border-right: none;
+ }
+  
+ .field__file-button {
+   width: 150px;
+   height: 50px;
+   background: #931515;
+   color: #fff;
+   font-size: 14px;
+   font-weight: 700;
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-align: center;
+       -ms-flex-align: center;
+           align-items: center;
+   -webkit-box-pack: center;
+       -ms-flex-pack: center;
+           justify-content: center;
+   border-radius: 8px 8px 8px 8px;
+   cursor: pointer;
+ }
+
+.border-error-vac{
+	border: 1px solid #FF0000;
+	border-radius: 4px;
+   border-bottom-right-radius: 0;
+   border-top-right-radius: 0;
+}
+.order-attach{
+  width: 100%;
+  border: 1px solid #5900ff;
+  margin-top: 3px;
+}
+/* input upload end */
 </style>

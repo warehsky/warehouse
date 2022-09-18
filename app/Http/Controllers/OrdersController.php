@@ -9,6 +9,7 @@ use App\Model\ExpenseItem;
 use App\Model\OrderLocks;
 use App\Model\Cargos;
 use App\Model\Operations;
+use App\Model\OrderAttach;
 use Carbon\Carbon;
 
 class OrdersController extends BaseController
@@ -33,6 +34,7 @@ class OrdersController extends BaseController
         $orders = Orders::select('orders.*', 'clients.client')
         ->join('clients', 'orders.clientId', 'clients.id')
         ->with('orderItems')
+        ->with("orderAttach")
         ->orderBy('updated_at', 'desc')->paginate($paginate);
         $now = Carbon::now()->timezone('Europe/Moscow')->startOfDay();
         
@@ -83,6 +85,7 @@ class OrdersController extends BaseController
         ->join("clients", "clients.id", "orders.clientId")
         ->where("orders.id", $id)
         ->with("orderItems")
+        ->with("orderAttach")
         ->first();
         
         return response()->json(['code'=>200, 'order'=>$order]);
@@ -94,7 +97,8 @@ class OrdersController extends BaseController
         if (! \Auth::guard('admin')->user()->can('orders_all')) {
             return response()->json(['code'=>700]);
         }
-        @$order = $request->input('params')['order'];
+        
+        @$order = json_decode($request->order, true);
         
         if(!$order)
             return json_encode( ['code' => 700, 'msg' => 'заказ не обновлен - нет данных'], JSON_UNESCAPED_UNICODE );
@@ -140,12 +144,31 @@ class OrdersController extends BaseController
                         OrderItem::where('orderId', $order['id'])->where('itemId', $orderItem->itemId)->delete();
                     }
                 }
-                $order=[
+                $orderu=[
                     
                     "sum_total" => $sum,
                 ];
-                $update = $_order->update($order);
+                $update = $_order->update($orderu);
             }
+            $_attachs = [];
+            
+            foreach($order['order_attach'] as $_a)
+                $_attachs[] = $_a['id'];
+            $attachs = OrderAttach::where("orderId", $_order['id'])->get();
+            foreach($attachs as $a){
+                if(!in_array($a->id, $_attachs)){
+                    \Storage::delete($a->attach);
+                    $a->delete();
+                }
+            }
+            if (isset($request->uploadFiles))
+                foreach ($request->uploadFiles as $file) {
+                    $filename = "documents/{$_order['id']}/".$file->getClientOriginalName();
+                    \Storage::delete($filename);
+                    $file->storeAs("documents/{$_order['id']}", $file->getClientOriginalName());
+                    if(OrderAttach::where("orderId", $_order['id'])->where("attach", $filename)->count()==0)
+                        OrderAttach::create(['orderId' => $_order['id'], 'attach' => "documents/{$_order['id']}/".$file->getClientOriginalName()]);
+                }
 
         }catch(\Exception $e){
             \DB::rollback();

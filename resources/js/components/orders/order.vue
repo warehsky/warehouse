@@ -360,7 +360,7 @@ export default {
             return;
           }
           order.locked = false;
-          window.location = this.wareh_url+"/orders";
+          window.location = this.wareh_url+"orders";
         }).catch((error)=>{
           console.log(error);
           alert("Ошибка: "+error);

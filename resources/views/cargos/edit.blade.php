@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.adminv')
 @section('content')
 <script src="{{ asset('js/jquery-3.4.1.min.js') }}" ></script>
 <script src="{{ asset('js/jquery.autocomplete.min.js') }}" ></script>

@@ -27,8 +27,9 @@ class ExpensesController extends BaseController
             return redirect()->route('home');
         }
         $paginate = $this->getOption('orders_paginate');
-        $expenses = Expenses::orderBy('updated_at', 'desc')->paginate($paginate);
+        $expenses = Expenses::with('client')->orderBy('updated_at', 'desc')->paginate($paginate);
         $operations = Operations::where("deleted", 0)->orderBy('operation', 'asc')->get();
+        
         return view('expenses.index', compact('expenses', 'operations'));
     }
     /**

@@ -3,7 +3,7 @@
     <tr>
         <td>{{ $el->id}}</td>
         <td>{{ $el->created_at}}</td>
-        <td>{{ $el->clientId}}</td>
+        <td>@if($el->client) {{$el->client->client}} @endif</td>
         
         <td>
             <a class='btn btn-xs btn-primary' href='/admin/items/{{$el->id}}?id={{$id ?? ""}}&name={{$name ?? ""}}&longName={{$longName ?? ""}}&page={{$page ?? ""}}&date={{$date ?? ""}}&sorting={{$sorting ?? ""}}&id1c={{$id1c ?? ""}}&weightId={{$weightId ?? ""}}'>просмотр</a>

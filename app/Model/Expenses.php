@@ -25,5 +25,9 @@ class Expenses extends Model
     {
         return $this->hasMany(ExpenseItem::class, 'expenseId')->with("items");
     }
-    
+    /** */
+    public function client()
+    {
+        return $this->hasOne(Clients::class, 'id', 'clientId');
+    }
 }

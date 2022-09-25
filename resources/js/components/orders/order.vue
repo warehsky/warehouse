@@ -15,7 +15,7 @@
       <span>[#{{this.order?this.order.clientId:''}}]{{!this.order || this.order.clientId==0 ? "не выбран" : this.order.client}}</span><span>&nbsp;&nbsp;&nbsp;</span>
       <label for="operationId">Тип операции:</label>
         <select v-model="order.operationId">
-          <option  v-for="(operation) in operations" :key="operation.id" :value="operation.id">{{operation.operation}}</option>
+          <option  v-for="(operation) in operations" :key="operation.id" :value="operation.id" class="sellist-operation">{{operation.operation}}</option>
         </select>
     </div>
     <div class="order-list">
@@ -91,7 +91,8 @@
       <div class="order-attach" v-show="order.order_attach.length>0">
         <div class="attach-header">Документы</div>
         <table>
-          <tr v-for="attach in order.order_attach" :key="attach.id">
+          <transition-group name="list" tag="p">
+          <tr v-for="attach in order.order_attach" :key="attach.id" class="list-attach">
             <td>
               <a  :href="'/'+attach.attach" class="attach-link" target="_blank">{{attach.attach}}</a>
             </td>
@@ -99,6 +100,7 @@
               <img style="width:10px;height: 10px;" src="/img/icons/cross.svg" @click="delAttach(attach)"/>
             </td>
           </tr>
+        </transition-group>
         </table>
       </div>
       <div class="order-itog">
@@ -524,4 +526,16 @@ order-head, .order_bottom{
   margin-top: 3px;
 }
 /* input upload end */
+.list-attach {
+  display: inline-block;
+  margin-right: 10px;
+}
+.list-enter-active, .list-leave-active {
+  transition: all 1s;
+}
+.list-enter, .list-leave-to /* .list-leave-active до версии 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
 </style>

@@ -143,7 +143,7 @@ use Illuminate\Support\Facades\Auth;
             </li>
             @endif
             
-            @if(auth()->guard('admin')->user()->can('userAdmin_all'))
+            @if(auth()->guard('admin')->user()->can('orders_all'))
             <li>
               <a class="nav-link" onclick="sub_menu('1')" href="#"><div class="menudiv menudiv-r"><img class="sky-menu-icon" src="/img/icons/menu/store1.png" /></div><div class="menudiv menu-h">Хранение</div>
               <div class="menudiv menudiv-l menu-h"><img class="sky-menu-icon" src="/img/icons/menu/down1.png" id="down-1"/></div>
@@ -157,7 +157,7 @@ use Illuminate\Support\Facades\Auth;
             </li>
             @endif
 
-            @if(auth()->guard('admin')->user()->can('userAdmin_all'))
+            @if(auth()->guard('admin')->user()->can('orders_all'))
             <li>
               <a class="nav-link" onclick="sub_menu('2')" href="#"><div class="menudiv menudiv-r"><img class="sky-menu-icon" src="/img/icons/menu/spr1.png" /></div><div class="menudiv menu-h">Справочники</div>
               <div class="menudiv menudiv-l menu-h"><img class="sky-menu-icon" src="/img/icons/menu/down1.png" id="down-2"/></div>

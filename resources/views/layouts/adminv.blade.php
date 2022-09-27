@@ -164,8 +164,9 @@ use Illuminate\Support\Facades\Auth;
               </a>
               <div class="submenu passiv-submenu menu-h" id="sub-2">
                 <ul class="">
-                <a class="nav-link" href="/cargos">Типы груза</a>
-                <a class="nav-link" href="/operations">Типы операций</a>
+                <li><a class="nav-link" href="/cargos">Типы груза</a></li>
+                <li><a class="nav-link" href="/operations">Типы операций</a></li>
+                <li><a class="nav-link" href="/clients">Клиенты</a></li>
                 </ul>
               </div>
             </li>
@@ -294,7 +295,7 @@ use Illuminate\Support\Facades\Auth;
 .menudiv {
     display:inline-block;
     max-width: 100px;
-    max-height: 50px;
+    max-height: 25px;
     overflow: hidden;
 }
 .menu-pass{

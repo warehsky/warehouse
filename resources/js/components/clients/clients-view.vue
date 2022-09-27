@@ -6,10 +6,10 @@
 		<input type="number" v-model="clientsLimit.id" />
 		<label>Имя:</label>
 		<input type="text" v-model="clientsLimit.client" />
-		<input type="button" value="Применить" @click="update(true)">
-		<input type="button" value="Сброс" @click="update()">
+		<input type="button" value="Применить" @click="getClients(clientsLimit.id,clientsLimit.client)">
+		<input type="button" value="Сброс" @click="clientsLimit.id=0;clientsLimit.client='';getClients(clientsLimit.id,clientsLimit.client)">
 		<div>
-			<input type="button" value="Добавить" @click="editMode=!editMode">
+			<input type="button" value="Добавить" @click="add()">
 		</div>
 		<table v-if="!updating && clients.length>0" class="report-table">
 			<thead>
@@ -28,7 +28,10 @@
 					<td>{{client.phone}}</td>
 					<td>{{client.address}}</td>
 					<td>{{client.note}}</td>
-					<td><input type="button" value="Выбрать" @click="$emit('select',client)"></td>
+					<td>
+						<input v-if="mode=='order'"  type="button" value="Выбрать" @click="$emit('select',client)">
+						<input v-if="mode=='spr'"  type="button" value="Редактировать" @click="edit(client)">
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -72,6 +75,11 @@
 import circleLoading from '../UI/mini/circle-loading.vue';
 export default {
   components: { circleLoading },
+  props:{
+    
+    mode:String
+    
+  },
 	computed:{
 		reportWaves(){
 			return this.groupWaves(this.ordersLimit.waves)
@@ -82,14 +90,27 @@ export default {
 			clients:[],
 			updating:false,
 			clientsLimit:{"id":0,"client":''},
-			clientEdit:{"id":0,"client":''},
+			clientEdit:{"id":0,"client":'', "phone": '', "address": '', "nip": '', "note": ''},
+			client0:{"id":0,"client":'', "phone": '', "address": '', "nip": '', "note": ''},
 			editMode: false
 		}
 	},
 	mounted(){
-		this.getClients();
+		this.getClients(0,'');
   	},
 	methods:{
+		edit(client){
+			this.editMode = !this.editMode;
+			if(this.editMode){
+				this.clientEdit = client;
+			}else{
+				this.clientEdit = this.client0;
+			}
+		},
+		add(){
+			this.editMode = !this.editMode;
+			this.clientEdit = this.client0;
+		},
 		async update(withSelectedDate){
 			this.updating = true;
 			try{
@@ -97,14 +118,18 @@ export default {
 			} catch(e){	console.error(e); }
 			this.updating = false;
 		},
-		getClients(){
+		getClients(clientId, client){
+			let params = {};
+			if(clientId>0)
+				params.clientId = clientId;
+			if(client != '')
+				params.client = client;
 			this.updating = true;
 			axios
         .get('/getClients', {
           headers: {'X-Access-Token': Globals.api_token, "content-type": "application/json"},
-          params: {
-            
-          },
+          params: params       
+          ,
         },
         {headers: {'X-Access-Token': Globals.api_token, "content-type": "application/json"}})
         .then(response => {

@@ -127,7 +127,7 @@
         <h2 class="modalHeaderItem">Клиенты</h2>
       </template>
       <template #body>
-        <clients-view ref="report"
+        <clients-view mode="order"
           @select="onSelectClient">
         </clients-view>
       </template>
@@ -153,7 +153,7 @@
 <script>
 import CircleLoading from '../UI/mini/circle-loading.vue';
 import modal from "../UI/panels/modal.vue";
-import clientsView from "../clients/clients-view.vue";
+// import clientsView from "../clients/clients-view.vue";
 import itemsView from "../items/items-view.vue";
 export default {
   name:"order",
@@ -166,7 +166,7 @@ export default {
   },
   components: {
     modal,
-    clientsView,
+    // clientsView,
     itemsView
   },
   data(){

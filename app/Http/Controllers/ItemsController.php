@@ -25,7 +25,13 @@ class ItemsController extends BaseController
         if (! \Auth::guard('admin')->user()->can('orders_all')) {
             return response()->json(['code'=>700]);
         }
-        $items = Items::with('cargo')->orderBy('item', 'asc')->get();
+        $items = Items::with('cargo');
+        if(isset($request->clientId) && !empty($request->clientId))
+            $items = $items->where("id", $request->itemId);
+        if(isset($request->client) && !empty($request->client))
+            $items = $items->where("item", "like", "%$request->item%");
+        
+        $items = $items->orderBy('item', 'asc')->get();
         $cargos = Cargos::where("deleted", 0)->orderBy('cargo', 'asc')->get();
         return response()->json(['code'=>200, 'items'=>$items, 'cargos'=>$cargos]);
     }
@@ -69,5 +75,15 @@ class ItemsController extends BaseController
             }
             \DB::commit();
             return json_encode( ['code' => 200, 'msg' => 'Клиент обновлен', 'item' => $_item], JSON_UNESCAPED_UNICODE );
+    }
+    /**
+
+    */
+    public function index()
+    {
+        $items =Items::orderBy('updated_at', 'desc')->paginate(20);
+
+        return view('items/index', ['items' => $items]);
+
     }
 }

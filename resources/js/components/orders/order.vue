@@ -142,7 +142,7 @@
         <h2 class="modalHeaderItem">Услуги</h2>
       </template>
       <template #body>
-        <items-view ref="report"
+        <items-view mode="item"
           @select="onSelectItem">
         </items-view>
       </template>
@@ -154,7 +154,7 @@
 import CircleLoading from '../UI/mini/circle-loading.vue';
 import modal from "../UI/panels/modal.vue";
 // import clientsView from "../clients/clients-view.vue";
-import itemsView from "../items/items-view.vue";
+// import itemsView from "../items/items-view.vue";
 export default {
   name:"order",
   props:{
@@ -167,7 +167,7 @@ export default {
   components: {
     modal,
     // clientsView,
-    itemsView
+    // itemsView
   },
   data(){
     return{
@@ -400,6 +400,9 @@ export default {
 </script>
 
 <style lang="scss">
+  .modal{
+    position: relative;
+  }
 .orders{
   .groupbox-actions{
     display: flex;

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" /> 
     <link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
+    
     
     <!-- <link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
@@ -129,29 +129,86 @@ use Illuminate\Support\Facades\Auth;
           <div class="sidebar-container active-sidebar" id="elem_sidebar">
           <ul class="mr-auto mt-menu">
           <li>
-             <a class="nav-link" href="/admin/"><div class="menudiv menudiv-r"><img class="sky-menu-icon" src="/img/icons/menu/home1.png" /></div><div class="menudiv menu-h">Главная</div></a>
+            
+             <a class="nav-link" href="/admin/">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="menudiv menudiv-r"><img class="sky-menu-icon" src="/img/icons/menu/home1.png" /></div>
+                        </td>
+                        <td>
+                        <div class="menudiv menu-h">Главная</div>
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                </table>
+            </a>
             </li>
           @if(auth()->guard('admin')->user()->can('userAdmin_all'))
             <li>
-              <a class="nav-link" href="{{ route('userAdmins.index') }}"><div class="menudiv menudiv-r"><img class="sky-menu-icon" src="/img/icons/menu/contr1.png" /></div><div class="menudiv menu-h">Admin пользователи</div></a>
+
+              <a class="nav-link" href="{{ route('userAdmins.index') }}">
+              <table>
+                    <tr>
+                        <td>
+                            <div class="menudiv menudiv-r"><img class="sky-menu-icon" src="/img/icons/menu/contr1.png" /></div>
+                        </td>
+                        <td>
+                            <div class="menudiv menu-h">Admin пользователи</div>
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                </table>
+              
+                </a>
             </li>
             @endif
 
             @if(auth()->guard('admin')->user()->can('options_all'))
             <li>
-              <a class="nav-link" href="{{ route('optionsIndex') }}"><div class="menudiv menudiv-r"><img class="sky-menu-icon" src="/img/icons/menu/ctrl1.png" /></div><div class="menudiv menu-h">Настройки</div></a>
+              <a class="nav-link" href="{{ route('optionsIndex') }}">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="menudiv menudiv-r"><img class="sky-menu-icon" src="/img/icons/menu/ctrl1.png" /></div>
+                        </td>
+                        <td>
+                            <div class="menudiv menu-h">Настройки</div>
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                </table>
+              </a>
             </li>
             @endif
             
             @if(auth()->guard('admin')->user()->can('orders_all'))
             <li>
-              <a class="nav-link" onclick="sub_menu('1')" href="#"><div class="menudiv menudiv-r"><img class="sky-menu-icon" src="/img/icons/menu/store1.png" /></div><div class="menudiv menu-h">Хранение</div>
-              <div class="menudiv menudiv-l menu-h"><img class="sky-menu-icon" src="/img/icons/menu/down1.png" id="down-1"/></div>
+              <a class="nav-link" onclick="sub_menu('1')" href="#">
+              <table>
+                    <tr>
+                        <td>
+                            <div class="menudiv menudiv-r"><img class="sky-menu-icon" src="/img/icons/menu/store1.png" /></div>
+                        </td>
+                        <td>
+                            <div class="menudiv menu-h">Хранение</div>
+                        </td>
+                        <td>
+                            <div class="menudiv menudiv-l menu-h"><img class="sky-menu-icon" src="/img/icons/menu/down1.png" id="down-1"/></div>
+                        </td>
+                    </tr>
+                </table>
               </a>
               <div class="submenu passiv-submenu menu-h" id="sub-1">
                 <ul class="">
-                    <a class="nav-link" href="/orders">Приход</a>
-                    <a class="nav-link" href="/expenses">Расход</a>
+                    <a class="nav-link" href="/orders"><div class="menudiv">Приход</div></a>
+                    <a class="nav-link" href="/expenses"><div class="menudiv">Расход</div></a>
                 </ul>
               </div>
             </li>
@@ -159,14 +216,28 @@ use Illuminate\Support\Facades\Auth;
 
             @if(auth()->guard('admin')->user()->can('orders_all'))
             <li>
-              <a class="nav-link" onclick="sub_menu('2')" href="#"><div class="menudiv menudiv-r"><img class="sky-menu-icon" src="/img/icons/menu/spr1.png" /></div><div class="menudiv menu-h">Справочники</div>
-              <div class="menudiv menudiv-l menu-h"><img class="sky-menu-icon" src="/img/icons/menu/down1.png" id="down-2"/></div>
+              <a class="nav-link" onclick="sub_menu('2')" href="#">
+                <table>
+                    <tr>
+                        <td>
+                        <div class="menudiv menudiv-r">
+                <img class="sky-menu-icon" src="/img/icons/menu/spr1.png" /></div>
+                        </td>
+                        <td>
+                        <div class="menudiv menu-h">Справочники</div>
+                        </td>
+                        <td>
+                        <div class="menudiv menudiv-l menu-h"><img class="sky-menu-icon" src="/img/icons/menu/down1.png" id="down-2"/></div>
+                        </td>
+                    </tr>
+                </table>
               </a>
               <div class="submenu passiv-submenu menu-h" id="sub-2">
                 <ul class="">
-                <li><a class="nav-link" href="/cargos">Типы груза</a></li>
-                <li><a class="nav-link" href="/operations">Типы операций</a></li>
-                <li><a class="nav-link" href="/clients">Клиенты</a></li>
+                <li><a class="nav-link " href="/cargos"><div class="menudiv">Типы груза</div></a></li>
+                <li><a class="nav-link" href="/operations"><div class="menudiv">Типы операций</div></a></li>
+                <li><a class="nav-link" href="/clients"><div class="menudiv">Клиенты</div></a></li>
+                <li><a class="nav-link" href="/items"><div class="menudiv">Услуги</div></a></li>
                 </ul>
               </div>
             </li>
@@ -328,8 +399,6 @@ ul.mt-menu {
     padding: 0px;
 }
 ul.mt-menu li {
-    /* display: inline-block !important; */
-    /* padding: 0px 5px 0px 5px; */
     color: honeydew;
     list-style-type: none;
 }

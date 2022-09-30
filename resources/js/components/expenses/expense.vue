@@ -303,6 +303,9 @@ export default {
 </script>
 
 <style lang="scss">
+.modal{
+    position: relative;
+  }
 .orders{
   .groupbox-actions{
     display: flex;

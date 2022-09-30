@@ -1,5 +1,8 @@
 <template>
 	<div class="waves-report">
+		<div class="card-header">
+        Клиенты
+    	</div>
 		<div class="clients-list" v-show="!editMode">
 		Нажмите "применить", чтобы отфильтровать.<br>
 		<label>ID:</label>
@@ -76,9 +79,7 @@ import circleLoading from '../UI/mini/circle-loading.vue';
 export default {
   components: { circleLoading },
   props:{
-    
     mode:String
-    
   },
 	computed:{
 		reportWaves(){

@@ -1,13 +1,16 @@
 <template>
 	<div class="waves-report">
+		<div class="card-header">
+        Услуги
+    	</div>
 		<div class="items-list" v-show="!editMode">
 		Нажмите "применить", чтобы отфильтровать.<br>
 		<label>ID:</label>
 		<input type="number" v-model="itemsLimit.id" />
 		<label>Имя:</label>
 		<input type="text" v-model="itemsLimit.item" />
-		<input type="button" value="Применить" @click="update(true)">
-		<input type="button" value="Сброс" @click="update()">
+		<input type="button" value="Применить" @click="getItems(itemsLimit.id,itemsLimit.item)">
+		<input type="button" value="Сброс" @click="itemsLimit.id=0;itemsLimit.item='';getItems(itemsLimit.id,itemsLimit.item)">
 		<div>
 			<input type="button" value="Добавить" @click="editMode=!editMode">
 		</div>
@@ -22,7 +25,10 @@
 				<tr v-for="item in items" :key="item.id" :client="item">
 					<td>{{item.id}}</td>
 					<td>{{item.item}}</td>
-					<td><input class="btn-choose" type="button" value="Выбрать" @click="$emit('select',item)"></td>
+					<td>
+						<input v-if="mode=='item'" class="btn-choose" type="button" value="Выбрать" @click="$emit('select',item)">
+						<input v-if="mode=='spr'"  type="button" value="Редактировать" @click="edit(item)">
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -68,20 +74,32 @@ export default {
 	computed:{
 		
 	},
+	props:{
+    mode:String
+    },
 	data(){
 		return{
 			items:[],
 			cargos:[],
 			updating:false,
 			itemsLimit:{"id":0,"client":''},
-			itemEdit:{"id":0,"client":''},
+			itemEdit:{"id":0,"item":'', "price":0, "note":'', "cargoId":0},
+			item0:{"id":0,"item":'', "price":0, "note":'', "cargoId":0},
 			editMode: false
 		}
 	},
 	mounted(){
-		this.getItems();
+		this.getItems(0,'');
   	},
 	methods:{
+		edit(item){
+			this.editMode = !this.editMode;
+			if(this.editMode){
+				this.itemEdit = item;
+			}else{
+				this.itemEdit = this.item0;
+			}
+		},
 		async update(withSelectedDate){
 			this.updating = true;
 			try{
@@ -89,14 +107,17 @@ export default {
 			} catch(e){	console.error(e); }
 			this.updating = false;
 		},
-		getItems(){
+		getItems(itemId, item){
+			let params = {};
+			if(itemId>0)
+				params.itemId = itemId;
+			if(item != '')
+				params.item = item;
 			this.updating = true;
 			axios
         .get('/getItems', {
           headers: {'X-Access-Token': Globals.api_token, "content-type": "application/json"},
-          params: {
-            
-          },
+          params: params,
         },
         {headers: {'X-Access-Token': Globals.api_token, "content-type": "application/json"}})
         .then(response => {

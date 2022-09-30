@@ -24,6 +24,7 @@ Vue.prototype.$course = window.course;
 Vue.component('modal', require('./components/UI/panels/modal.vue').default);
 Vue.component('orders', require('./components/orders/orders.vue').default);
 Vue.component('clientsView', require('./components/clients/clients-view.vue').default);
+Vue.component('itemsView', require('./components/items/items-view.vue').default);
 Vue.component('order', require('./components/orders/order.vue').default);
 Vue.component('expense', require('./components/expenses/expense.vue').default);
 

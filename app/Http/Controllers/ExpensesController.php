@@ -26,6 +26,7 @@ class ExpensesController extends BaseController
         if (! \Auth::guard('admin')->user()->can('orders_all')) {
             return redirect()->route('home');
         }
+        
         $paginate = $this->getOption('orders_paginate');
         $expenses = Expenses::with('client')->orderBy('updated_at', 'desc')->paginate($paginate);
         $operations = Operations::where("deleted", 0)->orderBy('operation', 'asc')->get();
@@ -42,8 +43,8 @@ class ExpensesController extends BaseController
         $status = $request->input('status') ?? 0;
         $api_token = \Auth::guard('admin')->user()->getToken();
         
-        
-        $data = ['orderId' => $id, 'dFrom' => $dFrom, 'dTo' => $dTo, 'status' => $status, 'api_token' => $api_token];
+        $editable = $request->e ?? 1;
+        $data = ['orderId' => $id, 'dFrom' => $dFrom, 'dTo' => $dTo, 'status' => $status, 'api_token' => $api_token, 'editable' => $editable];
         return view('expenses.order', $data);
     }
     /**

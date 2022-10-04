@@ -1,22 +1,28 @@
 <template>
   <div class="orders">
-    <h2>Редактировать приходную накладную</h2>
+    <h2 v-if="editable">Редактировать приходную накладную</h2>
+    <h2 v-if="!editable">Просмотр приходной накладной</h2>
     <div class="order-head">
       <span>№ заказа</span><span>{{this.order?this.order.id:''}}</span><span>&nbsp;&nbsp;&nbsp;</span>
       <span>Дата заказа</span>
-      <span><input 
+      <span v-if="editable"><input 
               name="Дата"
               type="date"
               v-model="order.data"
               min="today.toShortDateString()"/>
-      </span><span>&nbsp;&nbsp;&nbsp;</span>
+      </span>
+      <span v-if="!editable">
+        {{ this.order.data }}
+      </span>
+      <span>&nbsp;&nbsp;&nbsp;</span>
       <span>Клиент </span>
-      <button type="button" @click="modalOpened.clients = true;" class="btn btn-points">...</button>
+      <button type="button" @click="modalOpened.clients = true;" class="btn btn-points" v-if="editable">...</button>
       <span>[#{{this.order?this.order.clientId:''}}]{{!this.order || this.order.clientId==0 ? "не выбран" : this.order.client}}</span><span>&nbsp;&nbsp;&nbsp;</span>
       <label for="operationId">Тип операции:</label>
-        <select v-model="order.operationId">
+        <select v-model="order.operationId" v-if="editable">
           <option  v-for="(operation) in operations" :key="operation.id" :value="operation.id" class="sellist-operation">{{operation.operation}}</option>
         </select>
+        <span v-if="!editable">{{this.getOperation()}}</span>
     </div>
     <div class="order-list">
       <div>Услуги</div>
@@ -37,23 +43,23 @@
 					<td>{{item.id}}</td>
 					<td>{{item.item.item}}</td>
 					<td class="tdinput">
-            <input type="number" v-model="item.quantity" min="0"/>
+            <input type="number" v-model="item.quantity" min="0" :disabled="!editable"/>
           </td>
 					<td class="tdinput">
-            <input type="number" v-model="item.price" min="0"/>
+            <input type="number" v-model="item.price" min="0" :disabled="!editable"/>
           </td>
           <td class="tdinput">
             {{ (item.quantity - item.quantity_loss)*item.price | currencydecimal }}
           </td>
           <td :class="item.quantity_loss>0?'tdloss':''">{{item.quantity_loss}}</td>
 					<td>
-            <input type="text" v-model="item.note"/>
+            <input type="text" v-model="item.note" :disabled="!editable"/>
           </td>
 					<td></td>
 				</tr>
 			</tbody>
 		  </table>
-      <div  class="order_add"><input type="button" value="Добавить" @click="modalOpened.items = true;"/></div>
+      <div  class="order_add"><input type="button" value="Добавить" @click="modalOpened.items = true;" v-if="editable"/></div>
     </div>
     <div class="order_bottom">
       <div class="order-advance">
@@ -70,7 +76,7 @@
               />
 
               <label class="field__file-wrapper" for="uploadFiles">
-                <div
+                <div v-if="editable"
                   ref="fileChoose"
                   class="field__file-fake"
                   v-bind:class="{
@@ -79,7 +85,7 @@
                 >
                   Файл не выбран
                 </div>
-                <div class="field__file-button" @click="chooseFiles()">
+                <div class="field__file-button" @click="chooseFiles()" v-if="editable">
                   Добавить документ
                 </div>
               </label>
@@ -97,7 +103,7 @@
               <a  :href="'/'+attach.attach" class="attach-link" target="_blank">{{attach.attach}}</a>
             </td>
             <td style="padding-left:20px; vertical-align: top;">
-              <img style="width:10px;height: 10px;" src="/img/icons/cross.svg" @click="delAttach(attach)"/>
+              <img style="width:10px;height: 10px;" src="/img/icons/cross.svg" @click="delAttach(attach)" v-if="editable"/>
             </td>
           </tr>
         </transition-group>
@@ -114,7 +120,7 @@
           <label>Сумма всего: </label><span>{{ total.days+total.one | currencydecimal }}</span>
         </div>
       </div>
-      <input type="button" value="Сохранить" @click="saveOrder(order);"/>
+      <input type="button" value="Сохранить" @click="saveOrder(order);" v-if="editable"/>
       <input type="button" value="Отмена" @click="onCancelEdit(order);"/>
     </div>
     <modal class="waves-report-modal"
@@ -162,6 +168,7 @@ export default {
     d_from:String,
     d_to:String,
     status:[Number,String],
+    editable:Boolean,
     wareh_url:String
   },
   components: {
@@ -215,6 +222,16 @@ export default {
        this.getOrder({"orderId":this.order_id});
   },
   methods:{
+    getOperation(){
+      let o = "";
+      let i = 0;
+      for(i=0; i<this.operations.length; i++)
+        if(this.operations[i].id==this.order.operationId){
+          o = this.operations[i].operation;
+          break;
+        }
+        return o;
+    },
     //метод выбора файла для загрузки
     chooseFiles() {
       let fields = document.querySelectorAll(".field__file");

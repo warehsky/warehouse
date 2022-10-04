@@ -30,6 +30,7 @@ class OrdersController extends BaseController
         if (! \Auth::guard('admin')->user()->can('orders_all')) {
             return redirect()->route('home');
         }
+        
         $paginate = $this->getOption('orders_paginate');
         $orders = Orders::select('orders.*', 'clients.client')
         ->join('clients', 'orders.clientId', 'clients.id')
@@ -68,8 +69,8 @@ class OrdersController extends BaseController
         $dTo = $request->input('dTo')&&!empty($request->input('dTo'))?$request->input('dTo'):Carbon::parse(Carbon::now());
         $status = $request->input('status') ?? 0;
         $api_token = \Auth::guard('admin')->user()->getToken();
-        
-        $data = ['orderId' => $id, 'dFrom' => $dFrom, 'dTo' => $dTo, 'status' => $status, 'api_token' => $api_token];
+        $editable = $request->e ?? 1;
+        $data = ['orderId' => $id, 'dFrom' => $dFrom, 'dTo' => $dTo, 'status' => $status, 'api_token' => $api_token, 'editable' => $editable];
         
         return view('orders.order', $data);
     }

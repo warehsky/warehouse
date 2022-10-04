@@ -1,17 +1,22 @@
 <template>
   <div class="orders">
-    <h2>Редактировать расходный ордер</h2>
+    <h2 v-if="editable">Редактировать расходный ордер</h2>
+    <h2 v-if="!editable">Просмотр расходного ордера</h2>
     <div class="order-head">
       <span>№ ордера: </span><span>{{this.expense?this.expense.id:''}}</span><span>&nbsp;&nbsp;&nbsp;</span>
       <span>Дата ордера</span>
-      <span><input 
+      <span><input v-if="editable"
               name="Дата"
               type="date"
               v-model="expense.expenseDate"
               min="today.toShortDateString()"/>
-      </span><span>&nbsp;&nbsp;&nbsp;</span>
+      </span>
+      <span v-if="!editable">
+        {{this.expense.expenseDate}}
+      </span>
+      <span>&nbsp;&nbsp;&nbsp;</span>
       <span>Клиент </span>
-      <button type="button" @click="modalOpened.clients = true;" class="btn btn-points">...</button>
+      <button type="button" @click="modalOpened.clients = true;" class="btn btn-points"  v-if="editable">...</button>
       <span>&nbsp;&nbsp;</span>
       <span>[#{{this.expense?this.expense.clientId:''}}]{{!this.expense||this.expense.clientId==0?'не выбран':this.expense.client}}</span>
     </div>
@@ -35,22 +40,22 @@
           <td>{{item.orderId}}</td>
 					<td>{{item.items.item}}</td>
           <td class="tdinput">
-            <input type="number" v-model="item.quantity" min="0"/>
+            <input type="number" v-model="item.quantity" min="0" :disabled="!editable"/>
           </td>
 					<td class="tdinput">
-            <input type="number" v-model="item.price" min="0"/>
+            <input type="number" v-model="item.price" min="0" :disabled="!editable"/>
           </td>
           <td class="tdinput">
             {{item.price*item.quantity  | currencydecimal}}
           </td>
 					<td>
-            <input type="text" v-model="item.note" />
+            <input type="text" v-model="item.note" :disabled="!editable"/>
           </td>
 					<td></td>
 				</tr>
 			</tbody>
 		  </table>
-      <div class="order_add"><input type="button" value="Добавить" @click="addGoods();"/></div>
+      <div class="order_add"><input type="button" value="Добавить" @click="addGoods();"  v-if="editable" /></div>
     </div>
     <div class="order_bottom">
       <div class="order-itog">
@@ -64,7 +69,7 @@
           <label>Сумма всего: </label><span>{{ total.days+total.one | currencydecimal }}</span>
         </div>
       </div>
-      <input type="button" value="Сохранить" @click="saveexpense(expense);"/>
+      <input type="button" value="Сохранить" @click="saveexpense(expense);"  v-if="editable"/>
       <input type="button" value="Отмена" @click="onCancelEdit(expense);"/>
     </div>
 
@@ -114,6 +119,7 @@ export default {
     d_from:String,
     d_to:String,
     status:[Number,String],
+    editable:Number,
     wareh_url:String,
   },
   components: {

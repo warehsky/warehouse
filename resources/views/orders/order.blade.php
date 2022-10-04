@@ -10,6 +10,7 @@
             d_from="{{$dFrom}}"
             d_to="{{$dTo}}"
             status="{{$status}}"
+            :editable="{{$editable}}"
             wareh_url="{{ env('WAREH_URL',false) }}">
         </order>
     </div>    

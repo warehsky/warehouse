@@ -43,6 +43,8 @@ Route::middleware(['adminauth'])->group(function () {
     Route::delete('permissions_mass_destroy', 'Admin\PermissionsController@massDestroy')->name('permissions.mass_destroy');
     Route::resource('roles', 'Admin\RolesController');
     Route::delete('roles_mass_destroy', 'Admin\RolesController@massDestroy')->name('roles.mass_destroy');
+    //Отчеты
+    Route::get('reminds', 'ReportsController@getReportReminds')->name('reminds');
 });
 
     
@@ -59,7 +61,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminauth']], function () {
     Route::resource('userAdmins', 'Admin\UsersController');
     
  
-    //Отчеты
     
 
     //Настройки
@@ -72,4 +73,5 @@ Route::group(['prefix' => 'admin', 'middleware' => ['adminauth']], function () {
 
    
 });
+
 

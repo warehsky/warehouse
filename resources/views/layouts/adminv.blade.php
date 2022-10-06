@@ -245,9 +245,30 @@ use Illuminate\Support\Facades\Auth;
 
            
 
-            @if(auth()->guard('admin')->user()->can('report_view'))
+            @if(auth()->guard('admin')->user()->can('orders_all'))
             <li>
-             <a id="ReportLi" class="nav-link" href="/admin/report"><p id='reportP'>Отчеты</p></a>
+              <a class="nav-link" onclick="sub_menu('3')" href="#">
+                <table>
+                    <tr>
+                        <td>
+                        <div class="menudiv menudiv-r">
+                <img class="sky-menu-icon" src="/img/icons/menu/spr1.png" /></div>
+                        </td>
+                        <td>
+                        <div class="menudiv menu-h">Отчеты</div>
+                        </td>
+                        <td>
+                        <div class="menudiv menudiv-l menu-h"><img class="sky-menu-icon" src="/img/icons/menu/down1.png" id="down-3"/></div>
+                        </td>
+                    </tr>
+                </table>
+              </a>
+              <div class="submenu passiv-submenu menu-h" id="sub-3">
+                <ul class="">
+                <li><a class="nav-link " href="/reminds"><div class="menudiv">Остатки</div></a></li>
+                
+                </ul>
+              </div>
             </li>
             @endif
 
